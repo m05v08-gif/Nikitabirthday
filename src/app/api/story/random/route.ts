@@ -1,17 +1,28 @@
 import { NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabase-server";
 
+type StoryRow = { id: string; text: string; image_path: string };
+
+function coerceStoryRow(row: unknown): StoryRow | null {
+  if (!row || typeof row !== "object") return null;
+  const r = row as { id?: unknown; text?: unknown; image_path?: unknown };
+  if (typeof r.id !== "string" || typeof r.text !== "string" || typeof r.image_path !== "string") {
+    return null;
+  }
+  return { id: r.id, text: r.text, image_path: r.image_path };
+}
+
 export async function GET() {
   try {
     const supabase = supabaseServer();
 
     const rpc = await supabase.rpc("get_random_story");
 
-    let story: { id: string; text: string; image_path: string } | null = null;
+    let story: StoryRow | null = null;
 
     if (!rpc.error && rpc.data) {
       const row = Array.isArray(rpc.data) ? rpc.data[0] : rpc.data;
-      story = row as { id: string; text: string; image_path: string };
+      story = coerceStoryRow(row);
     } else {
       const countRes = await supabase
         .from("stories")
@@ -52,7 +63,7 @@ export async function GET() {
         );
       }
 
-      story = (storyRes.data?.[0] ?? null) as typeof story;
+      story = coerceStoryRow(storyRes.data?.[0]);
     }
 
     if (!story) {
