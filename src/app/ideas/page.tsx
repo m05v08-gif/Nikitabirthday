@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useMemo, useState } from "react";
 
 type Mode = "home" | "out";
@@ -157,12 +158,12 @@ export default function IdeasPage() {
         )}
       </div>
 
-      <a
+      <Link
         href="/"
         className="inline-flex w-full items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900/40 px-4 py-3 text-sm font-semibold text-zinc-100"
       >
         Домой
-      </a>
+      </Link>
     </main>
   );
 }
