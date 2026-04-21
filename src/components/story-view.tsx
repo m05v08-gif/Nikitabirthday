@@ -11,12 +11,10 @@ export function StoryView({
   data,
   loading,
   storyKey,
-  tag
 }: {
   data: RandomStoryResult | null;
   loading: boolean;
   storyKey: string;
-  tag?: string | null;
 }) {
   const [entered, setEntered] = useState(false);
 
@@ -67,8 +65,8 @@ export function StoryView({
       }`}
     >
       <div
-        className={`relative overflow-hidden rounded-[1.35rem] ring-1 ring-[color:var(--color-ring)] transition duration-300 ease-[cubic-bezier(0.2,0.9,0.2,1)] ${
-          entered ? "translate-y-0 scale-[1] opacity-100" : "translate-y-2 scale-[0.992] opacity-0"
+        className={`relative overflow-hidden rounded-[1.35rem] ring-1 ring-[color:var(--color-ring)] transition duration-240 ease-[cubic-bezier(0.2,0.9,0.2,1)] ${
+          entered ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
         }`}
       >
         <div className="pointer-events-none absolute -left-10 -top-10 h-40 w-40 rounded-full bg-[radial-gradient(circle_at_30%_30%,var(--blob-b),transparent_62%)] opacity-80 blur-2xl" />
@@ -84,20 +82,11 @@ export function StoryView({
             priority
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-
-          {tag ? (
-            <div className="absolute left-4 top-4">
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/30 px-3 py-1 text-[0.72rem] font-semibold tracking-wide text-white shadow-[var(--shadow-card)] backdrop-blur-md">
-                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-white/70" />
-                {tag}
-              </div>
-            </div>
-          ) : null}
         </div>
       </div>
 
       <div
-        className={`relative overflow-hidden rounded-[1.25rem] border border-[color:var(--color-border)] bg-[color:var(--color-panel)] p-5 shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-xl transition duration-300 ease-[cubic-bezier(0.2,0.9,0.2,1)] ${
+        className={`relative overflow-hidden rounded-[1.25rem] border border-[color:var(--color-border)] bg-[color:var(--color-panel)] p-5 shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-xl transition duration-240 ease-[cubic-bezier(0.2,0.9,0.2,1)] ${
           entered ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
         }`}
       >
