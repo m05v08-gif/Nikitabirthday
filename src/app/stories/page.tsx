@@ -125,11 +125,7 @@ export default function StoriesPage() {
         <div className="pointer-events-none absolute -left-6 top-6 h-24 w-24 rotate-12 rounded-3xl border border-[color:var(--color-stroke)] opacity-40" />
         <div className="relative overflow-hidden rounded-[1.75rem] border border-[color:var(--color-border)] bg-[color:var(--color-panel)] p-5 shadow-[var(--shadow-soft)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-xl sm:p-6">
           <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--color-stroke)] to-transparent" />
-          <StoryView
-            data={data}
-            loading={loading}
-            storyKey={storyKey}
-          />
+          <StoryView data={data} loading={loading} storyKey={storyKey} />
         </div>
       </section>
 
