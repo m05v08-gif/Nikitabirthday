@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useMemo, useState } from "react";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { parseNumberedIdeas } from "@/lib/parse-numbered-ideas";
 
 type Mode = "home" | "out";
@@ -62,19 +63,26 @@ export default function IdeasPage() {
   return (
     <main className="animate-fade-in-up space-y-8">
       <header className="relative space-y-4">
-        <div className="pointer-events-none absolute -right-6 top-0 h-24 w-24 rotate-12 rounded-3xl border border-[color:var(--color-stroke)] opacity-35" />
+        <div className="pointer-events-none absolute -right-6 top-8 h-24 w-24 rotate-12 rounded-3xl border border-[color:var(--color-stroke)] opacity-35" />
 
-        <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-panel)] px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-[color:var(--color-muted-2)] shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-md">
-          <span
-            aria-hidden="true"
-            className="inline-block h-2 w-10 rounded-full bg-[radial-gradient(circle_at_20%_30%,var(--blob-b),var(--blob-a))]"
-          />
-          Идеи на вечер
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0 space-y-4">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-panel)] px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-[color:var(--color-muted-2)] shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-md">
+              <span
+                aria-hidden="true"
+                className="inline-block h-2 w-10 rounded-full bg-[radial-gradient(circle_at_20%_30%,var(--blob-b),var(--blob-a))]"
+              />
+              Идеи на вечер
+            </div>
+
+            <h1 className="font-display text-balance-safe text-[2.15rem] font-semibold leading-[0.95] tracking-[-0.05em] text-[color:var(--color-fg)]">
+              Сегодня
+            </h1>
+          </div>
+          <div className="shrink-0 pt-0.5">
+            <ThemeToggle />
+          </div>
         </div>
-
-        <h1 className="font-display text-balance-safe text-[2.15rem] font-semibold leading-[0.95] tracking-[-0.05em] text-[color:var(--color-fg)]">
-          Сегодня
-        </h1>
       </header>
 
       <section className="relative overflow-hidden rounded-[1.75rem] border border-[color:var(--color-border)] bg-[color:var(--color-panel)] p-5 shadow-[var(--shadow-soft)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-xl sm:p-6">

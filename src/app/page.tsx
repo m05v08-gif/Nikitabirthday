@@ -1,4 +1,14 @@
 import Link from "next/link";
+import { Playfair_Display } from "next/font/google";
+import { ThemeToggle } from "@/components/theme-toggle";
+
+const playfairHome = Playfair_Display({
+  subsets: ["latin", "cyrillic"],
+  weight: ["700", "800"],
+  style: ["normal", "italic"],
+  variable: "--font-home-display",
+  display: "swap"
+});
 
 function Tile({
   title,
@@ -11,52 +21,25 @@ function Tile({
   href: string;
   variant: "stories" | "ideas";
 }) {
-  const wash =
+  const panel =
     variant === "stories"
-      ? "from-[color-mix(in_oklab,var(--blob-a)_22%,transparent)] to-[color-mix(in_oklab,var(--blob-c)_16%,transparent)]"
-      : "from-[color-mix(in_oklab,var(--blob-b)_24%,transparent)] to-[color-mix(in_oklab,var(--blob-d)_18%,transparent)]";
-
-  const mark =
+      ? "bg-[color:color-mix(in_oklab,var(--color-panel)_32%,transparent)]"
+      : "bg-[color:color-mix(in_oklab,var(--color-panel)_28%,transparent)]";
+  const glow =
     variant === "stories"
-      ? "bg-[radial-gradient(circle_at_30%_30%,var(--blob-a),var(--blob-c))]"
-      : "bg-[radial-gradient(circle_at_30%_30%,var(--blob-b),var(--blob-d))]";
+      ? "bg-[radial-gradient(circle_at_20%_20%,color-mix(in_oklab,var(--blob-b)_16%,transparent),transparent_58%),radial-gradient(circle_at_80%_70%,color-mix(in_oklab,var(--blob-a)_14%,transparent),transparent_62%)]"
+      : "bg-[radial-gradient(circle_at_20%_30%,color-mix(in_oklab,var(--blob-a)_14%,transparent),transparent_60%),radial-gradient(circle_at_75%_25%,color-mix(in_oklab,var(--blob-c)_12%,transparent),transparent_62%)]";
 
   return (
     <Link
       href={href}
-      className="group relative block overflow-hidden rounded-[1.75rem] border border-[color:var(--color-border)] bg-[color:var(--color-panel)] shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-xl transition active:scale-[0.99] motion-safe:hover:-translate-y-1 motion-safe:hover:shadow-[var(--shadow-soft)]"
+      className={`home-tile group relative block overflow-hidden rounded-[1.15rem] border border-[color:color-mix(in_oklab,var(--color-border)_50%,transparent)] ${panel} p-[1.05rem] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_38%,transparent)] backdrop-blur-[11px] transition active:scale-[0.99] motion-safe:hover:bg-[color:color-mix(in_oklab,var(--color-panel)_42%,transparent)]`}
     >
-      <div
-        className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${wash} opacity-90`}
-      />
-      <div className="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full bg-[radial-gradient(circle_at_40%_35%,var(--blob-b),transparent_62%)] opacity-55 blur-2xl transition group-hover:opacity-80" />
+      <div aria-hidden="true" className={`pointer-events-none absolute inset-0 ${glow} opacity-55`} />
 
-      <div className="relative p-6">
-        <div className="flex items-start justify-between gap-4">
-          <div className="space-y-3">
-            <div
-              aria-hidden="true"
-              className={`inline-flex h-1.5 w-14 rounded-full ${mark} opacity-90 ring-1 ring-[color:var(--color-ring)]`}
-            />
-
-            <div>
-              <div className="font-display text-[1.35rem] font-semibold leading-[1.05] text-[color:var(--color-fg)]">
-                {title}
-              </div>
-              <div className="mt-2 max-w-[18rem] text-sm leading-relaxed text-[color:var(--color-muted)]">
-                {subtitle}
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-1 inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-panel-2)] text-[color:var(--color-fg)] shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] transition group-hover:translate-x-0.5">
-            <span aria-hidden="true" className="text-xl leading-none">
-              →
-            </span>
-          </div>
-        </div>
-
-        <div className="pointer-events-none absolute bottom-4 left-6 right-6 h-px bg-gradient-to-r from-transparent via-[color:var(--color-stroke)] to-transparent opacity-70" />
+      <div className="relative space-y-1.5">
+        <div className="home-card-title text-[1.2rem] leading-[1.08] sm:text-[1.22rem]">{title}</div>
+        <div className="home-card-body text-sm leading-relaxed">{subtitle}</div>
       </div>
     </Link>
   );
@@ -64,45 +47,49 @@ function Tile({
 
 export default function Home() {
   return (
-    <main className="animate-fade-in-up space-y-10">
-      <header className="relative space-y-6">
-        <div className="pointer-events-none absolute -left-10 top-2 h-28 w-28 rotate-6 rounded-[2rem] border border-[color:var(--color-stroke)] opacity-50" />
-        <div className="pointer-events-none absolute right-0 top-24 h-20 w-20 -rotate-12 rounded-full border border-[color:var(--color-stroke)] opacity-35" />
+    <main className={`${playfairHome.variable} home-page relative w-full min-h-[100dvh] overflow-hidden`}>
+      {/* Full-screen background (home only) */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-[image:var(--home-artwork)] bg-cover bg-center bg-no-repeat opacity-[0.92] [filter:saturate(0.94)_contrast(0.94)]" />
+        <div className="absolute inset-0 bg-[color:var(--home-art-overlay)]" />
+      </div>
 
-        <div className="inline-flex -rotate-1 items-center gap-3 rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-panel)] px-4 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.32em] text-[color:var(--color-muted-2)] shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-md">
-          <span aria-hidden="true" className="h-2 w-2 rounded-full bg-[radial-gradient(circle_at_30%_30%,var(--blob-b),var(--blob-a))]" />
-          Для нас двоих
-        </div>
+      {/* Content layer */}
+      <div className="relative mx-auto w-full max-w-md px-0 pb-10 pt-4 sm:pb-12 sm:pt-6">
+        <header className="relative space-y-5">
+          <div className="space-y-3">
+            <h1 className="home-hero-title text-balance-safe text-[2.35rem] leading-[1.02] sm:text-[2.58rem]">
+              Наш <span className="home-hero-accent">маленький</span> мир
+            </h1>
+            <p className="home-hero-sub text-pretty text-[1.02rem] leading-relaxed">
+              Уютный уголок — мир, который мы создаём сами.
+            </p>
+          </div>
 
-        <div className="space-y-4">
-          <h1 className="font-display max-w-[14ch] text-balance-safe text-[2.55rem] font-semibold leading-[0.92] tracking-[-0.05em] text-[color:var(--color-fg)] sm:text-[2.75rem]">
-            Для нас
-          </h1>
-          <p className="max-w-prose text-pretty text-[1.05rem] leading-relaxed text-[color:var(--color-muted)]">
-            Истории из наших моментов и короткие идеи на вечер.
-          </p>
-        </div>
-      </header>
+          <div className="flex items-center">
+            <ThemeToggle className="home-hero-toggle border-[color:color-mix(in_oklab,var(--color-border)_42%,transparent)] bg-[color:color-mix(in_oklab,var(--color-toggle-bg)_48%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_48%,transparent)] backdrop-blur-[14px]" />
+          </div>
+        </header>
 
-      <section className="grid gap-4">
-        <Tile
-          variant="stories"
-          title="Истории"
-          subtitle="Нажми — и появится случайная история"
-          href="/stories"
-        />
-        <Tile
-          variant="ideas"
-          title="Идеи на вечер"
-          subtitle="3 короткие идеи — без воды"
-          href="/ideas"
-        />
-      </section>
+        <section className="mt-8 grid gap-3">
+          <Tile
+            variant="stories"
+            title="Воспоминания"
+            subtitle="Нажми — и появится случайная история"
+            href="/stories"
+          />
+          <Tile
+            variant="ideas"
+            title="Вдохновения"
+            subtitle="Разные идеи на вечер"
+            href="/ideas"
+          />
+        </section>
 
-      <footer className="border-t border-[color:var(--color-border)] pt-6 text-[0.72rem] leading-relaxed text-[color:var(--color-muted-2)]">
-        Совет: добавь страницу на экран iPhone (Поделиться → На экран «Домой»).
-      </footer>
+        <p className="home-helper mt-8 text-[0.68rem] leading-relaxed opacity-90">
+          Совет: добавь страницу на экран iPhone (Поделиться → На экран «Домой»).
+        </p>
+      </div>
     </main>
   );
 }
-
