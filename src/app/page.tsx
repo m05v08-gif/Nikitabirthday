@@ -47,28 +47,33 @@ function Tile({
 
 export default function Home() {
   return (
-    <main className={`${playfairHome.variable} home-page relative w-full min-h-[100dvh] overflow-hidden`}>
-      {/* Full-screen background (home only) */}
-      <div aria-hidden="true" className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[image:var(--home-artwork)] bg-cover bg-center bg-no-repeat opacity-[0.92] [filter:saturate(0.94)_contrast(0.94)]" />
+    <main className={`${playfairHome.variable} home-page relative min-h-[100dvh] w-full`}>
+      {/* Full-screen background: viewport-fixed so it is not clipped by layout max-w-md / padding */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-[5] h-[100dvh] min-h-[100dvh] w-full"
+      >
+        <div className="h-full w-full bg-[image:var(--home-artwork)] bg-cover bg-center bg-no-repeat opacity-[0.92] [filter:saturate(0.94)_contrast(0.94)]" />
         <div className="absolute inset-0 bg-[color:var(--home-art-overlay)]" />
       </div>
 
-      {/* Content layer */}
-      <div className="relative mx-auto w-full max-w-md px-0 pb-10 pt-4 sm:pb-12 sm:pt-6">
-        <header className="relative space-y-5">
-          <div className="space-y-3">
-            <h1 className="home-hero-title text-balance-safe text-[2.35rem] leading-[1.02] sm:text-[2.58rem]">
-              Наш <span className="home-hero-accent">маленький</span> мир
-            </h1>
-            <p className="home-hero-sub text-pretty text-[1.02rem] leading-relaxed">
-              Уютный уголок — мир, который мы создаём сами.
-            </p>
-          </div>
+      {/* Theme toggle — fixed top-right over the artwork */}
+      <div className="pointer-events-none fixed inset-x-0 top-0 z-30 flex justify-end px-4 pt-[max(0.75rem,env(safe-area-inset-top))] sm:px-5">
+        <div className="pointer-events-auto">
+          <ThemeToggle className="home-hero-toggle border-[color:color-mix(in_oklab,var(--color-border)_42%,transparent)] bg-[color:color-mix(in_oklab,var(--color-toggle-bg)_48%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_48%,transparent)] backdrop-blur-[14px]" />
+        </div>
+      </div>
 
-          <div className="flex items-center">
-            <ThemeToggle className="home-hero-toggle border-[color:color-mix(in_oklab,var(--color-border)_42%,transparent)] bg-[color:color-mix(in_oklab,var(--color-toggle-bg)_48%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_48%,transparent)] backdrop-blur-[14px]" />
-          </div>
+      {/* Content (hero + cards) stays in layout column; no toggle inside hero */}
+      <div className="relative z-20 w-full pb-10 pt-[4.75rem] sm:pb-12 sm:pt-[5.25rem]">
+        <header className="space-y-4">
+          <h1 className="home-hero-title text-balance-safe text-[2.1rem] leading-[1.08] sm:text-[2.35rem]">
+            <span className="block">Какой красивый мир</span>
+            <span className="block">мы создаём вместе.</span>
+          </h1>
+          <p className="home-hero-sub home-hero-tagline text-pretty text-[0.95rem] leading-relaxed sm:text-[1rem]">
+            Посиди, отдохни, почитай, улыбнись
+          </p>
         </header>
 
         <section className="mt-8 grid gap-3">
