@@ -57,7 +57,7 @@ export default function IdeasPage() {
   const segInactive =
     "border border-[color:var(--color-border)] bg-[color:var(--color-panel-2)] text-[color:var(--color-fg)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-md transition active:scale-[0.99] motion-safe:hover:bg-[color:var(--color-panel)]";
   const segActive =
-    "border border-[color:var(--color-border)] bg-[linear-gradient(135deg,color-mix(in_oklab,var(--blob-c)_18%,transparent),color-mix(in_oklab,var(--blob-a)_16%,transparent))] text-[color:var(--color-fg)] shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-md";
+    "border border-[color:var(--color-border)] bg-[linear-gradient(135deg,color-mix(in_oklab,var(--blob-b)_22%,transparent),color-mix(in_oklab,var(--blob-a)_18%,transparent))] text-[color:var(--color-fg)] shadow-[var(--shadow-soft)] ring-2 ring-[color:var(--color-stroke)] backdrop-blur-md";
 
   return (
     <main className="animate-fade-in-up space-y-8">
@@ -90,77 +90,77 @@ export default function IdeasPage() {
             />
           </div>
 
-            <div className="grid gap-2">
-              <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">Где</div>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setMode("home")}
-                  className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
-                    mode === "home" ? segActive : segInactive
-                  }`}
-                >
-                  Дома
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setMode("out")}
-                  className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
-                    mode === "out" ? segActive : segInactive
-                  }`}
-                >
-                  Вне дома
-                </button>
-              </div>
+          <div className="grid gap-2">
+            <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">Где</div>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setMode("home")}
+                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                  mode === "home" ? segActive : segInactive
+                }`}
+              >
+                Дома
+              </button>
+              <button
+                type="button"
+                onClick={() => setMode("out")}
+                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                  mode === "out" ? segActive : segInactive
+                }`}
+              >
+                Вне дома
+              </button>
             </div>
+          </div>
 
-            <div className="grid gap-2">
-              <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">Время</div>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setDuration("short")}
-                  className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
-                    duration === "short" ? segActive : segInactive
-                  }`}
-                >
-                  30–60 мин
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setDuration("medium")}
-                  className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
-                    duration === "medium" ? segActive : segInactive
-                  }`}
-                >
-                  2–3 часа
-                </button>
-              </div>
+          <div className="grid gap-2">
+            <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">Время</div>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setDuration("short")}
+                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                  duration === "short" ? segActive : segInactive
+                }`}
+              >
+                30–60 мин
+              </button>
+              <button
+                type="button"
+                onClick={() => setDuration("medium")}
+                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                  duration === "medium" ? segActive : segInactive
+                }`}
+              >
+                2–3 часа
+              </button>
             </div>
+          </div>
 
-            <div className="grid gap-2">
-              <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">Бюджет</div>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setBudget("zero")}
-                  className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
-                    budget === "zero" ? segActive : segInactive
-                  }`}
-                >
-                  0
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setBudget("small")}
-                  className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
-                    budget === "small" ? segActive : segInactive
-                  }`}
-                >
-                  Небольшой
-                </button>
-              </div>
+          <div className="grid gap-2">
+            <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">Бюджет</div>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setBudget("zero")}
+                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                  budget === "zero" ? segActive : segInactive
+                }`}
+              >
+                0
+              </button>
+              <button
+                type="button"
+                onClick={() => setBudget("small")}
+                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                  budget === "small" ? segActive : segInactive
+                }`}
+              >
+                Небольшой
+              </button>
             </div>
+          </div>
         </div>
       </section>
 

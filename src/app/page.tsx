@@ -71,7 +71,7 @@ export default function Home() {
 
         <div className="inline-flex -rotate-1 items-center gap-3 rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-panel)] px-4 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.32em] text-[color:var(--color-muted-2)] shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-md">
           <span aria-hidden="true" className="h-2 w-2 rounded-full bg-[radial-gradient(circle_at_30%_30%,var(--blob-b),var(--blob-a))]" />
-          Для вас двоих
+          Для нас двоих
         </div>
 
         <div className="space-y-4">
