@@ -168,7 +168,7 @@ export default function IdeasPage() {
         type="button"
         disabled={!canGenerate}
         onClick={generate}
-        className="w-full rounded-2xl bg-[linear-gradient(135deg,color-mix(in_oklab,var(--blob-b)_30%,white),color-mix(in_oklab,var(--blob-a)_26%,white))] px-4 py-3.5 text-sm font-semibold text-[color:var(--color-app-bg)] shadow-[var(--shadow-soft)] ring-1 ring-[color:var(--color-ring)] transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 motion-safe:hover:-translate-y-0.5"
+        className="w-full rounded-2xl bg-[linear-gradient(135deg,color-mix(in_oklab,var(--blob-b)_30%,white),color-mix(in_oklab,var(--blob-a)_26%,white))] px-4 py-3.5 text-sm font-semibold text-[color:var(--color-primary-ink)] shadow-[var(--shadow-soft)] ring-1 ring-[color:var(--color-ring)] transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 motion-safe:hover:-translate-y-0.5"
       >
         {loading ? "Генерирую…" : "Сгенерировать идеи"}
       </button>

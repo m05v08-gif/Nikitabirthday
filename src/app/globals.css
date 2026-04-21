@@ -17,6 +17,7 @@
   --color-toggle-bg: hsl(225 28% 12% / 0.55);
   --color-toggle-track: hsl(225 22% 18% / 0.85);
   --color-toggle-knob: hsl(210 40% 98%);
+  --color-primary-ink: var(--color-app-bg);
 
   --blob-a: hsl(214 90% 58% / 0.18);
   --blob-b: hsl(28 95% 58% / 0.16);
@@ -47,6 +48,7 @@ html[data-theme="light"] {
   --color-toggle-bg: hsl(0 0% 100% / 0.65);
   --color-toggle-track: hsl(225 14% 88% / 0.95);
   --color-toggle-knob: hsl(225 30% 16%);
+  --color-primary-ink: var(--color-fg);
 
   --blob-a: hsl(214 95% 58% / 0.22);
   --blob-b: hsl(28 95% 56% / 0.20);
