@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Истории и идеи на вечер — для нас двоих",
     start_url: "/",
     display: "standalone",
-    background_color: "#09090b",
-    theme_color: "#09090b",
+    background_color: "#0b1220",
+    theme_color: "#0b1220",
     icons: [
       {
         src: "/icon.svg",

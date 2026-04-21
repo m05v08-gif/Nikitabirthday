@@ -42,97 +42,104 @@ export default function IdeasPage() {
     }
   }, [budget, duration, mode]);
 
+  const segInactive =
+    "border border-white/10 bg-white/[0.03] text-[color:var(--color-fg)] ring-1 ring-white/10 backdrop-blur-md transition active:scale-[0.99] motion-safe:hover:bg-white/[0.05]";
+  const segActive =
+    "border border-[hsl(214_85%_62%/0.55)] bg-gradient-to-b from-white/14 to-white/[0.06] text-[color:var(--color-fg)] shadow-[0_14px_45px_hsl(222_55%_5%/0.30)] ring-1 ring-[hsl(214_85%_62%/0.22)] backdrop-blur-md";
+
   return (
-    <main className="space-y-4">
-      <header className="space-y-1">
-        <div className="text-sm text-zinc-400">Идеи на вечер</div>
-        <h1 className="text-2xl font-semibold tracking-tight">Сегодня</h1>
+    <main className="animate-fade-in-up space-y-6">
+      <header className="space-y-3">
+        <div className="inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-[0.75rem] font-medium text-[color:var(--color-muted)] ring-1 ring-white/10 backdrop-blur-md">
+          <span
+            aria-hidden="true"
+            className="inline-block h-2 w-2 rounded-full bg-[hsl(214_85%_62%)] shadow-[0_0_0_6px_hsl(214_85%_62%/0.10)]"
+          />
+          Идеи на вечер
+        </div>
+
+        <h1 className="font-display text-balance-safe text-[1.85rem] font-semibold leading-[1.1] tracking-[-0.03em] text-[color:var(--color-fg)]">
+          Сегодня
+        </h1>
       </header>
 
-      <section className="space-y-3 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4">
-        <div className="text-sm font-semibold text-zinc-100">Настройки</div>
+      <section className="relative overflow-hidden rounded-3xl bg-[color:var(--color-panel)] p-[1px] shadow-[var(--shadow-card)] ring-1 ring-white/10 backdrop-blur-xl">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+        <div className="rounded-[calc(1.5rem-1px)] bg-gradient-to-b from-white/10 to-transparent p-[1px]">
+          <div className="space-y-5 rounded-[calc(1.5rem-2px)] bg-[linear-gradient(180deg,hsl(220_30%_16%/0.55),hsl(222_35%_11%/0.35))] p-4 sm:p-5">
+            <div className="text-sm font-semibold text-[color:var(--color-fg)]">Настройки</div>
 
-        <div className="grid gap-2">
-          <div className="text-xs text-zinc-400">Где</div>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => setMode("home")}
-              className={`rounded-xl border px-3 py-2 text-sm ${
-                mode === "home"
-                  ? "border-white bg-white text-zinc-950"
-                  : "border-zinc-800 bg-zinc-950/40 text-zinc-100"
-              }`}
-            >
-              Дома
-            </button>
-            <button
-              type="button"
-              onClick={() => setMode("out")}
-              className={`rounded-xl border px-3 py-2 text-sm ${
-                mode === "out"
-                  ? "border-white bg-white text-zinc-950"
-                  : "border-zinc-800 bg-zinc-950/40 text-zinc-100"
-              }`}
-            >
-              Вне дома
-            </button>
-          </div>
-        </div>
+            <div className="grid gap-2">
+              <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">Где</div>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setMode("home")}
+                  className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                    mode === "home" ? segActive : segInactive
+                  }`}
+                >
+                  Дома
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMode("out")}
+                  className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                    mode === "out" ? segActive : segInactive
+                  }`}
+                >
+                  Вне дома
+                </button>
+              </div>
+            </div>
 
-        <div className="grid gap-2">
-          <div className="text-xs text-zinc-400">Время</div>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => setDuration("short")}
-              className={`rounded-xl border px-3 py-2 text-sm ${
-                duration === "short"
-                  ? "border-white bg-white text-zinc-950"
-                  : "border-zinc-800 bg-zinc-950/40 text-zinc-100"
-              }`}
-            >
-              30–60 мин
-            </button>
-            <button
-              type="button"
-              onClick={() => setDuration("medium")}
-              className={`rounded-xl border px-3 py-2 text-sm ${
-                duration === "medium"
-                  ? "border-white bg-white text-zinc-950"
-                  : "border-zinc-800 bg-zinc-950/40 text-zinc-100"
-              }`}
-            >
-              2–3 часа
-            </button>
-          </div>
-        </div>
+            <div className="grid gap-2">
+              <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">Время</div>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setDuration("short")}
+                  className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                    duration === "short" ? segActive : segInactive
+                  }`}
+                >
+                  30–60 мин
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setDuration("medium")}
+                  className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                    duration === "medium" ? segActive : segInactive
+                  }`}
+                >
+                  2–3 часа
+                </button>
+              </div>
+            </div>
 
-        <div className="grid gap-2">
-          <div className="text-xs text-zinc-400">Бюджет</div>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => setBudget("zero")}
-              className={`rounded-xl border px-3 py-2 text-sm ${
-                budget === "zero"
-                  ? "border-white bg-white text-zinc-950"
-                  : "border-zinc-800 bg-zinc-950/40 text-zinc-100"
-              }`}
-            >
-              0
-            </button>
-            <button
-              type="button"
-              onClick={() => setBudget("small")}
-              className={`rounded-xl border px-3 py-2 text-sm ${
-                budget === "small"
-                  ? "border-white bg-white text-zinc-950"
-                  : "border-zinc-800 bg-zinc-950/40 text-zinc-100"
-              }`}
-            >
-              Небольшой
-            </button>
+            <div className="grid gap-2">
+              <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">Бюджет</div>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setBudget("zero")}
+                  className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                    budget === "zero" ? segActive : segInactive
+                  }`}
+                >
+                  0
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBudget("small")}
+                  className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                    budget === "small" ? segActive : segInactive
+                  }`}
+                >
+                  Небольшой
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -141,26 +148,35 @@ export default function IdeasPage() {
         type="button"
         disabled={!canGenerate}
         onClick={generate}
-        className="w-full rounded-xl bg-white px-4 py-3 text-sm font-semibold text-zinc-950 disabled:opacity-60"
+        className="w-full rounded-2xl bg-white px-4 py-3.5 text-sm font-semibold text-zinc-950 shadow-[0_18px_55px_hsl(222_55%_5%/0.35)] ring-1 ring-white/20 transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 motion-safe:hover:-translate-y-0.5 motion-safe:hover:shadow-[0_22px_65px_hsl(222_55%_5%/0.45)]"
       >
         {loading ? "Генерирую…" : "Сгенерировать идеи"}
       </button>
 
-      <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4">
-        {error ? (
-          <pre className="whitespace-pre-wrap text-sm text-zinc-300">{error}</pre>
-        ) : text ? (
-          <pre className="whitespace-pre-wrap text-sm text-zinc-100">{text}</pre>
-        ) : (
-          <div className="text-sm text-zinc-300">
-            Нажми кнопку — появятся 3 короткие идеи на вечер.
+      <div className="relative overflow-hidden rounded-3xl bg-[color:var(--color-panel)] p-[1px] shadow-[var(--shadow-card)] ring-1 ring-white/10 backdrop-blur-xl">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+        <div className="rounded-[calc(1.5rem-1px)] bg-gradient-to-b from-white/10 to-transparent p-[1px]">
+          <div className="rounded-[calc(1.5rem-2px)] bg-[linear-gradient(180deg,hsl(220_30%_16%/0.55),hsl(222_35%_11%/0.35))] p-4 sm:p-5">
+            {error ? (
+              <pre className="whitespace-pre-wrap text-sm leading-relaxed text-[color:var(--color-muted)]">
+                {error}
+              </pre>
+            ) : text ? (
+              <pre className="whitespace-pre-wrap text-sm leading-relaxed text-[color:var(--color-fg)]">
+                {text}
+              </pre>
+            ) : (
+              <div className="text-sm leading-relaxed text-[color:var(--color-muted)]">
+                Нажми кнопку — появятся 3 короткие идеи на вечер.
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
 
       <Link
         href="/"
-        className="inline-flex w-full items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900/40 px-4 py-3 text-sm font-semibold text-zinc-100"
+        className="inline-flex w-full items-center justify-center rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3.5 text-sm font-semibold text-[color:var(--color-fg)] ring-1 ring-white/10 backdrop-blur-md transition active:scale-[0.99] motion-safe:hover:bg-white/[0.06]"
       >
         Домой
       </Link>
