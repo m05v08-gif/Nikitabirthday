@@ -70,13 +70,40 @@ export async function POST(req: Request) {
       message?: {
         message_id: number;
         chat: { id: number };
+        text?: string;
         caption?: string;
         photo?: Array<{ file_id: string; width: number; height: number }>;
       };
     };
 
     const msg = update.message;
-    if (!msg?.photo?.length) {
+    if (!msg) {
+      return NextResponse.json({ ok: true, ignored: true });
+    }
+
+    const rawText = (msg.text ?? "").trim();
+    const isStart =
+      rawText === "/start" ||
+      rawText.startsWith("/start ");
+
+    if (isStart) {
+      await telegramSendMessage(
+        msg.chat.id,
+        [
+          "Привет! Это бот для дня рождения Никиты.",
+          "",
+          "Сюда можно отправлять фотографии с текстом.",
+          "Это могут быть смешные истории, поздравления или вообще всё, что душе угодно.",
+          "",
+          "Никите я сделала приложение — оно будет рандомно показывать сообщения из этого бота.",
+          "",
+          "Как отправить: прикрепи фото и добавь подпись к фото — подпись станет текстом истории."
+        ].join("\n")
+      );
+      return NextResponse.json({ ok: true });
+    }
+
+    if (!msg.photo?.length) {
       return NextResponse.json({ ok: true, ignored: true });
     }
 
