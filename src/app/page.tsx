@@ -15,8 +15,8 @@ function Tile({
       className="group relative block overflow-hidden rounded-3xl bg-[color:var(--color-panel)] p-[1px] shadow-[var(--shadow-card)] ring-1 ring-white/10 backdrop-blur-xl transition active:scale-[0.99] motion-safe:hover:-translate-y-0.5 motion-safe:hover:shadow-[0_18px_55px_hsl(222_55%_5%/0.38)] motion-safe:hover:ring-white/15"
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
-      <div className="pointer-events-none absolute -left-24 -top-24 h-48 w-48 rounded-full bg-[radial-gradient(circle_at_30%_30%,hsl(210_40%_96%/0.10),transparent_62%)] blur-2xl transition group-hover:opacity-95" />
-      <div className="pointer-events-none absolute -right-24 -bottom-24 h-52 w-52 rounded-full bg-[radial-gradient(circle_at_40%_40%,hsl(214_80%_62%/0.08),transparent_62%)] blur-2xl transition group-hover:opacity-95" />
+      <div className="pointer-events-none absolute -left-24 -top-24 h-48 w-48 rounded-full bg-[radial-gradient(circle_at_30%_30%,hsl(32_92%_62%/0.10),transparent_62%)] blur-2xl transition group-hover:opacity-95" />
+      <div className="pointer-events-none absolute -right-24 -bottom-24 h-52 w-52 rounded-full bg-[radial-gradient(circle_at_40%_40%,hsl(214_80%_62%/0.07),transparent_62%)] blur-2xl transition group-hover:opacity-95" />
 
       <div className="relative rounded-[calc(1.5rem-1px)] bg-gradient-to-b from-white/10 to-transparent p-[1px]">
         <div className="rounded-[calc(1.5rem-2px)] bg-[linear-gradient(180deg,hsl(220_30%_16%/0.55),hsl(222_35%_11%/0.35))] p-5">
@@ -48,7 +48,7 @@ export default function Home() {
         <div className="inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-[0.75rem] font-medium text-[color:var(--color-muted)] ring-1 ring-white/10 backdrop-blur-md">
           <span
             aria-hidden="true"
-            className="inline-block h-2 w-2 rounded-full bg-[hsl(214_85%_62%)] shadow-[0_0_0_6px_hsl(214_85%_62%/0.10)]"
+            className="inline-block h-2 w-2 rounded-full bg-[hsl(32_92%_58%)] shadow-[0_0_0_6px_hsl(32_92%_58%/0.14)]"
           />
           Для вас двоих
         </div>

@@ -35,7 +35,7 @@ export default function StoriesPage() {
         <div className="inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-[0.75rem] font-medium text-[color:var(--color-muted)] ring-1 ring-white/10 backdrop-blur-md">
           <span
             aria-hidden="true"
-            className="inline-block h-2 w-2 rounded-full bg-[hsl(214_85%_62%)] shadow-[0_0_0_6px_hsl(214_85%_62%/0.10)]"
+            className="inline-block h-2 w-2 rounded-full bg-[hsl(32_92%_58%)] shadow-[0_0_0_6px_hsl(32_92%_58%/0.14)]"
           />
           Истории
         </div>
@@ -53,7 +53,7 @@ export default function StoriesPage() {
             {data === null ? (
               <div className="space-y-4">
                 <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-gradient-to-br from-white/10 via-white/5 to-transparent ring-1 ring-white/10">
-                  <div className="animate-pulse-soft absolute inset-0 bg-[radial-gradient(circle_at_30%_25%,hsl(214_85%_62%/0.12),transparent_60%)]" />
+                  <div className="animate-pulse-soft absolute inset-0 bg-[radial-gradient(circle_at_30%_25%,hsl(32_92%_62%/0.10),transparent_60%)]" />
                   <div className="absolute inset-x-6 top-6 h-3 rounded-full bg-white/10" />
                   <div className="absolute inset-x-6 top-12 h-3 w-3/5 rounded-full bg-white/8" />
                 </div>

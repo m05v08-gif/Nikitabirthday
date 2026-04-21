@@ -28,14 +28,14 @@ body {
   color: var(--color-fg);
   background:
     radial-gradient(1200px 900px at 22% -10%, hsl(220 42% 18% / 0.48), transparent 62%),
-    radial-gradient(980px 820px at 92% 6%, hsl(214 55% 58% / 0.08), transparent 58%),
-    radial-gradient(980px 820px at 10% 68%, hsl(220 35% 70% / 0.06), transparent 58%),
-    radial-gradient(1100px 920px at 78% 82%, hsl(214 70% 58% / 0.08), transparent 58%),
+    radial-gradient(1050px 860px at 92% 4%, hsl(28 92% 62% / 0.10), transparent 58%),
+    radial-gradient(980px 820px at 10% 68%, hsl(38 85% 62% / 0.06), transparent 58%),
+    radial-gradient(1100px 920px at 78% 82%, hsl(214 70% 58% / 0.07), transparent 58%),
     linear-gradient(180deg, var(--color-app-bg) 0%, var(--color-app-bg-2) 100%);
 }
 
 ::selection {
-  background: hsl(214 70% 62% / 0.18);
+  background: hsl(28 85% 62% / 0.16);
 }
 
 @keyframes fade-in-up {

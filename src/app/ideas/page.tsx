@@ -45,7 +45,7 @@ export default function IdeasPage() {
   const segInactive =
     "border border-white/10 bg-white/[0.03] text-[color:var(--color-fg)] ring-1 ring-white/10 backdrop-blur-md transition active:scale-[0.99] motion-safe:hover:bg-white/[0.05]";
   const segActive =
-    "border border-[hsl(214_85%_62%/0.55)] bg-gradient-to-b from-white/14 to-white/[0.06] text-[color:var(--color-fg)] shadow-[0_14px_45px_hsl(222_55%_5%/0.30)] ring-1 ring-[hsl(214_85%_62%/0.22)] backdrop-blur-md";
+    "border border-[hsl(32_90%_58%/0.55)] bg-gradient-to-b from-white/14 to-white/[0.06] text-[color:var(--color-fg)] shadow-[0_14px_45px_hsl(28_85%_20%/0.22)] ring-1 ring-[hsl(32_90%_58%/0.24)] backdrop-blur-md";
 
   return (
     <main className="animate-fade-in-up space-y-6">
@@ -53,7 +53,7 @@ export default function IdeasPage() {
         <div className="inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-[0.75rem] font-medium text-[color:var(--color-muted)] ring-1 ring-white/10 backdrop-blur-md">
           <span
             aria-hidden="true"
-            className="inline-block h-2 w-2 rounded-full bg-[hsl(214_85%_62%)] shadow-[0_0_0_6px_hsl(214_85%_62%/0.10)]"
+            className="inline-block h-2 w-2 rounded-full bg-[hsl(32_92%_58%)] shadow-[0_0_0_6px_hsl(32_92%_58%/0.14)]"
           />
           Идеи на вечер
         </div>
