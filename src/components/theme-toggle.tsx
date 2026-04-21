@@ -10,7 +10,11 @@ function readTheme(): Theme {
   return t === "light" || t === "dark" ? t : "dark";
 }
 
-export function ThemeToggle() {
+type ThemeToggleProps = {
+  className?: string;
+};
+
+export function ThemeToggle({ className }: ThemeToggleProps) {
   const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
@@ -36,7 +40,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      className="group inline-flex items-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-toggle-bg)] p-1 shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-md transition active:scale-[0.98] motion-safe:hover:-translate-y-0.5 motion-safe:hover:shadow-[var(--shadow-soft)]"
+      className={`group inline-flex min-h-[44px] items-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-toggle-bg)] p-1 shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-md transition active:scale-[0.98] motion-safe:hover:-translate-y-0.5 motion-safe:hover:shadow-[var(--shadow-soft)] ${className ?? ""}`}
       aria-label={theme === "dark" ? "Включить светлую тему" : "Включить тёмную тему"}
     >
       <span className="relative inline-flex h-8 w-[72px] items-center rounded-full bg-[color:var(--color-toggle-track)] ring-1 ring-black/5">

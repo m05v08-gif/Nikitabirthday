@@ -3,7 +3,6 @@ import { Fraunces, Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import { ArtBackground } from "@/components/art-background";
 import { ThemeScript } from "@/components/theme-script";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -50,11 +49,9 @@ export default function RootLayout({
         <div className="relative isolate min-h-dvh overflow-x-hidden pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
           <ArtBackground />
 
-          <div className="relative mx-auto flex w-full max-w-md justify-end px-4 pt-6 sm:pt-8">
-            <ThemeToggle />
+          <div className="relative mx-auto w-full max-w-md px-4 pb-10 pt-6 sm:pb-12 sm:pt-8">
+            {children}
           </div>
-
-          <div className="relative mx-auto w-full max-w-md px-4 pb-10 sm:pb-12">{children}</div>
         </div>
       </body>
     </html>
