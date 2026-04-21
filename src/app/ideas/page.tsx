@@ -57,7 +57,7 @@ export default function IdeasPage() {
   const segInactive =
     "border border-[color:var(--color-border)] bg-[color:var(--color-panel-2)] text-[color:var(--color-fg)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-md transition active:scale-[0.99] motion-safe:hover:bg-[color:var(--color-panel)]";
   const segActive =
-    "border border-[color:var(--color-border)] bg-[linear-gradient(135deg,color-mix(in_oklab,var(--blob-b)_22%,transparent),color-mix(in_oklab,var(--blob-a)_18%,transparent))] text-[color:var(--color-fg)] shadow-[var(--shadow-soft)] ring-2 ring-[color:var(--color-stroke)] backdrop-blur-md";
+    "border-2 border-[color-mix(in_oklab,var(--blob-b)_70%,var(--blob-a)_30%)] bg-[linear-gradient(135deg,color-mix(in_oklab,var(--blob-b)_38%,var(--color-panel)),color-mix(in_oklab,var(--blob-a)_28%,var(--color-panel)))] text-[color:var(--color-fg)] shadow-[var(--shadow-soft)] ring-2 ring-[color-mix(in_oklab,var(--blob-b)_55%,white)] outline outline-2 outline-[color-mix(in_oklab,var(--blob-b)_55%,var(--blob-a)_45%)] outline-offset-2 backdrop-blur-md";
 
   return (
     <main className="animate-fade-in-up space-y-8">
