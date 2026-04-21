@@ -145,7 +145,7 @@ export default function StoriesPage() {
                 onClick={() => toggleReaction(emoji)}
                 className={`inline-flex items-center justify-center rounded-full border px-3 py-2 text-sm shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-md transition active:scale-[0.96] ${
                   active
-                    ? "border-[color-mix(in_oklab,var(--blob-b)_65%,var(--blob-a)_35%)] bg-[linear-gradient(135deg,color-mix(in_oklab,var(--blob-b)_26%,var(--color-panel)),color-mix(in_oklab,var(--blob-a)_22%,var(--color-panel)))] text-[color:var(--color-fg)] ring-2 ring-[color-mix(in_oklab,var(--blob-b)_50%,white)] shadow-[var(--shadow-soft)]"
+                    ? "scale-[1.04] border-[color-mix(in_oklab,var(--blob-b)_78%,var(--blob-a)_48%)] bg-[linear-gradient(135deg,color-mix(in_oklab,var(--blob-b)_36%,var(--color-panel)),color-mix(in_oklab,var(--blob-a)_30%,var(--color-panel)))] text-[color:var(--color-fg)] ring-2 ring-[color-mix(in_oklab,var(--blob-b)_70%,white)] outline outline-2 outline-[color-mix(in_oklab,var(--blob-a)_55%,white)] outline-offset-2 shadow-[var(--shadow-soft)]"
                     : "border-[color:var(--color-border)] bg-[color:var(--color-panel-2)] text-[color:var(--color-fg)] motion-safe:hover:bg-[color:var(--color-panel)]"
                 }`}
                 aria-pressed={active}
