@@ -18,7 +18,7 @@ const manrope = Manrope({
 });
 
 const fraunces = Fraunces({
-  subsets: ["latin", "cyrillic"],
+  subsets: ["latin", "latin-ext"],
   variable: "--font-art",
   display: "swap"
 });

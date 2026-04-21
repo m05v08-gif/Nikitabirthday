@@ -161,7 +161,6 @@ export default function IdeasPage() {
                 </button>
               </div>
             </div>
-          </div>
         </div>
       </section>
 
