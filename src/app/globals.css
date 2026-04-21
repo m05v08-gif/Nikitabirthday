@@ -2,20 +2,62 @@
 
 :root {
   color-scheme: dark;
+
+  /* Dark gallery — default */
+  --color-app-bg: hsl(230 38% 8%);
+  --color-app-bg-2: hsl(225 32% 11%);
+  --color-fg: hsl(210 40% 98%);
+  --color-muted: hsl(220 16% 74%);
+  --color-muted-2: hsl(220 12% 58%);
+  --color-panel: hsl(225 28% 14% / 0.72);
+  --color-panel-2: hsl(225 26% 18% / 0.45);
+  --color-border: hsl(220 22% 26% / 0.85);
+  --color-ring: hsl(220 30% 96% / 0.12);
+  --color-stroke: hsl(220 25% 96% / 0.14);
+  --color-toggle-bg: hsl(225 28% 12% / 0.55);
+  --color-toggle-track: hsl(225 22% 18% / 0.85);
+  --color-toggle-knob: hsl(210 40% 98%);
+
+  --blob-a: hsl(214 90% 58% / 0.18);
+  --blob-b: hsl(28 95% 58% / 0.16);
+  --blob-c: hsl(150 70% 46% / 0.12);
+  --blob-d: hsl(280 35% 62% / 0.08);
+
+  --noise-opacity: 0.18;
+  --noise-blend: soft-light;
+
+  --shadow-soft: 0 22px 70px hsl(230 45% 4% / 0.55);
+  --shadow-card: 0 14px 40px hsl(230 45% 4% / 0.35);
 }
 
-@theme inline {
-  --color-app-bg: hsl(222 40% 9%);
-  --color-app-bg-2: hsl(220 32% 12%);
-  --color-panel: hsl(220 30% 13% / 0.62);
-  --color-panel-2: hsl(220 30% 15% / 0.42);
-  --color-border: hsl(214 26% 22% / 0.9);
-  --color-border-soft: hsl(214 24% 28% / 0.55);
-  --color-fg: hsl(210 35% 97%);
-  --color-muted: hsl(214 16% 72%);
-  --color-muted-2: hsl(214 14% 58%);
-  --shadow-soft: 0 18px 55px hsl(222 55% 4% / 0.45);
-  --shadow-card: 0 10px 30px hsl(222 55% 4% / 0.28);
+html[data-theme="light"] {
+  color-scheme: light;
+
+  /* Exhibition hall — light */
+  --color-app-bg: hsl(40 40% 97%);
+  --color-app-bg-2: hsl(210 35% 96%);
+  --color-fg: hsl(225 30% 14%);
+  --color-muted: hsl(225 14% 38%);
+  --color-muted-2: hsl(225 10% 52%);
+  --color-panel: hsl(0 0% 100% / 0.72);
+  --color-panel-2: hsl(210 35% 98% / 0.55);
+  --color-border: hsl(225 16% 82% / 0.95);
+  --color-ring: hsl(225 30% 20% / 0.08);
+  --color-stroke: hsl(225 20% 20% / 0.12);
+  --color-toggle-bg: hsl(0 0% 100% / 0.65);
+  --color-toggle-track: hsl(225 14% 88% / 0.95);
+  --color-toggle-knob: hsl(225 30% 16%);
+
+  --blob-a: hsl(214 95% 58% / 0.22);
+  --blob-b: hsl(28 95% 56% / 0.20);
+  --blob-c: hsl(150 65% 42% / 0.14);
+  --blob-d: hsl(280 40% 70% / 0.10);
+
+  --noise-opacity: 0.12;
+  --noise-blend: multiply;
+
+  --shadow-soft: 0 26px 80px hsl(225 35% 20% / 0.12);
+  --shadow-card: 0 16px 46px hsl(225 30% 20% / 0.10);
 }
 
 html,
@@ -26,16 +68,23 @@ body {
 body {
   margin: 0;
   color: var(--color-fg);
+  transition:
+    background 420ms ease,
+    color 320ms ease;
   background:
-    radial-gradient(1200px 900px at 22% -10%, hsl(220 42% 18% / 0.48), transparent 62%),
-    radial-gradient(1050px 860px at 92% 4%, hsl(28 92% 62% / 0.10), transparent 58%),
-    radial-gradient(980px 820px at 10% 68%, hsl(38 85% 62% / 0.06), transparent 58%),
-    radial-gradient(1100px 920px at 78% 82%, hsl(214 70% 58% / 0.07), transparent 58%),
+    radial-gradient(1200px 900px at 18% -12%, var(--blob-a), transparent 62%),
+    radial-gradient(980px 820px at 92% 2%, var(--blob-b), transparent 58%),
+    radial-gradient(1000px 900px at 8% 72%, var(--blob-c), transparent 58%),
+    radial-gradient(1100px 920px at 82% 84%, var(--blob-d), transparent 58%),
     linear-gradient(180deg, var(--color-app-bg) 0%, var(--color-app-bg-2) 100%);
 }
 
 ::selection {
-  background: hsl(28 85% 62% / 0.16);
+  background: hsl(28 90% 58% / 0.22);
+}
+
+html[data-theme="light"] ::selection {
+  background: hsl(214 95% 55% / 0.22);
 }
 
 @keyframes fade-in-up {
@@ -71,8 +120,8 @@ body {
 
 @layer utilities {
   .font-display {
-    font-family: var(--font-display), var(--font-sans), ui-sans-serif, system-ui, -apple-system,
-      Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    font-family: var(--font-art), var(--font-display), var(--font-sans), ui-sans-serif, system-ui,
+      -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
     letter-spacing: -0.02em;
   }
 
@@ -82,12 +131,83 @@ body {
       radial-gradient(hsl(210 25% 98% / 0.035) 0.7px, transparent 0.7px);
     background-size: 14px 14px, 18px 18px;
     background-position: 0 0, 7px 9px;
-    opacity: 0.22;
-    mix-blend-mode: soft-light;
+    opacity: var(--noise-opacity);
+    mix-blend-mode: var(--noise-blend);
   }
 
   .text-balance-safe {
     text-wrap: balance;
+  }
+
+  .art-blob {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(46px);
+    opacity: 0.95;
+    mix-blend-mode: normal;
+    animation: blob-drift 18s ease-in-out infinite;
+  }
+
+  .art-blob-a {
+    left: -40%;
+    top: -18%;
+    width: 92%;
+    height: 52%;
+    background: radial-gradient(
+      circle at 30% 30%,
+      color-mix(in oklab, var(--blob-a) 100%, transparent),
+      transparent 62%
+    );
+    animation-delay: -2s;
+  }
+
+  .art-blob-b {
+    right: -46%;
+    top: 6%;
+    width: 88%;
+    height: 48%;
+    background: radial-gradient(
+      circle at 40% 35%,
+      color-mix(in oklab, var(--blob-b) 100%, transparent),
+      transparent 62%
+    );
+    animation-delay: -6s;
+  }
+
+  .art-blob-c {
+    left: -30%;
+    bottom: -8%;
+    width: 78%;
+    height: 44%;
+    background: radial-gradient(
+      circle at 45% 40%,
+      color-mix(in oklab, var(--blob-c) 100%, transparent),
+      transparent 64%
+    );
+    animation-delay: -10s;
+  }
+
+  .art-blob-d {
+    right: -18%;
+    bottom: 6%;
+    width: 62%;
+    height: 38%;
+    background: radial-gradient(
+      circle at 50% 45%,
+      color-mix(in oklab, var(--blob-d) 100%, transparent),
+      transparent 64%
+    );
+    animation-delay: -14s;
+  }
+}
+
+@keyframes blob-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0) scale(1.03);
   }
 }
 
