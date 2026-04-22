@@ -23,23 +23,23 @@ function Tile({
 }) {
   const panel =
     variant === "stories"
-      ? "bg-[color:color-mix(in_oklab,var(--color-panel)_32%,transparent)]"
-      : "bg-[color:color-mix(in_oklab,var(--color-panel)_28%,transparent)]";
+      ? "bg-[color:color-mix(in_oklab,var(--color-panel)_22%,transparent)]"
+      : "bg-[color:color-mix(in_oklab,var(--color-panel)_20%,transparent)]";
   const glow =
     variant === "stories"
-      ? "bg-[radial-gradient(circle_at_20%_20%,color-mix(in_oklab,var(--blob-b)_16%,transparent),transparent_58%),radial-gradient(circle_at_80%_70%,color-mix(in_oklab,var(--blob-a)_14%,transparent),transparent_62%)]"
-      : "bg-[radial-gradient(circle_at_20%_30%,color-mix(in_oklab,var(--blob-a)_14%,transparent),transparent_60%),radial-gradient(circle_at_75%_25%,color-mix(in_oklab,var(--blob-c)_12%,transparent),transparent_62%)]";
+      ? "bg-[radial-gradient(circle_at_18%_18%,color-mix(in_oklab,var(--blob-b)_14%,transparent),transparent_62%),radial-gradient(circle_at_82%_78%,color-mix(in_oklab,var(--blob-a)_12%,transparent),transparent_66%)]"
+      : "bg-[radial-gradient(circle_at_20%_28%,color-mix(in_oklab,var(--blob-a)_12%,transparent),transparent_64%),radial-gradient(circle_at_78%_22%,color-mix(in_oklab,var(--blob-c)_10%,transparent),transparent_66%)]";
 
   return (
     <Link
       href={href}
-      className={`home-tile group relative block overflow-hidden rounded-[1.15rem] border border-[color:color-mix(in_oklab,var(--color-border)_50%,transparent)] ${panel} p-[1.05rem] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_38%,transparent)] backdrop-blur-[11px] transition active:scale-[0.99] motion-safe:hover:bg-[color:color-mix(in_oklab,var(--color-panel)_42%,transparent)]`}
+      className={`home-tile group relative block overflow-hidden rounded-[1.25rem] border border-[color:color-mix(in_oklab,var(--color-border)_42%,transparent)] ${panel} p-[1.1rem] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_34%,transparent)] backdrop-blur-[16px] transition active:scale-[0.99] motion-safe:hover:bg-[color:color-mix(in_oklab,var(--color-panel)_30%,transparent)]`}
     >
-      <div aria-hidden="true" className={`pointer-events-none absolute inset-0 ${glow} opacity-55`} />
+      <div aria-hidden="true" className={`pointer-events-none absolute inset-0 ${glow} opacity-45`} />
 
       <div className="relative space-y-1.5">
-        <div className="home-card-title text-[1.2rem] leading-[1.08] sm:text-[1.22rem]">{title}</div>
-        <div className="home-card-body text-sm leading-relaxed">{subtitle}</div>
+        <div className="home-card-title text-[1.22rem] leading-[1.06] sm:text-[1.24rem]">{title}</div>
+        <div className="home-card-body text-[0.95rem] leading-relaxed">{subtitle}</div>
       </div>
     </Link>
   );
@@ -53,30 +53,38 @@ export default function Home() {
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 z-[5] h-[100dvh] min-h-[100dvh] w-full"
       >
-        <div className="h-full w-full bg-[image:var(--home-artwork)] bg-cover bg-center bg-no-repeat opacity-[0.92] [filter:saturate(0.94)_contrast(0.94)]" />
-        <div className="absolute inset-0 bg-[color:var(--home-art-overlay)]" />
+        {/* Keep the original artwork brightness (no filters / global overlays) */}
+        <div className="h-full w-full bg-[image:var(--home-artwork)] bg-cover bg-center bg-no-repeat opacity-100 [filter:brightness(var(--home-bg-brightness))]" />
+
+        {/* Local readability only (not affecting the whole image) */}
+        <div className="absolute left-0 top-0 h-[44dvh] w-full bg-[image:var(--home-top-scrim)] opacity-60 [mix-blend-mode:multiply]" />
+        <div className="absolute bottom-0 left-0 h-[30dvh] w-full bg-[image:var(--home-bottom-scrim)] opacity-60 [mix-blend-mode:multiply]" />
       </div>
 
       {/* Theme toggle — fixed top-right over the artwork */}
       <div className="pointer-events-none fixed inset-x-0 top-0 z-30 flex justify-end px-4 pt-[max(0.75rem,env(safe-area-inset-top))] sm:px-5">
         <div className="pointer-events-auto">
-          <ThemeToggle className="home-hero-toggle border-[color:color-mix(in_oklab,var(--color-border)_42%,transparent)] bg-[color:color-mix(in_oklab,var(--color-toggle-bg)_48%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_48%,transparent)] backdrop-blur-[14px]" />
+          <ThemeToggle className="home-hero-toggle border-[color:color-mix(in_oklab,var(--color-border)_36%,transparent)] bg-[color:color-mix(in_oklab,var(--color-toggle-bg)_36%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_42%,transparent)] backdrop-blur-[18px]" />
         </div>
       </div>
 
       {/* Content (hero + cards) stays in layout column; no toggle inside hero */}
-      <div className="relative z-20 w-full pb-10 pt-[4.75rem] sm:pb-12 sm:pt-[5.25rem]">
-        <header className="space-y-4">
-          <h1 className="home-hero-title text-balance-safe text-[2.1rem] leading-[1.08] sm:text-[2.35rem]">
+      <div className="relative z-20 w-full pb-10 pt-[5.15rem] sm:pb-12 sm:pt-[5.7rem]">
+        <header className="relative space-y-4 px-0">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -left-6 -top-6 h-[34dvh] w-[120%] bg-[image:var(--home-hero-underlay)] opacity-100"
+          />
+          <h1 className="home-hero-title text-balance-safe text-[2.22rem] leading-[1.06] sm:text-[2.5rem]">
             <span className="block">Какой красивый мир</span>
             <span className="block">мы создаём вместе.</span>
           </h1>
-          <p className="home-hero-sub home-hero-tagline text-pretty text-[0.95rem] leading-relaxed sm:text-[1rem]">
+          <p className="home-hero-sub home-hero-tagline text-pretty text-[0.98rem] leading-relaxed sm:text-[1.02rem]">
             Посиди, отдохни, почитай, улыбнись
           </p>
         </header>
 
-        <section className="mt-8 grid gap-3">
+        <section className="mt-9 grid gap-3.5">
           <Tile
             variant="stories"
             title="Воспоминания"
@@ -91,7 +99,7 @@ export default function Home() {
           />
         </section>
 
-        <p className="home-helper mt-8 text-center text-[0.68rem] leading-relaxed opacity-90">
+        <p className="home-helper mt-9 text-center text-[0.72rem] leading-relaxed opacity-95">
           <span className="block">Совет: добавь страницу на экран телефона</span>
           <span className="block">Поделиться → На экран «Домой»</span>
         </p>
