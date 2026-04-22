@@ -96,16 +96,19 @@ export default function StoriesPage() {
   );
 
   return (
-    <main className="stories-page relative min-h-[100dvh] w-full animate-fade-in-up space-y-6 overflow-hidden">
+    <main className="stories-page relative min-h-[100dvh] w-full space-y-6 overflow-hidden">
       {/* Full-screen background (stories) */}
-      <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[5] h-[100dvh] w-full">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-[5] h-[100vh] min-h-[100dvh] w-screen"
+      >
         <div className="h-full w-full bg-[image:var(--stories-artwork)] bg-cover bg-center bg-no-repeat opacity-100" />
         <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_22%_12%,hsl(0_0%_0%_/0.28)_0%,transparent_66%)] opacity-70" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,hsl(0_0%_0%_/0.30)_100%)] opacity-55" />
       </div>
 
       {/* Content */}
-      <div className="relative z-20">
+      <div className="relative z-20 animate-fade-in-up">
       <header className="space-y-3">
         <div className="flex items-center justify-between">
           <button
