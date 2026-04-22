@@ -231,6 +231,16 @@ html[data-theme="light"] ::selection {
   --home-card-title: var(--color-fg);
   --home-card-body: var(--color-muted);
   --home-helper: var(--color-muted-2);
+
+  /* Home background tuning */
+  --home-bg-brightness: 1.1; /* dark: +10% brightness */
+
+  /* Local readability layers (defaults for dark) */
+  --home-top-scrim: radial-gradient(120% 90% at 18% 12%, hsl(0 0% 0% / 0.38) 0%, transparent 66%);
+  --home-bottom-scrim: linear-gradient(180deg, transparent 0%, hsl(0 0% 0% / 0.34) 100%);
+
+  /* Hero underlay (none by default) */
+  --home-hero-underlay: none;
 }
 
 html[data-theme="light"] .home-page {
@@ -241,6 +251,13 @@ html[data-theme="light"] .home-page {
   --home-card-title: hsl(226 22% 32%);
   --home-card-body: hsl(226 13% 44%);
   --home-helper: hsl(226 11% 48%);
+
+  --home-bg-brightness: 1;
+  --home-top-scrim: radial-gradient(120% 90% at 18% 12%, hsl(36 65% 92% / 0.62) 0%, transparent 70%);
+  --home-bottom-scrim: linear-gradient(180deg, transparent 0%, hsl(36 65% 92% / 0.42) 100%);
+
+  /* No hero underlay in light mode */
+  --home-hero-underlay: none;
 }
 
 .home-page .home-hero-title {
@@ -248,6 +265,7 @@ html[data-theme="light"] .home-page {
   font-weight: 700;
   letter-spacing: -0.03em;
   color: var(--home-hero-headline);
+  text-shadow: 0 1px 0 hsl(0 0% 0% / 0.04);
 }
 
 .home-page .home-hero-title .home-hero-accent {
@@ -284,6 +302,7 @@ html[data-theme="light"] .home-page {
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   font-weight: 400;
   color: var(--home-helper);
+  text-shadow: 0 1px 0 hsl(0 0% 0% / 0.06);
 }
 
 .home-page .home-tile {
@@ -300,5 +319,25 @@ html[data-theme="dark"] .home-page .home-tile {
 
 html[data-theme="dark"] .home-page .home-hero-toggle {
   box-shadow: 0 10px 32px hsl(0 0% 0% / 0.32);
+}
+
+.home-page .home-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  /* Subtle vellum inner glow + edge falloff */
+  background:
+    radial-gradient(120% 90% at 20% 10%, hsl(40 80% 92% / 0.12), transparent 60%),
+    linear-gradient(180deg, hsl(0 0% 100% / 0.06), transparent 42%, hsl(0 0% 0% / 0.06));
+  opacity: 0.9;
+}
+
+html[data-theme="light"] .home-page .home-tile::before {
+  background:
+    radial-gradient(120% 90% at 20% 10%, hsl(28 90% 62% / 0.10), transparent 62%),
+    linear-gradient(180deg, hsl(0 0% 100% / 0.18), transparent 46%, hsl(222 30% 14% / 0.05));
+  opacity: 0.85;
 }
 
