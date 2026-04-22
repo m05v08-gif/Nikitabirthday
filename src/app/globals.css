@@ -33,6 +33,9 @@
   /* Home-only background artwork */
   --home-artwork: url('/home-bg-dark.png');
   --home-art-overlay: linear-gradient(180deg, hsl(230 38% 8% / 0.62) 0%, hsl(225 32% 11% / 0.78) 72%);
+
+  /* Stories background artwork */
+  --stories-artwork: url('/stories-bg-dark.png');
 }
 
 html[data-theme="light"] {
@@ -68,6 +71,9 @@ html[data-theme="light"] {
   /* Home-only background artwork */
   --home-artwork: url('/home-bg-light.png');
   --home-art-overlay: linear-gradient(180deg, hsl(40 40% 97% / 0.78) 0%, hsl(210 35% 96% / 0.84) 72%);
+
+  /* Stories background artwork */
+  --stories-artwork: url('/stories-bg-light.png');
 }
 
 html,
@@ -96,6 +102,96 @@ body {
 
 html[data-theme="light"] ::selection {
   background: hsl(214 95% 55% / 0.22);
+}
+
+/* Stories page — premium editorial story frame */
+.stories-page {
+  --story-frame-bg: color-mix(in oklab, var(--color-panel) 48%, transparent);
+  --story-frame-border: color-mix(in oklab, var(--color-border) 60%, transparent);
+  --story-frame-ring: color-mix(in oklab, var(--color-ring) 70%, transparent);
+  --story-frame-shadow: 0 26px 80px hsl(230 45% 4% / 0.24);
+  --story-frame-glow:
+    radial-gradient(120% 85% at 18% 8%, hsl(28 90% 58% / 0.10), transparent 62%),
+    radial-gradient(120% 92% at 86% 88%, hsl(214 90% 58% / 0.10), transparent 64%),
+    linear-gradient(180deg, hsl(0 0% 100% / 0.04), transparent 46%, hsl(0 0% 0% / 0.10));
+
+  --story-image-bg: color-mix(in oklab, var(--color-panel-2) 70%, black);
+  --story-image-ring: color-mix(in oklab, var(--color-ring) 85%, transparent);
+  --story-image-shadow: 0 18px 52px hsl(230 45% 4% / 0.34);
+  --story-image-wash: linear-gradient(180deg, transparent 0%, transparent 62%, hsl(0 0% 0% / 0.30) 100%);
+
+  --story-caption-divider: linear-gradient(90deg, transparent 0%, color-mix(in oklab, var(--color-stroke) 90%, transparent) 50%, transparent 100%);
+  --story-caption-fg: color-mix(in oklab, var(--color-fg) 92%, var(--color-muted) 8%);
+
+  --story-chip-bg: color-mix(in oklab, var(--color-panel-2) 46%, transparent);
+  --story-chip-bg-hover: color-mix(in oklab, var(--color-panel) 36%, transparent);
+  --story-chip-border: color-mix(in oklab, var(--color-border) 55%, transparent);
+  --story-chip-ring: color-mix(in oklab, var(--color-ring) 55%, transparent);
+  --story-chip-shadow: 0 12px 34px hsl(230 45% 4% / 0.18);
+  --story-chip-fg: var(--color-fg);
+  /* Active state: higher contrast, still premium */
+  --story-chip-bg-active: color-mix(in oklab, var(--color-panel) 78%, transparent);
+  --story-chip-border-active: color-mix(in oklab, var(--blob-b) 52%, var(--color-border));
+  --story-chip-ring-active: color-mix(in oklab, var(--blob-b) 48%, white);
+  --story-chip-shadow-active: 0 18px 52px hsl(230 45% 4% / 0.34);
+  --story-chip-fg-active: var(--color-fg);
+
+  --story-primary-bg: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--blob-b) 26%, color-mix(in oklab, var(--color-panel) 70%, black)),
+    color-mix(in oklab, var(--blob-a) 18%, color-mix(in oklab, var(--color-panel) 72%, black))
+  );
+  --story-primary-fg: var(--color-fg);
+  --story-primary-shadow: 0 22px 70px hsl(230 45% 4% / 0.44);
+  --story-primary-ring: color-mix(in oklab, var(--color-ring) 70%, transparent);
+
+  --story-secondary-bg: color-mix(in oklab, var(--color-panel-2) 46%, transparent);
+  --story-secondary-bg-hover: color-mix(in oklab, var(--color-panel) 40%, transparent);
+  --story-secondary-border: color-mix(in oklab, var(--color-border) 55%, transparent);
+  --story-secondary-ring: color-mix(in oklab, var(--color-ring) 55%, transparent);
+  --story-secondary-fg: var(--color-fg);
+}
+
+html[data-theme="light"] .stories-page {
+  /* Warm ivory / paper */
+  --story-frame-bg: color-mix(in oklab, hsl(36 60% 96% / 0.92) 68%, transparent);
+  --story-frame-border: color-mix(in oklab, hsl(28 22% 72% / 0.70) 52%, transparent);
+  --story-frame-ring: color-mix(in oklab, hsl(228 30% 20% / 0.10) 58%, transparent);
+  --story-frame-shadow: 0 26px 80px hsl(28 40% 24% / 0.10);
+  --story-frame-glow:
+    radial-gradient(120% 85% at 18% 8%, hsl(28 92% 60% / 0.10), transparent 62%),
+    radial-gradient(120% 92% at 86% 88%, hsl(214 92% 58% / 0.08), transparent 64%),
+    linear-gradient(180deg, hsl(0 0% 100% / 0.18), transparent 46%, hsl(222 30% 14% / 0.04));
+
+  --story-image-bg: hsl(36 40% 92% / 0.65);
+  --story-image-ring: hsl(228 30% 20% / 0.08);
+  --story-image-shadow: 0 18px 52px hsl(28 40% 24% / 0.12);
+  --story-image-wash: linear-gradient(180deg, transparent 0%, transparent 64%, hsl(28 40% 24% / 0.18) 100%);
+
+  --story-caption-fg: hsl(228 28% 18%);
+
+  --story-chip-bg: hsl(36 60% 96% / 0.55);
+  --story-chip-bg-hover: hsl(36 60% 96% / 0.70);
+  --story-chip-border: hsl(28 22% 72% / 0.45);
+  --story-chip-ring: hsl(228 30% 20% / 0.06);
+  --story-chip-shadow: 0 12px 34px hsl(28 40% 24% / 0.10);
+  --story-chip-fg: hsl(228 18% 26%);
+  --story-chip-bg-active: hsl(36 60% 96% / 0.94);
+  --story-chip-border-active: hsl(28 80% 52% / 0.55);
+  --story-chip-ring-active: hsl(28 80% 52% / 0.28);
+  --story-chip-shadow-active: 0 16px 46px hsl(28 40% 24% / 0.18);
+  --story-chip-fg-active: hsl(228 28% 18%);
+
+  --story-primary-bg: linear-gradient(135deg, hsl(28 92% 60% / 0.92), hsl(214 92% 58% / 0.78));
+  --story-primary-fg: hsl(228 28% 16%);
+  --story-primary-shadow: 0 22px 70px hsl(28 40% 24% / 0.18);
+  --story-primary-ring: hsl(228 30% 20% / 0.08);
+
+  --story-secondary-bg: hsl(36 60% 96% / 0.55);
+  --story-secondary-bg-hover: hsl(36 60% 96% / 0.70);
+  --story-secondary-border: hsl(28 22% 72% / 0.48);
+  --story-secondary-ring: hsl(228 30% 20% / 0.06);
+  --story-secondary-fg: hsl(228 18% 26%);
 }
 
 @keyframes fade-in-up {
