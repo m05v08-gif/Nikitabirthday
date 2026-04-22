@@ -36,6 +36,9 @@
 
   /* Stories background artwork */
   --stories-artwork: url('/stories-bg-dark.png');
+
+  /* Ideas background artwork */
+  --ideas-artwork: url('/ideas-bg-dark.png');
 }
 
 html[data-theme="light"] {
@@ -74,6 +77,9 @@ html[data-theme="light"] {
 
   /* Stories background artwork */
   --stories-artwork: url('/stories-bg-light.png');
+
+  /* Ideas background artwork */
+  --ideas-artwork: url('/ideas-bg-light.png');
 }
 
 html,
