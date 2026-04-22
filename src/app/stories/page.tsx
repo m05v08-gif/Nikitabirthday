@@ -96,13 +96,22 @@ export default function StoriesPage() {
   );
 
   return (
-    <main className="animate-fade-in-up space-y-8">
-      <header className="space-y-4">
-        <div className="flex items-center justify-between gap-2">
+    <main className="stories-page relative min-h-[100dvh] w-full animate-fade-in-up space-y-6 overflow-hidden">
+      {/* Full-screen background (stories) */}
+      <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[5] h-[100dvh] w-full">
+        <div className="h-full w-full bg-[image:var(--stories-artwork)] bg-cover bg-center bg-no-repeat opacity-100" />
+        <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_22%_12%,hsl(0_0%_0%_/0.28)_0%,transparent_66%)] opacity-70" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,hsl(0_0%_0%_/0.30)_100%)] opacity-55" />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-20">
+      <header className="space-y-3">
+        <div className="flex items-center justify-between">
           <button
             type="button"
             onClick={() => router.back()}
-            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-panel-2)] text-[color:var(--color-fg)] shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-md transition active:scale-[0.98] motion-safe:hover:bg-[color:var(--color-panel)]"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-border)_55%,transparent)] bg-[color:color-mix(in_oklab,var(--color-panel-2)_42%,transparent)] text-[color:var(--color-fg)] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_55%,transparent)] backdrop-blur-sm transition active:scale-[0.98] motion-safe:hover:bg-[color:color-mix(in_oklab,var(--color-panel)_45%,transparent)]"
             aria-label="Назад"
           >
             <span aria-hidden="true" className="text-xl leading-none">
@@ -111,69 +120,60 @@ export default function StoriesPage() {
           </button>
 
           <div className="flex min-w-0 flex-1 items-center justify-end gap-2">
-            <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-panel)] px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-[color:var(--color-muted-2)] shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-md">
-              <span
-                aria-hidden="true"
-                className="h-1.5 w-1.5 shrink-0 rounded-full bg-[radial-gradient(circle_at_30%_30%,var(--blob-a),var(--blob-c))]"
-              />
+            <div className="inline-flex items-center gap-2 px-1.5 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.34em] text-[color:var(--color-muted-2)] opacity-80">
+              <span aria-hidden="true" className="h-1 w-1 rounded-full bg-[color:var(--color-muted-2)] opacity-60" />
               Истории
             </div>
-            <ThemeToggle />
+            <ThemeToggle className="border-[color:color-mix(in_oklab,var(--color-border)_45%,transparent)] bg-[color:color-mix(in_oklab,var(--color-toggle-bg)_30%,transparent)] shadow-none ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_55%,transparent)] backdrop-blur-sm motion-safe:hover:shadow-none motion-safe:hover:-translate-y-0" />
           </div>
         </div>
 
         {/* Intentionally no headline here (reading mode) */}
       </header>
 
-      <section className="relative">
-        <div className="pointer-events-none absolute -left-6 top-6 h-24 w-24 rotate-12 rounded-3xl border border-[color:var(--color-stroke)] opacity-40" />
-        <div className="relative overflow-hidden rounded-[1.75rem] border border-[color:var(--color-border)] bg-[color:var(--color-panel)] p-5 shadow-[var(--shadow-soft)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-xl sm:p-6">
-          <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--color-stroke)] to-transparent" />
-          <StoryView data={data} loading={loading} storyKey={storyKey} />
-        </div>
-      </section>
+      <section className="space-y-4">
+        <StoryView data={data} loading={loading} storyKey={storyKey} />
 
-      {/* Reactions */}
-      <section className="space-y-3">
-        <div className="flex flex-wrap justify-center gap-2">
-          {["❤️", "🔥", "😂", "😮", "🥹"].map((emoji) => {
+        <div className="stories-reactions flex flex-wrap justify-center gap-2 pt-1">
+          {["❤️", "🥹", "😂", "✨"].map((emoji) => {
             const active = Boolean(currentReactions?.includes(emoji));
             return (
               <button
                 key={emoji}
                 type="button"
                 onClick={() => toggleReaction(emoji)}
-                className={`inline-flex items-center justify-center rounded-full border px-3 py-2 text-sm shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-md transition active:scale-[0.96] ${
+                className={`inline-flex min-h-10 items-center justify-center rounded-full border px-4 py-2 text-[0.95rem] shadow-[var(--story-chip-shadow)] ring-1 ring-[color:var(--story-chip-ring)] backdrop-blur-sm transition active:scale-[0.98] ${
                   active
-                    ? "scale-[1.04] border-[color-mix(in_oklab,var(--blob-b)_78%,var(--blob-a)_48%)] bg-[linear-gradient(135deg,color-mix(in_oklab,var(--blob-b)_36%,var(--color-panel)),color-mix(in_oklab,var(--blob-a)_30%,var(--color-panel)))] text-[color:var(--color-fg)] ring-2 ring-[color-mix(in_oklab,var(--blob-b)_70%,white)] outline outline-2 outline-[color-mix(in_oklab,var(--blob-a)_55%,white)] outline-offset-2 shadow-[var(--shadow-soft)]"
-                    : "border-[color:var(--color-border)] bg-[color:var(--color-panel-2)] text-[color:var(--color-fg)] motion-safe:hover:bg-[color:var(--color-panel)]"
+                    ? "scale-[1.02] border-[color:var(--story-chip-border-active)] bg-[color:var(--story-chip-bg-active)] text-[color:var(--story-chip-fg-active)] shadow-[var(--story-chip-shadow-active)] ring-2 ring-[color:var(--story-chip-ring-active)]"
+                    : "border-[color:var(--story-chip-border)] bg-[color:var(--story-chip-bg)] text-[color:var(--story-chip-fg)] motion-safe:hover:bg-[color:var(--story-chip-bg-hover)]"
                 }`}
                 aria-pressed={active}
               >
-                <span aria-hidden="true" className={`leading-none ${active ? "scale-[1.06]" : ""}`}>
+                <span aria-hidden="true" className={active ? "translate-y-[0.5px]" : ""}>
                   {emoji}
                 </span>
               </button>
             );
           })}
         </div>
-      </section>
 
-      <div className="flex gap-3">
-        <button
-          type="button"
-          onClick={() => void load()}
-          disabled={loading}
-          className="inline-flex flex-1 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,color-mix(in_oklab,var(--blob-a)_35%,white),color-mix(in_oklab,var(--blob-b)_35%,white))] px-4 py-3.5 text-sm font-semibold text-[color:var(--color-primary-ink)] shadow-[var(--shadow-soft)] ring-1 ring-[color:var(--color-ring)] transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 motion-safe:hover:-translate-y-0.5"
-        >
-          {loading ? "Еще одну…" : "Еще одну историю"}
-        </button>
-        <Link
-          href="/"
-          className="inline-flex items-center justify-center rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-panel-2)] px-4 py-3.5 text-sm font-semibold text-[color:var(--color-fg)] shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-md transition active:scale-[0.99] motion-safe:hover:bg-[color:var(--color-panel)]"
-        >
-          Домой
-        </Link>
+        <div className="flex gap-3 pt-1">
+          <button
+            type="button"
+            onClick={() => void load()}
+            disabled={loading}
+            className="inline-flex flex-1 items-center justify-center rounded-[1.15rem] bg-[color:var(--story-primary-bg)] px-4 py-3.5 text-sm font-semibold text-[color:var(--story-primary-fg)] shadow-[var(--story-primary-shadow)] ring-1 ring-[color:var(--story-primary-ring)] transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 motion-safe:hover:-translate-y-0.5"
+          >
+            {loading ? "Еще…" : "Еще история"}
+          </button>
+          <Link
+            href="/"
+            className="inline-flex items-center justify-center rounded-[1.15rem] border border-[color:var(--story-secondary-border)] bg-[color:var(--story-secondary-bg)] px-4 py-3.5 text-sm font-semibold text-[color:var(--story-secondary-fg)] ring-1 ring-[color:var(--story-secondary-ring)] backdrop-blur-sm transition active:scale-[0.99] motion-safe:hover:bg-[color:var(--story-secondary-bg-hover)]"
+          >
+            На главную
+          </Link>
+        </div>
+      </section>
       </div>
     </main>
   );
