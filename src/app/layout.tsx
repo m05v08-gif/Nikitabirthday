@@ -46,7 +46,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${manrope.variable} ${fraunces.variable} min-h-dvh font-sans antialiased`}
       >
-        <div className="relative isolate min-h-dvh overflow-x-hidden pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
+        <div className="relative isolate min-h-dvh pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
           <ArtBackground />
 
           <div className="relative mx-auto w-full max-w-md px-4 pb-10 pt-6 sm:pb-12 sm:pt-8">
