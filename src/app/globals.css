@@ -224,7 +224,8 @@ html[data-theme="light"] ::selection {
 
 /* Home page only — typography + text tokens (see src/app/page.tsx .home-page) */
 .home-page {
-  --home-hero-headline: var(--color-fg);
+  /* Slightly warmer than default fg (dark theme) */
+  --home-hero-headline: hsl(40 32% 96%);
   --home-hero-sub: var(--color-muted);
   --home-hero-tagline: hsl(220 14% 72%);
   --home-card-title: var(--color-fg);
@@ -233,7 +234,8 @@ html[data-theme="light"] ::selection {
 }
 
 html[data-theme="light"] .home-page {
-  --home-hero-headline: hsl(222 46% 12%);
+  /* Light theme headline: more noble graphite, better contrast on photo */
+  --home-hero-headline: hsl(228 28% 20%);
   --home-hero-sub: hsl(222 22% 34%);
   --home-hero-tagline: hsl(222 14% 40%);
   --home-card-title: hsl(226 22% 32%);

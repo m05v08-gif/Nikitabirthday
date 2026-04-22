@@ -91,8 +91,9 @@ export default function Home() {
           />
         </section>
 
-        <p className="home-helper mt-8 text-[0.68rem] leading-relaxed opacity-90">
-          Совет: добавь страницу на экран iPhone (Поделиться → На экран «Домой»).
+        <p className="home-helper mt-8 text-center text-[0.68rem] leading-relaxed opacity-90">
+          <span className="block">Совет: добавь страницу на экран телефона</span>
+          <span className="block">Поделиться → На экран «Домой»</span>
         </p>
       </div>
     </main>
