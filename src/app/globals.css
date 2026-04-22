@@ -238,6 +238,8 @@ html[data-theme="light"] ::selection {
   /* Local readability layers (defaults for dark) */
   --home-top-scrim: radial-gradient(120% 90% at 18% 12%, hsl(0 0% 0% / 0.38) 0%, transparent 66%);
   --home-bottom-scrim: linear-gradient(180deg, transparent 0%, hsl(0 0% 0% / 0.34) 100%);
+  --home-top-scrim-opacity: 0.34;
+  --home-bottom-scrim-opacity: 0.30;
 
   /* Hero underlay (none by default) */
   --home-hero-underlay: none;
@@ -253,8 +255,11 @@ html[data-theme="light"] .home-page {
   --home-helper: hsl(226 11% 48%);
 
   --home-bg-brightness: 1;
-  --home-top-scrim: radial-gradient(120% 90% at 18% 12%, hsl(36 65% 92% / 0.62) 0%, transparent 70%);
-  --home-bottom-scrim: linear-gradient(180deg, transparent 0%, hsl(36 65% 92% / 0.42) 100%);
+  /* Light: calm tonal zone behind hero without covering the whole scene */
+  --home-top-scrim: radial-gradient(130% 92% at 22% 10%, hsl(36 70% 92% / 0.82) 0%, hsl(36 70% 92% / 0.46) 44%, transparent 76%);
+  --home-bottom-scrim: linear-gradient(180deg, transparent 0%, hsl(36 70% 92% / 0.30) 65%, hsl(36 70% 92% / 0.52) 100%);
+  --home-top-scrim-opacity: 0.55;
+  --home-bottom-scrim-opacity: 0.42;
 
   /* No hero underlay in light mode */
   --home-hero-underlay: none;
@@ -339,5 +344,36 @@ html[data-theme="light"] .home-page .home-tile::before {
     radial-gradient(120% 90% at 20% 10%, hsl(28 90% 62% / 0.10), transparent 62%),
     linear-gradient(180deg, hsl(0 0% 100% / 0.18), transparent 46%, hsl(222 30% 14% / 0.05));
   opacity: 0.85;
+}
+
+.home-page .home-tile--stories::before {
+  opacity: 0.92;
+}
+
+.home-page .home-tile--ideas::before {
+  opacity: 0.84;
+}
+
+.home-page .home-helper-wrap {
+  position: relative;
+}
+
+.home-page .home-helper-wrap::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(92vw, 26rem);
+  height: 3.6rem;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: radial-gradient(120% 100% at 50% 50%, hsl(0 0% 0% / 0.22) 0%, transparent 72%);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+html[data-theme="light"] .home-page .home-helper-wrap::before {
+  background: radial-gradient(120% 100% at 50% 50%, hsl(36 70% 92% / 0.62) 0%, transparent 74%);
+  opacity: 0.75;
 }
 

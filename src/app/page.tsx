@@ -21,6 +21,7 @@ function Tile({
   href: string;
   variant: "stories" | "ideas";
 }) {
+  const variantClass = variant === "stories" ? "home-tile--stories" : "home-tile--ideas";
   const panel =
     variant === "stories"
       ? "bg-[color:color-mix(in_oklab,var(--color-panel)_22%,transparent)]"
@@ -33,7 +34,7 @@ function Tile({
   return (
     <Link
       href={href}
-      className={`home-tile group relative block overflow-hidden rounded-[1.25rem] border border-[color:color-mix(in_oklab,var(--color-border)_42%,transparent)] ${panel} p-[1.1rem] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_34%,transparent)] backdrop-blur-[16px] transition active:scale-[0.99] motion-safe:hover:bg-[color:color-mix(in_oklab,var(--color-panel)_30%,transparent)]`}
+      className={`home-tile ${variantClass} group relative block overflow-hidden rounded-[1.25rem] border border-[color:color-mix(in_oklab,var(--color-border)_42%,transparent)] ${panel} p-[1.1rem] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_34%,transparent)] backdrop-blur-[16px] transition active:scale-[0.99] motion-safe:hover:bg-[color:color-mix(in_oklab,var(--color-panel)_30%,transparent)]`}
     >
       <div aria-hidden="true" className={`pointer-events-none absolute inset-0 ${glow} opacity-45`} />
 
@@ -57,14 +58,14 @@ export default function Home() {
         <div className="h-full w-full bg-[image:var(--home-artwork)] bg-cover bg-center bg-no-repeat opacity-100 [filter:brightness(var(--home-bg-brightness))]" />
 
         {/* Local readability only (not affecting the whole image) */}
-        <div className="absolute left-0 top-0 h-[44dvh] w-full bg-[image:var(--home-top-scrim)] opacity-60 [mix-blend-mode:multiply]" />
-        <div className="absolute bottom-0 left-0 h-[30dvh] w-full bg-[image:var(--home-bottom-scrim)] opacity-60 [mix-blend-mode:multiply]" />
+        <div className="absolute left-0 top-0 h-[46dvh] w-full bg-[image:var(--home-top-scrim)] opacity-[var(--home-top-scrim-opacity)]" />
+        <div className="absolute bottom-0 left-0 h-[34dvh] w-full bg-[image:var(--home-bottom-scrim)] opacity-[var(--home-bottom-scrim-opacity)]" />
       </div>
 
       {/* Theme toggle — fixed top-right over the artwork */}
       <div className="pointer-events-none fixed inset-x-0 top-0 z-30 flex justify-end px-4 pt-[max(0.75rem,env(safe-area-inset-top))] sm:px-5">
         <div className="pointer-events-auto">
-          <ThemeToggle className="home-hero-toggle border-[color:color-mix(in_oklab,var(--color-border)_36%,transparent)] bg-[color:color-mix(in_oklab,var(--color-toggle-bg)_36%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_42%,transparent)] backdrop-blur-[18px]" />
+          <ThemeToggle className="home-hero-toggle border-[color:color-mix(in_oklab,var(--color-border)_30%,transparent)] bg-[color:color-mix(in_oklab,var(--color-toggle-bg)_28%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_34%,transparent)] backdrop-blur-[18px] motion-safe:hover:translate-y-0 motion-safe:hover:shadow-[var(--shadow-card)]" />
         </div>
       </div>
 
@@ -99,7 +100,7 @@ export default function Home() {
           />
         </section>
 
-        <p className="home-helper mt-9 text-center text-[0.72rem] leading-relaxed opacity-95">
+        <p className="home-helper home-helper-wrap mt-9 text-center text-[0.72rem] leading-relaxed opacity-95">
           <span className="block">Совет: добавь страницу на экран телефона</span>
           <span className="block">Поделиться → На экран «Домой»</span>
         </p>
