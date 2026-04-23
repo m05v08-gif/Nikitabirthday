@@ -266,6 +266,11 @@ html[data-theme="light"] .ideas-page {
   letter-spacing: -0.01em;
 }
 
+.ideas-page .ideas-result-num {
+  font-family: var(--font-editorial), ui-serif, Georgia, "Times New Roman", serif;
+  font-weight: 700;
+}
+
 /* Home-like material effects for Ideas UI (no background changes) */
 .ideas-page .ideas-card,
 .ideas-page .ideas-badge,
