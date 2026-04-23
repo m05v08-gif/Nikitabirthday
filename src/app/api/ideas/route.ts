@@ -4,21 +4,52 @@ import { openai } from "@/lib/openai";
 export async function POST(req: Request) {
   try {
     const body = (await req.json().catch(() => ({}))) as {
-      mode?: "home" | "out";
-      duration?: "short" | "medium";
-      budget?: "zero" | "small";
+      city?: "astana" | "tashkent";
+      companyType?: "with_children" | "with_masha" | "with_friends" | "alone";
+      duration?: "1_2_hours" | "2_3_hours";
+      budget?: "econom" | "medium" | "premium";
+      mood?: "fun" | "calm" | "beautiful" | "legendary" | "surprise";
     };
 
-    const mode = body.mode ?? "home";
-    const duration = body.duration ?? "short";
-    const budget = body.budget ?? "small";
+    const city = body.city ?? "astana";
+    const companyType = body.companyType ?? "with_friends";
+    const duration = body.duration ?? "1_2_hours";
+    const budget = body.budget ?? "medium";
+    const mood = body.mood ?? "beautiful";
+
+    const cityLabel = city === "astana" ? "Астана" : "Ташкент";
+    const companyLabel =
+      companyType === "with_children"
+        ? "с детьми"
+        : companyType === "with_masha"
+          ? "вдвоём с Машей"
+          : companyType === "with_friends"
+            ? "с друзьями"
+            : "один";
+    const durationLabel = duration === "1_2_hours" ? "1–2 часа" : "2–3 часа";
+    const budgetLabel =
+      budget === "econom" ? "экономно" : budget === "medium" ? "средне" : "можно красиво";
+    const moodLabel =
+      mood === "fun"
+        ? "весело"
+        : mood === "calm"
+          ? "спокойно"
+          : mood === "beautiful"
+            ? "красиво"
+            : mood === "legendary"
+              ? "легендарно"
+              : "удиви меня";
 
     const prompt = [
-      "Сгенерируй 3 короткие идеи на вечер для пары. Язык: русский.",
-      "Формат: нумерованный список 1-3, каждая идея 1-2 предложения, конкретные шаги, без воды.",
-      `Условия: ${mode === "home" ? "дома" : "вне дома"}, ${
-        duration === "short" ? "30–60 минут" : "2–3 часа"
-      }, бюджет: ${budget === "zero" ? "0" : "небольшой"}.`,
+      "Сгенерируй 3 короткие идеи, как отпраздновать день рождения. Язык: русский.",
+      "Формат: нумерованный список 1-3. Каждая идея 1-2 предложения, конкретные шаги, без воды.",
+      "Идеи должны быть реалистичными и соответствовать выбранным условиям.",
+      `Город: ${cityLabel}.`,
+      `С кем: ${companyLabel}.`,
+      `Длительность: ${durationLabel}.`,
+      `Бюджет: ${budgetLabel}.`,
+      `Настроение: ${moodLabel}.`,
+      "Если выбрано «Удиви меня», предложи разные по характеру идеи (но всё равно в заданном городе/бюджете/времени/формате).",
       "Не используй эмодзи."
     ].join("\n");
 
@@ -29,7 +60,7 @@ export async function POST(req: Request) {
         {
           role: "system",
           content:
-            "Ты помогаешь паре придумывать короткие, конкретные идеи на вечер. Пиши по-русски, без воды, без эмодзи."
+            "Ты придумываешь короткие, конкретные идеи празднования дня рождения. Пиши по-русски, без воды, без эмодзи."
         },
         { role: "user", content: prompt }
       ]

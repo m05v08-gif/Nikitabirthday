@@ -5,14 +5,18 @@ import { useCallback, useMemo, useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { parseNumberedIdeas } from "@/lib/parse-numbered-ideas";
 
-type Mode = "home" | "out";
-type Duration = "short" | "medium";
-type Budget = "zero" | "small";
+type City = "astana" | "tashkent";
+type CompanyType = "with_children" | "with_masha" | "with_friends" | "alone";
+type Duration = "1_2_hours" | "2_3_hours";
+type Budget = "econom" | "medium" | "premium";
+type Mood = "fun" | "calm" | "beautiful" | "legendary" | "surprise";
 
 export default function IdeasPage() {
-  const [mode, setMode] = useState<Mode>("home");
-  const [duration, setDuration] = useState<Duration>("short");
-  const [budget, setBudget] = useState<Budget>("small");
+  const [city, setCity] = useState<City>("astana");
+  const [companyType, setCompanyType] = useState<CompanyType>("with_friends");
+  const [duration, setDuration] = useState<Duration>("1_2_hours");
+  const [budget, setBudget] = useState<Budget>("medium");
+  const [mood, setMood] = useState<Mood>("beautiful");
 
   const [text, setText] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -38,7 +42,7 @@ export default function IdeasPage() {
       const res = await fetch("/api/ideas", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ mode, duration, budget })
+        body: JSON.stringify({ city, companyType, duration, budget, mood })
       });
       const json = (await res.json()) as { ok: boolean; text?: string; error?: string };
       if (!json.ok) {
@@ -53,7 +57,7 @@ export default function IdeasPage() {
     } finally {
       setLoading(false);
     }
-  }, [budget, duration, mode]);
+  }, [budget, city, companyType, duration, mood]);
 
   const segInactive =
     "border border-[color:var(--color-border)] bg-[color:var(--color-panel-2)] text-[color:var(--color-fg)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-md transition active:scale-[0.99] motion-safe:hover:bg-[color:var(--color-panel)]";
@@ -84,11 +88,11 @@ export default function IdeasPage() {
                 aria-hidden="true"
                 className="inline-block h-2 w-10 rounded-full bg-[radial-gradient(circle_at_20%_30%,var(--blob-b),var(--blob-a))]"
               />
-              Идеи на вечер
+              День рождения
             </div>
 
             <h1 className="font-display text-balance-safe text-[2.15rem] font-semibold leading-[0.95] tracking-[-0.05em] text-[color:var(--color-fg)]">
-              Сегодня
+              Как отпраздновать
             </h1>
           </div>
           <div className="shrink-0 pt-0.5">
@@ -111,46 +115,88 @@ export default function IdeasPage() {
           </div>
 
           <div className="grid gap-2">
-            <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">Где</div>
+            <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">Город</div>
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
-                onClick={() => setMode("home")}
+                onClick={() => setCity("astana")}
                 className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
-                  mode === "home" ? segActive : segInactive
+                  city === "astana" ? segActive : segInactive
                 }`}
               >
-                Дома
+                Астана
               </button>
               <button
                 type="button"
-                onClick={() => setMode("out")}
+                onClick={() => setCity("tashkent")}
                 className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
-                  mode === "out" ? segActive : segInactive
+                  city === "tashkent" ? segActive : segInactive
                 }`}
               >
-                Вне дома
+                Ташкент
               </button>
             </div>
           </div>
 
           <div className="grid gap-2">
-            <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">Время</div>
+            <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">С кем</div>
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
-                onClick={() => setDuration("short")}
+                onClick={() => setCompanyType("with_children")}
                 className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
-                  duration === "short" ? segActive : segInactive
+                  companyType === "with_children" ? segActive : segInactive
                 }`}
               >
-                30–60 мин
+                С детьми
               </button>
               <button
                 type="button"
-                onClick={() => setDuration("medium")}
+                onClick={() => setCompanyType("with_masha")}
                 className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
-                  duration === "medium" ? segActive : segInactive
+                  companyType === "with_masha" ? segActive : segInactive
+                }`}
+              >
+                Вдвоем с Машей
+              </button>
+              <button
+                type="button"
+                onClick={() => setCompanyType("with_friends")}
+                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                  companyType === "with_friends" ? segActive : segInactive
+                }`}
+              >
+                С друзьями
+              </button>
+              <button
+                type="button"
+                onClick={() => setCompanyType("alone")}
+                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                  companyType === "alone" ? segActive : segInactive
+                }`}
+              >
+                Один
+              </button>
+            </div>
+          </div>
+
+          <div className="grid gap-2">
+            <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">Сколько времени</div>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setDuration("1_2_hours")}
+                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                  duration === "1_2_hours" ? segActive : segInactive
+                }`}
+              >
+                1–2 часа
+              </button>
+              <button
+                type="button"
+                onClick={() => setDuration("2_3_hours")}
+                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                  duration === "2_3_hours" ? segActive : segInactive
                 }`}
               >
                 2–3 часа
@@ -160,24 +206,84 @@ export default function IdeasPage() {
 
           <div className="grid gap-2">
             <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">Бюджет</div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-3 gap-2">
               <button
                 type="button"
-                onClick={() => setBudget("zero")}
+                onClick={() => setBudget("econom")}
                 className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
-                  budget === "zero" ? segActive : segInactive
+                  budget === "econom" ? segActive : segInactive
                 }`}
               >
-                0
+                Экономно
               </button>
               <button
                 type="button"
-                onClick={() => setBudget("small")}
+                onClick={() => setBudget("medium")}
                 className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
-                  budget === "small" ? segActive : segInactive
+                  budget === "medium" ? segActive : segInactive
                 }`}
               >
-                Небольшой
+                Средне
+              </button>
+              <button
+                type="button"
+                onClick={() => setBudget("premium")}
+                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                  budget === "premium" ? segActive : segInactive
+                }`}
+              >
+                Можно красиво
+              </button>
+            </div>
+          </div>
+
+          <div className="grid gap-2">
+            <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">Настроение</div>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setMood("fun")}
+                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                  mood === "fun" ? segActive : segInactive
+                }`}
+              >
+                Весело
+              </button>
+              <button
+                type="button"
+                onClick={() => setMood("calm")}
+                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                  mood === "calm" ? segActive : segInactive
+                }`}
+              >
+                Спокойно
+              </button>
+              <button
+                type="button"
+                onClick={() => setMood("beautiful")}
+                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                  mood === "beautiful" ? segActive : segInactive
+                }`}
+              >
+                Красиво
+              </button>
+              <button
+                type="button"
+                onClick={() => setMood("legendary")}
+                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                  mood === "legendary" ? segActive : segInactive
+                }`}
+              >
+                Легендарно
+              </button>
+              <button
+                type="button"
+                onClick={() => setMood("surprise")}
+                className={`col-span-2 rounded-2xl px-3 py-2.5 text-sm font-semibold ${
+                  mood === "surprise" ? segActive : segInactive
+                }`}
+              >
+                Удиви меня
               </button>
             </div>
           </div>
@@ -190,7 +296,7 @@ export default function IdeasPage() {
         onClick={generate}
         className="w-full rounded-2xl bg-[linear-gradient(135deg,color-mix(in_oklab,var(--blob-b)_30%,white),color-mix(in_oklab,var(--blob-a)_26%,white))] px-4 py-3.5 text-sm font-semibold text-[color:var(--color-primary-ink)] shadow-[var(--shadow-soft)] ring-1 ring-[color:var(--color-ring)] transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 motion-safe:hover:-translate-y-0.5"
       >
-        {loading ? "Генерирую…" : "Сгенерировать идеи"}
+        {loading ? "Подбираю…" : "Подобрать 3 идеи"}
       </button>
 
       <div className="relative overflow-hidden rounded-[1.75rem] border border-[color:var(--color-border)] bg-[color:var(--color-panel)] p-5 shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-xl sm:p-6">
@@ -237,7 +343,7 @@ export default function IdeasPage() {
               )
             ) : (
               <div className="text-sm leading-relaxed text-[color:var(--color-muted)]">
-                Нажми кнопку — появятся 3 короткие идеи на вечер.
+                Нажми кнопку — появятся 3 идеи, как отпраздновать день рождения с учетом города, бюджета и настроения.
               </div>
             )}
         </div>
