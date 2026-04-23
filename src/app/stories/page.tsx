@@ -123,7 +123,7 @@ export default function StoriesPage() {
           </button>
 
           <div className="flex min-w-0 flex-1 items-center justify-end gap-2">
-            <ThemeToggle className="border-[color:color-mix(in_oklab,var(--color-border)_45%,transparent)] bg-[color:color-mix(in_oklab,var(--color-toggle-bg)_30%,transparent)] shadow-none ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_55%,transparent)] backdrop-blur-sm motion-safe:hover:shadow-none motion-safe:hover:-translate-y-0" />
+            <ThemeToggle className="stories-toggle border-[color:color-mix(in_oklab,var(--color-border)_45%,transparent)] bg-[color:color-mix(in_oklab,var(--color-toggle-bg)_30%,transparent)] shadow-none ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_55%,transparent)] backdrop-blur-sm motion-safe:hover:shadow-none motion-safe:hover:-translate-y-0" />
           </div>
         </div>
 
