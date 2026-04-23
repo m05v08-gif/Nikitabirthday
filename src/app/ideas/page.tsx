@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useCallback, useMemo, useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { parseNumberedIdeas } from "@/lib/parse-numbered-ideas";
 
 type City = "astana" | "tashkent";
 type CompanyType = "with_children" | "with_masha" | "with_friends" | "alone";
@@ -23,17 +22,6 @@ export default function IdeasPage() {
   const [error, setError] = useState<string | null>(null);
 
   const canGenerate = useMemo(() => !loading, [loading]);
-
-  const ideaItems = useMemo(() => {
-    if (!text) return null;
-    return parseNumberedIdeas(text);
-  }, [text]);
-
-  const ideaCards = useMemo(() => {
-    if (!ideaItems) return null;
-    if (ideaItems.length < 3) return null;
-    return ideaItems.slice(0, 3);
-  }, [ideaItems]);
 
   const generate = useCallback(async () => {
     setLoading(true);
@@ -81,7 +69,15 @@ export default function IdeasPage() {
         <div className="mx-auto max-w-[430px] px-[var(--ideas-pad-x)] pb-[calc(32px_+_env(safe-area-inset-bottom))] pt-6">
           <header className="ideas-hero">
             <div className="flex items-center justify-between gap-3">
-              <div />
+              <Link
+                href="/"
+                className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-border)_45%,transparent)] bg-[color:color-mix(in_oklab,var(--color-panel-2)_30%,transparent)] text-[color:color-mix(in_oklab,var(--color-fg)_92%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_45%,transparent)] backdrop-blur-sm transition active:scale-[0.98] motion-safe:hover:bg-[color:color-mix(in_oklab,var(--color-panel)_36%,transparent)]"
+                aria-label="На главную"
+              >
+                <span aria-hidden="true" className="text-xl leading-none">
+                  ‹
+                </span>
+              </Link>
               <ThemeToggle className="ideas-toggle border border-[color:var(--ideas-border-chip)] bg-[color:var(--ideas-badge-bg)] shadow-[var(--shadow-card)] ring-0 backdrop-blur-[var(--blur-surface)] motion-safe:hover:-translate-y-0 motion-safe:hover:shadow-[var(--shadow-card)]" />
             </div>
 
@@ -92,7 +88,7 @@ export default function IdeasPage() {
               <span className="block">рождения</span>
             </h1>
             <p className="ideas-subtitle mt-3 max-w-[320px] text-[0.98rem] leading-[1.45] tracking-[-0.01em] text-[color:var(--ideas-text-secondary)]">
-              Подберу 3 идеи по городу, бюджету, времени и настроению.
+              Подберу идею по городу, бюджету, времени и настроению.
             </p>
           </header>
 
@@ -185,21 +181,21 @@ export default function IdeasPage() {
               <button
                 type="button"
                 onClick={() => setBudget("econom")}
-                className={`${budget === "econom" ? chipActive : chipInactive} min-h-[76px] px-3`}
+                className={`${budget === "econom" ? chipActive : chipInactive} min-h-[68px] px-3`}
               >
                 Экономно
               </button>
               <button
                 type="button"
                 onClick={() => setBudget("medium")}
-                className={`${budget === "medium" ? chipActive : chipInactive} min-h-[76px] px-3`}
+                className={`${budget === "medium" ? chipActive : chipInactive} min-h-[68px] px-3`}
               >
                 Средне
               </button>
               <button
                 type="button"
                 onClick={() => setBudget("premium")}
-                className={`${budget === "premium" ? chipActive : chipInactive} min-h-[76px] px-3`}
+                className={`${budget === "premium" ? chipActive : chipInactive} min-h-[68px] px-3`}
               >
                 Можно красиво
               </button>
@@ -250,19 +246,6 @@ export default function IdeasPage() {
           </div>
           </section>
 
-          <button
-            type="button"
-            disabled={!canGenerate}
-            onClick={generate}
-            className="ideas-cta mt-6 inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-cta)] border border-[color:var(--ideas-cta-border)] bg-[image:var(--ideas-cta-bg)] px-5 text-[18px] font-bold leading-6 tracking-[-0.01em] text-[color:var(--ideas-cta-fg)] shadow-[var(--shadow-cta)] transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
-            style={{ height: "var(--ideas-cta-h)" }}
-          >
-            <span aria-hidden="true" className="text-[16px] opacity-80">
-              ✦
-            </span>
-            {loading ? "Подбираю…" : "Подобрать 3 идеи"}
-          </button>
-
           {!text && !error ? (
             <div className="ideas-helper mt-5 flex w-full items-start gap-[14px] rounded-[var(--radius-cta)] border border-[color:var(--ideas-border-main)] bg-[color:var(--ideas-helper-bg)] p-[18px] shadow-[var(--ideas-shadow-helper)] backdrop-blur-[var(--blur-surface)]">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[color:var(--ideas-helper-icon-bg)]">
@@ -271,7 +254,7 @@ export default function IdeasPage() {
                 </span>
               </div>
               <div className="text-[16px] leading-[1.5] tracking-[-0.01em] text-[color:var(--ideas-text-secondary)]">
-                Появятся 3 идеи с атмосферой, примерным бюджетом и понятным планом.
+                Появится идея с атмосферой, примерным бюджетом и понятным планом.
               </div>
             </div>
           ) : (
@@ -281,38 +264,35 @@ export default function IdeasPage() {
                   {error}
                 </pre>
               ) : text ? (
-                ideaCards ? (
-                  <div className="flex flex-col gap-[14px]">
-                    {ideaCards.map((idea, idx) => (
-                      <div
-                        key={`${idx}-${idea.slice(0, 12)}`}
-                        className="ideas-result-card relative overflow-hidden grid grid-cols-[34px_1fr] items-start gap-x-[14px] rounded-[var(--radius-result-card)] border border-[color:var(--ideas-result-border)] bg-[color:var(--ideas-result-bg)] p-[18px] shadow-[var(--ideas-shadow-result)]"
-                      >
-                        <div className="ideas-result-num pt-[2px] leading-none text-[28px] text-[color:var(--ideas-text-primary)]">
-                          {idx + 1}
-                        </div>
-                        <div className="text-[16px] leading-[1.62] tracking-[-0.01em] text-[color:var(--ideas-result-fg)]">
-                          {idea}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <pre className="whitespace-pre-wrap text-[16px] leading-[1.62] tracking-[-0.01em] text-[color:var(--ideas-result-fg)]">
-                    {text}
-                  </pre>
-                )
+                <pre className="whitespace-pre-wrap text-[16px] leading-[1.62] tracking-[-0.01em] text-[color:var(--ideas-result-fg)]">
+                  {text}
+                </pre>
               ) : null}
             </div>
           )}
 
-          <Link
-            href="/"
-            className="ideas-bottom mt-6 inline-flex w-full items-center justify-center rounded-[var(--radius-bottom-button)] border border-[color:var(--ideas-border-main)] bg-[color:var(--ideas-bottom-bg)] text-[18px] font-bold leading-6 tracking-[-0.01em] text-[color:var(--ideas-text-primary)] shadow-[var(--ideas-shadow-bottom)] backdrop-blur-[var(--blur-surface)] transition active:scale-[0.99]"
-            style={{ height: "64px" }}
-          >
-            Домой
-          </Link>
+          <div className="mt-6 grid gap-3">
+            <button
+              type="button"
+              disabled={!canGenerate}
+              onClick={generate}
+              className="ideas-cta inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-cta)] border border-[color:var(--ideas-cta-border)] bg-[image:var(--ideas-cta-bg)] px-5 text-[18px] font-bold leading-6 tracking-[-0.01em] text-[color:var(--ideas-cta-fg)] shadow-[var(--shadow-cta)] transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
+              style={{ height: "var(--ideas-cta-h)" }}
+            >
+              <span aria-hidden="true" className="text-[16px] opacity-80">
+                ✦
+              </span>
+              {loading ? "Подбираю…" : "Подобрать идею"}
+            </button>
+
+            <Link
+              href="/"
+              className="ideas-bottom inline-flex w-full items-center justify-center rounded-[var(--radius-bottom-button)] border border-[color:var(--ideas-border-main)] bg-[color:var(--ideas-bottom-bg)] text-[18px] font-bold leading-6 tracking-[-0.01em] text-[color:var(--ideas-text-primary)] shadow-[var(--ideas-shadow-bottom)] backdrop-blur-[var(--blur-surface)] transition active:scale-[0.99]"
+              style={{ height: "64px" }}
+            >
+              На главную
+            </Link>
+          </div>
         </div>
       </div>
     </main>

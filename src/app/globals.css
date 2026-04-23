@@ -113,11 +113,12 @@ html[data-theme="light"] ::selection {
 /* Ideas page — UI redesign (background untouched) */
 .ideas-page {
   --radius-page-card: 32px;
-  --radius-chip: 22px;
-  --radius-cta: 24px;
+  /* Match Home: slightly less round */
+  --radius-chip: 20px;
+  --radius-cta: 20px;
   --radius-badge: 20px;
   --radius-result-card: 26px;
-  --radius-bottom-button: 24px;
+  --radius-bottom-button: 20px;
   --border-hairline: 1px;
   --border-strong: 1.5px;
   --blur-surface: 16px;
