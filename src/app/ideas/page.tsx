@@ -60,7 +60,7 @@ export default function IdeasPage() {
   }, [budget, city, companyType, duration, mood]);
 
   const chipBase =
-    "min-h-[var(--ideas-chip-h)] rounded-[var(--radius-chip)] border px-4 text-center font-sans text-[17px] font-semibold leading-[1.2] tracking-[-0.01em] transition-[background-color,border-color,box-shadow,transform,color] duration-[220ms] ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.985]";
+    "ideas-chip relative overflow-hidden min-h-[var(--ideas-chip-h)] rounded-[var(--radius-chip)] border px-4 text-center font-sans text-[17px] font-semibold leading-[1.2] tracking-[-0.01em] transition-[background-color,border-color,box-shadow,transform,color] duration-[220ms] ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.985]";
   const chipInactive = `${chipBase} border-[color:var(--ideas-border-chip)] bg-[color:var(--ideas-surface-chip)] text-[color:var(--ideas-chip-fg)] shadow-[var(--shadow-chip)]`;
   const chipActive = `${chipBase} border-[color:var(--ideas-border-selected)] bg-[color:var(--ideas-surface-selected)] text-[color:var(--ideas-text-primary)] shadow-[var(--ideas-chip-selected-shadow)]`;
 
@@ -81,33 +81,21 @@ export default function IdeasPage() {
         <div className="mx-auto max-w-[430px] px-[var(--ideas-pad-x)] pb-[calc(32px_+_env(safe-area-inset-bottom))] pt-6">
           <header className="ideas-hero">
             <div className="flex items-center justify-between gap-3">
-              <div className="ideas-badge inline-flex h-10 items-center gap-2 rounded-[var(--radius-badge)] border border-[color:var(--ideas-border-chip)] bg-[color:var(--ideas-badge-bg)] px-4 shadow-[var(--shadow-chip)] backdrop-blur-[var(--blur-surface)]">
-                <span aria-hidden="true" className="h-[10px] w-[34px] rounded-full bg-[image:var(--ideas-badge-accent)] opacity-90" />
-                <span className="text-[12px] font-semibold uppercase tracking-[0.24em] text-[color:var(--ideas-text-secondary)]">
-                  ДЕНЬ РОЖДЕНИЯ
-                </span>
-              </div>
-
+              <div />
               <ThemeToggle className="ideas-toggle border border-[color:var(--ideas-border-chip)] bg-[color:var(--ideas-badge-bg)] shadow-[var(--shadow-card)] ring-0 backdrop-blur-[var(--blur-surface)] motion-safe:hover:-translate-y-0 motion-safe:hover:shadow-[var(--shadow-card)]" />
             </div>
 
             <h1 className="ideas-title mt-[18px] max-w-[320px] font-[600] leading-[0.94] tracking-[-0.02em] text-[color:var(--ideas-text-primary)]">
-              Как отпраздновать
+              <span className="block">Как</span>
+              <span className="block">отпраздновать</span>
+              <span className="block">день рождения</span>
             </h1>
             <p className="ideas-subtitle mt-3 max-w-[320px] text-[17px] leading-[1.45] tracking-[-0.01em] text-[color:var(--ideas-text-secondary)]">
               Подберу 3 идеи по городу, бюджету, времени и настроению.
             </p>
           </header>
 
-          <section className="ideas-card mt-7 relative overflow-hidden rounded-[var(--radius-page-card)] border border-[color:var(--ideas-border-main)] bg-[color:var(--ideas-surface-main)] p-[24px_16px_18px_16px] shadow-[var(--shadow-card)] backdrop-blur-[var(--blur-surface)]">
-            <span aria-hidden="true" className="ideas-sparkle absolute right-[18px] top-[26px] text-[14px] opacity-[0.52] text-[color:var(--ideas-accent-sparkle)]">
-              ✦
-            </span>
-
-            <div className="mb-[18px] text-[18px] font-bold leading-6 tracking-[-0.01em] text-[color:var(--ideas-text-primary)]">
-              Под ваш формат
-            </div>
-
+          <section className="mt-7">
           <div className="grid gap-2">
             <div className="ideas-section-label mb-[10px] text-[15px] font-medium leading-5 tracking-[-0.01em] text-[color:var(--ideas-text-muted)]">
               Город
@@ -297,7 +285,7 @@ export default function IdeasPage() {
                     {ideaCards.map((idea, idx) => (
                       <div
                         key={`${idx}-${idea.slice(0, 12)}`}
-                        className="grid grid-cols-[34px_1fr] items-start gap-x-[14px] rounded-[var(--radius-result-card)] border border-[color:var(--ideas-result-border)] bg-[color:var(--ideas-result-bg)] p-[18px] shadow-[var(--ideas-shadow-result)]"
+                        className="ideas-result-card relative overflow-hidden grid grid-cols-[34px_1fr] items-start gap-x-[14px] rounded-[var(--radius-result-card)] border border-[color:var(--ideas-result-border)] bg-[color:var(--ideas-result-bg)] p-[18px] shadow-[var(--ideas-shadow-result)]"
                       >
                         <div className="pt-[2px] font-[700] leading-none text-[28px] text-[color:var(--ideas-text-primary)]">
                           {idx + 1}
