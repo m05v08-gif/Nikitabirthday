@@ -256,7 +256,7 @@ html[data-theme="light"] .ideas-page {
   --tt-pad: 7px;
   --tt-thumb: 44px;
   --tt-icon: 18px;
-  --tt-shift: calc(112px - 28px - 44px);
+  --tt-shift: calc(112px - 14px - 44px);
   border-radius: 29px;
 }
 
