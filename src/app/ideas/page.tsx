@@ -60,7 +60,7 @@ export default function IdeasPage() {
   }, [budget, city, companyType, duration, mood]);
 
   const chipBase =
-    "ideas-chip relative inline-flex w-full items-center justify-center overflow-hidden min-h-[var(--ideas-chip-h)] rounded-[var(--radius-chip)] border px-4 text-center text-[17px] font-semibold leading-[1.2] tracking-[-0.01em] transition-[background-color,border-color,box-shadow,transform,color] duration-[220ms] ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.985]";
+    "ideas-chip relative inline-flex w-full items-center justify-center overflow-hidden min-h-[var(--ideas-chip-h)] rounded-[var(--radius-chip)] border px-4 text-center text-[1rem] font-semibold leading-[1.15] tracking-[-0.01em] transition-[background-color,border-color,box-shadow,transform,color] duration-[220ms] ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.985]";
   const chipInactive = `${chipBase} border-[color:var(--ideas-border-chip)] bg-[color:var(--ideas-surface-chip)] text-[color:var(--ideas-chip-fg)] shadow-[var(--shadow-chip)]`;
   const chipActive = `${chipBase} border-[color:var(--ideas-border-selected)] bg-[color:var(--ideas-surface-selected)] text-[color:var(--ideas-text-primary)] shadow-[var(--ideas-chip-selected-shadow)]`;
 
@@ -91,7 +91,7 @@ export default function IdeasPage() {
               <span className="block">день</span>
               <span className="block">рождения</span>
             </h1>
-            <p className="ideas-subtitle mt-3 max-w-[320px] text-[17px] leading-[1.45] tracking-[-0.01em] text-[color:var(--ideas-text-secondary)]">
+            <p className="ideas-subtitle mt-3 max-w-[320px] text-[0.98rem] leading-[1.45] tracking-[-0.01em] text-[color:var(--ideas-text-secondary)]">
               Подберу 3 идеи по городу, бюджету, времени и настроению.
             </p>
           </header>
