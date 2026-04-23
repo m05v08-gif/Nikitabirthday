@@ -130,10 +130,10 @@ html[data-theme="light"] ::selection {
   --ideas-text-secondary: #E4DDD3;
   --ideas-text-muted: #AAB2C3;
 
-  --ideas-surface-main: rgba(14, 23, 39, 0.76);
-  --ideas-surface-secondary: rgba(17, 29, 49, 0.58);
-  --ideas-surface-chip: rgba(18, 30, 51, 0.54);
-  --ideas-surface-selected: rgba(30, 41, 68, 0.72);
+  --ideas-surface-main: rgba(14, 23, 39, 0.68);
+  --ideas-surface-secondary: rgba(17, 29, 49, 0.52);
+  --ideas-surface-chip: rgba(18, 30, 51, 0.49);
+  --ideas-surface-selected: rgba(30, 41, 68, 0.65);
 
   --ideas-border-main: rgba(110, 125, 154, 0.22);
   --ideas-border-chip: rgba(77, 93, 126, 0.36);
@@ -150,24 +150,24 @@ html[data-theme="light"] ::selection {
     0 6px 14px rgba(0, 0, 0, 0.26),
     inset 0 1px 0 rgba(255, 255, 255, 0.04);
 
-  --ideas-cta-bg: linear-gradient(180deg, rgba(248, 244, 238, 0.98) 0%, rgba(235, 227, 214, 0.98) 100%);
+  --ideas-cta-bg: linear-gradient(180deg, rgba(248, 244, 238, 0.88) 0%, rgba(235, 227, 214, 0.88) 100%);
   --ideas-cta-border: rgba(255, 255, 255, 0.10);
   --ideas-cta-fg: #121A2A;
 
-  --ideas-helper-bg: rgba(16, 25, 42, 0.66);
+  --ideas-helper-bg: rgba(16, 25, 42, 0.59);
   --ideas-helper-icon-bg: rgba(214, 154, 87, 0.14);
   --ideas-shadow-helper: 0 10px 24px rgba(0, 0, 0, 0.24);
 
-  --ideas-results-bg: rgba(14, 23, 39, 0.64);
+  --ideas-results-bg: rgba(14, 23, 39, 0.58);
   --ideas-results-border: rgba(110, 125, 154, 0.20);
   --ideas-shadow-results: 0 10px 28px rgba(0, 0, 0, 0.28);
 
-  --ideas-result-bg: rgba(18, 29, 48, 0.70);
+  --ideas-result-bg: rgba(18, 29, 48, 0.63);
   --ideas-result-border: rgba(87, 103, 136, 0.30);
   --ideas-shadow-result: 0 10px 28px rgba(0, 0, 0, 0.28);
   --ideas-result-fg: #E6DED4;
 
-  --ideas-bottom-bg: rgba(14, 23, 39, 0.66);
+  --ideas-bottom-bg: rgba(14, 23, 39, 0.59);
   --ideas-shadow-bottom: 0 10px 22px rgba(0, 0, 0, 0.24);
 
   --ideas-pad-x: 16px;
@@ -185,10 +185,10 @@ html[data-theme="light"] .ideas-page {
   --ideas-text-secondary: #3A4251;
   --ideas-text-muted: #7A8190;
 
-  --ideas-surface-main: rgba(248, 244, 238, 0.84);
-  --ideas-surface-secondary: rgba(255, 255, 255, 0.52);
-  --ideas-surface-chip: rgba(255, 255, 255, 0.44);
-  --ideas-surface-selected: rgba(248, 240, 234, 0.92);
+  --ideas-surface-main: rgba(248, 244, 238, 0.76);
+  --ideas-surface-secondary: rgba(255, 255, 255, 0.47);
+  --ideas-surface-chip: rgba(255, 255, 255, 0.40);
+  --ideas-surface-selected: rgba(248, 240, 234, 0.83);
 
   --ideas-border-main: rgba(194, 183, 164, 0.40);
   --ideas-border-chip: rgba(173, 180, 192, 0.38);
@@ -204,24 +204,24 @@ html[data-theme="light"] .ideas-page {
     0 0 0 2px rgba(245, 232, 222, 0.92),
     0 4px 12px rgba(188, 144, 109, 0.10);
 
-  --ideas-cta-bg: linear-gradient(180deg, rgba(248, 239, 229, 0.98) 0%, rgba(241, 224, 204, 0.98) 100%);
+  --ideas-cta-bg: linear-gradient(180deg, rgba(248, 239, 229, 0.88) 0%, rgba(241, 224, 204, 0.88) 100%);
   --ideas-cta-border: rgba(228, 197, 172, 0.56);
   --ideas-cta-fg: #1F2433;
 
-  --ideas-helper-bg: rgba(248, 244, 238, 0.72);
+  --ideas-helper-bg: rgba(248, 244, 238, 0.65);
   --ideas-helper-icon-bg: rgba(235, 201, 175, 0.24);
   --ideas-shadow-helper: 0 8px 22px rgba(82, 63, 39, 0.06);
 
-  --ideas-results-bg: rgba(248, 244, 238, 0.64);
+  --ideas-results-bg: rgba(248, 244, 238, 0.58);
   --ideas-results-border: rgba(194, 183, 164, 0.32);
   --ideas-shadow-results: 0 8px 24px rgba(82, 63, 39, 0.06);
 
-  --ideas-result-bg: rgba(252, 250, 246, 0.88);
+  --ideas-result-bg: rgba(252, 250, 246, 0.79);
   --ideas-result-border: rgba(201, 190, 172, 0.36);
   --ideas-shadow-result: 0 8px 24px rgba(82, 63, 39, 0.07);
   --ideas-result-fg: #2E3444;
 
-  --ideas-bottom-bg: rgba(248, 244, 238, 0.74);
+  --ideas-bottom-bg: rgba(248, 244, 238, 0.67);
   --ideas-shadow-bottom: 0 8px 22px rgba(82, 63, 39, 0.06);
 }
 
@@ -258,6 +258,61 @@ html[data-theme="light"] .ideas-page {
   --tt-icon: 18px;
   --tt-shift: calc(112px - 14px - 44px);
   border-radius: 29px;
+}
+
+/* Home-like material effects for Ideas UI (no background changes) */
+.ideas-page .ideas-card,
+.ideas-page .ideas-badge,
+.ideas-page .ideas-cta,
+.ideas-page .ideas-helper,
+.ideas-page .ideas-results,
+.ideas-page .ideas-bottom,
+.ideas-page .ideas-result-card,
+.ideas-page .ideas-chip {
+  position: relative;
+  overflow: hidden;
+}
+
+.ideas-page .ideas-card::before,
+.ideas-page .ideas-helper::before,
+.ideas-page .ideas-results::before,
+.ideas-page .ideas-result-card::before,
+.ideas-page .ideas-chip::before,
+.ideas-page .ideas-bottom::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(120% 90% at 20% 10%, rgba(235, 201, 175, 0.10), transparent 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.10), transparent 46%, rgba(0, 0, 0, 0.06));
+  opacity: 0.85;
+}
+
+html[data-theme="dark"] .ideas-page .ideas-card::before,
+html[data-theme="dark"] .ideas-page .ideas-helper::before,
+html[data-theme="dark"] .ideas-page .ideas-results::before,
+html[data-theme="dark"] .ideas-page .ideas-result-card::before,
+html[data-theme="dark"] .ideas-page .ideas-chip::before,
+html[data-theme="dark"] .ideas-page .ideas-bottom::before {
+  background:
+    radial-gradient(120% 90% at 18% 8%, rgba(215, 154, 98, 0.14), transparent 62%),
+    radial-gradient(120% 92% at 86% 88%, rgba(255, 227, 197, 0.10), transparent 64%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 46%, rgba(0, 0, 0, 0.14));
+  opacity: 0.9;
+}
+
+.ideas-page .ideas-chip:hover {
+  background-color: color-mix(in oklab, var(--ideas-surface-chip) 74%, transparent);
+}
+
+.ideas-page .ideas-bottom:hover {
+  background-color: color-mix(in oklab, var(--ideas-bottom-bg) 84%, transparent);
+}
+
+.ideas-page .ideas-cta:hover {
+  filter: saturate(1.02) contrast(1.02);
 }
 /* Stories page — premium editorial story frame */
 .stories-page {
