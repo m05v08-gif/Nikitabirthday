@@ -251,12 +251,13 @@ html[data-theme="light"] .ideas-page {
 }
 
 .ideas-page .ideas-toggle {
-  --tt-surface-w: 112px;
-  --tt-surface-h: 58px;
-  --tt-pad: 7px;
-  --tt-thumb: 44px;
-  --tt-icon: 18px;
-  --tt-shift: calc(112px - 14px - 44px);
+  /* Smaller toggle (match Home/Stories, less attention-grabbing) */
+  --tt-surface-w: 76px;
+  --tt-surface-h: 40px;
+  --tt-pad: 5px;
+  --tt-thumb: 30px;
+  --tt-icon: 14px;
+  --tt-shift: calc(var(--tt-surface-w) - 2 * var(--tt-pad) - var(--tt-thumb));
   border-radius: 29px;
 }
 
@@ -418,11 +419,11 @@ html[data-theme="light"] .stories-page {
 }
 
 .stories-page .stories-toggle {
-  --tt-surface-w: 112px;
-  --tt-surface-h: 58px;
-  --tt-pad: 7px;
-  --tt-thumb: 44px;
-  --tt-icon: 18px;
+  --tt-surface-w: 76px;
+  --tt-surface-h: 40px;
+  --tt-pad: 5px;
+  --tt-thumb: 30px;
+  --tt-icon: 14px;
   --tt-shift: calc(var(--tt-surface-w) - 2 * var(--tt-pad) - var(--tt-thumb));
 }
 
@@ -648,11 +649,11 @@ html[data-theme="dark"] .home-page .home-tile {
 
 .home-page .home-hero-toggle {
   box-shadow: 0 8px 28px hsl(225 30% 12% / 0.09);
-  --tt-surface-w: 112px;
-  --tt-surface-h: 58px;
-  --tt-pad: 7px;
-  --tt-thumb: 44px;
-  --tt-icon: 18px;
+  --tt-surface-w: 76px;
+  --tt-surface-h: 40px;
+  --tt-pad: 5px;
+  --tt-thumb: 30px;
+  --tt-icon: 14px;
   --tt-shift: calc(var(--tt-surface-w) - 2 * var(--tt-pad) - var(--tt-thumb));
 }
 
