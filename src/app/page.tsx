@@ -1,14 +1,5 @@
 import Link from "next/link";
-import { Playfair_Display } from "next/font/google";
 import { ThemeToggle } from "@/components/theme-toggle";
-
-const playfairHome = Playfair_Display({
-  subsets: ["latin", "cyrillic"],
-  weight: ["700", "800"],
-  style: ["normal", "italic"],
-  variable: "--font-home-display",
-  display: "swap"
-});
 
 function Tile({
   title,
@@ -48,7 +39,7 @@ function Tile({
 
 export default function Home() {
   return (
-    <main className={`${playfairHome.variable} home-page relative min-h-[100dvh] w-full`}>
+    <main className="home-page relative min-h-[100dvh] w-full">
       {/* Full-screen background: viewport-fixed so it is not clipped by layout max-w-md / padding */}
       <div
         aria-hidden="true"

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, Manrope } from "next/font/google";
+import { Fraunces, Inter, Manrope, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { ArtBackground } from "@/components/art-background";
 import { ThemeScript } from "@/components/theme-script";
@@ -19,6 +19,14 @@ const manrope = Manrope({
 const fraunces = Fraunces({
   subsets: ["latin", "latin-ext"],
   variable: "--font-art",
+  display: "swap"
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin", "cyrillic"],
+  weight: ["600", "700", "800"],
+  style: ["normal", "italic"],
+  variable: "--font-editorial",
   display: "swap"
 });
 
@@ -44,7 +52,7 @@ export default function RootLayout({
         <ThemeScript />
       </head>
       <body
-        className={`${inter.variable} ${manrope.variable} ${fraunces.variable} min-h-dvh font-sans antialiased`}
+        className={`${inter.variable} ${manrope.variable} ${fraunces.variable} ${playfair.variable} min-h-dvh font-sans antialiased`}
       >
         <div className="relative isolate min-h-dvh pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
           <ArtBackground />

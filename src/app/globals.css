@@ -171,7 +171,7 @@ html[data-theme="light"] ::selection {
   --ideas-shadow-bottom: 0 10px 22px rgba(0, 0, 0, 0.24);
 
   --ideas-pad-x: 16px;
-  --ideas-hero-size: 56px;
+  --ideas-hero-size: 55px;
   --ideas-chip-h: 60px;
   --ideas-cta-h: 68px;
 }
@@ -228,7 +228,7 @@ html[data-theme="light"] .ideas-page {
 @media (max-width: 389px) and (min-width: 360px) {
   .ideas-page {
     --ideas-pad-x: 14px;
-    --ideas-hero-size: 52px;
+    --ideas-hero-size: 51px;
     --ideas-chip-h: 56px;
     --radius-page-card: 28px;
     --ideas-cta-h: 64px;
@@ -238,7 +238,7 @@ html[data-theme="light"] .ideas-page {
 @media (max-width: 359px) {
   .ideas-page {
     --ideas-pad-x: 12px;
-    --ideas-hero-size: 48px;
+    --ideas-hero-size: 47px;
     --ideas-chip-h: 54px;
     --radius-page-card: 26px;
     --ideas-cta-h: 60px;
@@ -246,7 +246,7 @@ html[data-theme="light"] .ideas-page {
 }
 
 .ideas-page .ideas-title {
-  font-family: "Cormorant Garamond", "Playfair Display", var(--font-art), serif;
+  font-family: var(--font-editorial), "Cormorant Garamond", "Playfair Display", var(--font-art), serif;
   font-size: var(--ideas-hero-size);
 }
 
@@ -258,6 +258,17 @@ html[data-theme="light"] .ideas-page {
   --tt-icon: 18px;
   --tt-shift: calc(112px - 14px - 44px);
   border-radius: 29px;
+}
+
+.ideas-page .ideas-chip {
+  font-family: var(--font-editorial), ui-serif, Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.ideas-page .ideas-result-num {
+  font-family: var(--font-editorial), ui-serif, Georgia, "Times New Roman", serif;
+  font-weight: 700;
 }
 
 /* Home-like material effects for Ideas UI (no background changes) */
@@ -574,7 +585,7 @@ html[data-theme="light"] .home-page {
 }
 
 .home-page .home-hero-title {
-  font-family: var(--font-home-display), ui-serif, Georgia, "Times New Roman", serif;
+  font-family: var(--font-editorial), ui-serif, Georgia, "Times New Roman", serif;
   font-weight: 700;
   letter-spacing: -0.03em;
   color: var(--home-hero-headline);
@@ -599,7 +610,7 @@ html[data-theme="light"] .home-page {
 }
 
 .home-page .home-card-title {
-  font-family: var(--font-home-display), ui-serif, Georgia, "Times New Roman", serif;
+  font-family: var(--font-editorial), ui-serif, Georgia, "Times New Roman", serif;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--home-card-title);
