@@ -5,14 +5,18 @@ import { useCallback, useMemo, useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { parseNumberedIdeas } from "@/lib/parse-numbered-ideas";
 
-type Mode = "home" | "out";
-type Duration = "short" | "medium";
-type Budget = "zero" | "small";
+type City = "astana" | "tashkent";
+type CompanyType = "with_children" | "with_masha" | "with_friends" | "alone";
+type Duration = "1_2_hours" | "2_3_hours";
+type Budget = "econom" | "medium" | "premium";
+type Mood = "fun" | "calm" | "beautiful" | "legendary" | "surprise";
 
 export default function IdeasPage() {
-  const [mode, setMode] = useState<Mode>("home");
-  const [duration, setDuration] = useState<Duration>("short");
-  const [budget, setBudget] = useState<Budget>("small");
+  const [city, setCity] = useState<City>("astana");
+  const [companyType, setCompanyType] = useState<CompanyType>("with_friends");
+  const [duration, setDuration] = useState<Duration>("1_2_hours");
+  const [budget, setBudget] = useState<Budget>("medium");
+  const [mood, setMood] = useState<Mood>("beautiful");
 
   const [text, setText] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -38,7 +42,7 @@ export default function IdeasPage() {
       const res = await fetch("/api/ideas", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ mode, duration, budget })
+        body: JSON.stringify({ city, companyType, duration, budget, mood })
       });
       const json = (await res.json()) as { ok: boolean; text?: string; error?: string };
       if (!json.ok) {
@@ -53,15 +57,15 @@ export default function IdeasPage() {
     } finally {
       setLoading(false);
     }
-  }, [budget, duration, mode]);
+  }, [budget, city, companyType, duration, mood]);
 
-  const segInactive =
-    "border border-[color:var(--color-border)] bg-[color:var(--color-panel-2)] text-[color:var(--color-fg)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-md transition active:scale-[0.99] motion-safe:hover:bg-[color:var(--color-panel)]";
-  const segActive =
-    "border-2 border-[color-mix(in_oklab,var(--blob-b)_70%,var(--blob-a)_30%)] bg-[linear-gradient(135deg,color-mix(in_oklab,var(--blob-b)_38%,var(--color-panel)),color-mix(in_oklab,var(--blob-a)_28%,var(--color-panel)))] text-[color:var(--color-fg)] shadow-[var(--shadow-soft)] ring-2 ring-[color-mix(in_oklab,var(--blob-b)_55%,white)] outline outline-2 outline-[color-mix(in_oklab,var(--blob-b)_55%,var(--blob-a)_45%)] outline-offset-2 backdrop-blur-md";
+  const chipBase =
+    "min-h-[var(--ideas-chip-h)] rounded-[var(--radius-chip)] border px-4 text-center font-sans text-[17px] font-semibold leading-[1.2] tracking-[-0.01em] transition-[background-color,border-color,box-shadow,transform,color] duration-[220ms] ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.985]";
+  const chipInactive = `${chipBase} border-[color:var(--ideas-border-chip)] bg-[color:var(--ideas-surface-chip)] text-[color:var(--ideas-chip-fg)] shadow-[var(--shadow-chip)]`;
+  const chipActive = `${chipBase} border-[color:var(--ideas-border-selected)] bg-[color:var(--ideas-surface-selected)] text-[color:var(--ideas-text-primary)] shadow-[var(--ideas-chip-selected-shadow)]`;
 
   return (
-    <main className="relative min-h-[100dvh] w-full space-y-8 overflow-hidden">
+    <main className="ideas-page relative min-h-[100dvh] w-full overflow-hidden">
       {/* Full-screen background (ideas) */}
       <div
         aria-hidden="true"
@@ -73,182 +77,254 @@ export default function IdeasPage() {
       </div>
 
       {/* Content */}
-      <div className="relative z-20 animate-fade-in-up space-y-8">
-      <header className="relative space-y-4">
-        <div className="pointer-events-none absolute -right-6 top-8 h-24 w-24 rotate-12 rounded-3xl border border-[color:var(--color-stroke)] opacity-35" />
+      <div className="relative z-20 animate-fade-in-up">
+        <div className="mx-auto max-w-[430px] px-[var(--ideas-pad-x)] pb-[calc(32px_+_env(safe-area-inset-bottom))] pt-6">
+          <header className="ideas-hero">
+            <div className="flex items-center justify-between gap-3">
+              <div className="ideas-badge inline-flex h-10 items-center gap-2 rounded-[var(--radius-badge)] border border-[color:var(--ideas-border-chip)] bg-[color:var(--ideas-badge-bg)] px-4 shadow-[var(--shadow-chip)] backdrop-blur-[var(--blur-surface)]">
+                <span aria-hidden="true" className="h-[10px] w-[34px] rounded-full bg-[image:var(--ideas-badge-accent)] opacity-90" />
+                <span className="text-[12px] font-semibold uppercase tracking-[0.24em] text-[color:var(--ideas-text-secondary)]">
+                  ДЕНЬ РОЖДЕНИЯ
+                </span>
+              </div>
 
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0 space-y-4">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-panel)] px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-[color:var(--color-muted-2)] shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-md">
-              <span
-                aria-hidden="true"
-                className="inline-block h-2 w-10 rounded-full bg-[radial-gradient(circle_at_20%_30%,var(--blob-b),var(--blob-a))]"
-              />
-              Идеи на вечер
+              <ThemeToggle className="ideas-toggle border border-[color:var(--ideas-border-chip)] bg-[color:var(--ideas-badge-bg)] shadow-[var(--shadow-card)] ring-0 backdrop-blur-[var(--blur-surface)] motion-safe:hover:-translate-y-0 motion-safe:hover:shadow-[var(--shadow-card)]" />
             </div>
 
-            <h1 className="font-display text-balance-safe text-[2.15rem] font-semibold leading-[0.95] tracking-[-0.05em] text-[color:var(--color-fg)]">
-              Сегодня
+            <h1 className="ideas-title mt-[18px] max-w-[320px] font-[600] leading-[0.94] tracking-[-0.02em] text-[color:var(--ideas-text-primary)]">
+              Как отпраздновать
             </h1>
-          </div>
-          <div className="shrink-0 pt-0.5">
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
+            <p className="ideas-subtitle mt-3 max-w-[320px] text-[17px] leading-[1.45] tracking-[-0.01em] text-[color:var(--ideas-text-secondary)]">
+              Подберу 3 идеи по городу, бюджету, времени и настроению.
+            </p>
+          </header>
 
-      <section className="relative overflow-hidden rounded-[1.75rem] border border-[color:var(--color-border)] bg-[color:var(--color-panel)] p-5 shadow-[var(--shadow-soft)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-xl sm:p-6">
-        <div className="pointer-events-none absolute -left-24 top-10 h-44 w-44 rounded-full bg-[radial-gradient(circle_at_40%_35%,var(--blob-c),transparent_62%)] opacity-55 blur-3xl" />
-        <div className="pointer-events-none absolute -right-16 bottom-0 h-40 w-40 rounded-full bg-[radial-gradient(circle_at_50%_45%,var(--blob-b),transparent_62%)] opacity-45 blur-3xl" />
+          <section className="ideas-card mt-7 relative overflow-hidden rounded-[var(--radius-page-card)] border border-[color:var(--ideas-border-main)] bg-[color:var(--ideas-surface-main)] p-[24px_16px_18px_16px] shadow-[var(--shadow-card)] backdrop-blur-[var(--blur-surface)]">
+            <span aria-hidden="true" className="ideas-sparkle absolute right-[18px] top-[26px] text-[14px] opacity-[0.52] text-[color:var(--ideas-accent-sparkle)]">
+              ✦
+            </span>
 
-        <div className="relative space-y-6">
-          <div className="flex items-end justify-between gap-3">
-            <div className="text-sm font-semibold text-[color:var(--color-fg)]">Настройки</div>
-            <div
-              aria-hidden="true"
-              className="h-2 w-16 rounded-full bg-[radial-gradient(circle_at_20%_30%,var(--blob-c),var(--blob-a))] opacity-80 ring-1 ring-[color:var(--color-ring)]"
-            />
-          </div>
+            <div className="mb-[18px] text-[18px] font-bold leading-6 tracking-[-0.01em] text-[color:var(--ideas-text-primary)]">
+              Под ваш формат
+            </div>
 
           <div className="grid gap-2">
-            <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">Где</div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="ideas-section-label mb-[10px] text-[15px] font-medium leading-5 tracking-[-0.01em] text-[color:var(--ideas-text-muted)]">
+              Город
+            </div>
+            <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
-                onClick={() => setMode("home")}
-                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
-                  mode === "home" ? segActive : segInactive
-                }`}
+                onClick={() => setCity("astana")}
+                className={city === "astana" ? chipActive : chipInactive}
               >
-                Дома
+                Астана
               </button>
               <button
                 type="button"
-                onClick={() => setMode("out")}
-                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
-                  mode === "out" ? segActive : segInactive
-                }`}
+                onClick={() => setCity("tashkent")}
+                className={city === "tashkent" ? chipActive : chipInactive}
               >
-                Вне дома
+                Ташкент
               </button>
             </div>
           </div>
 
-          <div className="grid gap-2">
-            <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">Время</div>
-            <div className="grid grid-cols-2 gap-2">
+          <div className="mt-[18px] grid gap-2">
+            <div className="ideas-section-label mb-[10px] text-[15px] font-medium leading-5 tracking-[-0.01em] text-[color:var(--ideas-text-muted)]">
+              С кем
+            </div>
+            <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
-                onClick={() => setDuration("short")}
-                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
-                  duration === "short" ? segActive : segInactive
-                }`}
+                onClick={() => setCompanyType("with_children")}
+                className={companyType === "with_children" ? chipActive : chipInactive}
               >
-                30–60 мин
+                С детьми
               </button>
               <button
                 type="button"
-                onClick={() => setDuration("medium")}
-                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
-                  duration === "medium" ? segActive : segInactive
-                }`}
+                onClick={() => setCompanyType("with_masha")}
+                className={companyType === "with_masha" ? chipActive : chipInactive}
+              >
+                Вдвоем с Машей
+              </button>
+              <button
+                type="button"
+                onClick={() => setCompanyType("with_friends")}
+                className={companyType === "with_friends" ? chipActive : chipInactive}
+              >
+                С друзьями
+              </button>
+              <button
+                type="button"
+                onClick={() => setCompanyType("alone")}
+                className={companyType === "alone" ? chipActive : chipInactive}
+              >
+                Один
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-[18px] grid gap-2">
+            <div className="ideas-section-label mb-[10px] text-[15px] font-medium leading-5 tracking-[-0.01em] text-[color:var(--ideas-text-muted)]">
+              Сколько времени
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setDuration("1_2_hours")}
+                className={duration === "1_2_hours" ? chipActive : chipInactive}
+              >
+                1–2 часа
+              </button>
+              <button
+                type="button"
+                onClick={() => setDuration("2_3_hours")}
+                className={duration === "2_3_hours" ? chipActive : chipInactive}
               >
                 2–3 часа
               </button>
             </div>
           </div>
 
-          <div className="grid gap-2">
-            <div className="text-xs tracking-wide text-[color:var(--color-muted-2)]">Бюджет</div>
-            <div className="grid grid-cols-2 gap-2">
+          <div className="mt-[18px] grid gap-2">
+            <div className="ideas-section-label mb-[10px] text-[15px] font-medium leading-5 tracking-[-0.01em] text-[color:var(--ideas-text-muted)]">
+              Бюджет
+            </div>
+            <div className="grid grid-cols-3 gap-3">
               <button
                 type="button"
-                onClick={() => setBudget("zero")}
-                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
-                  budget === "zero" ? segActive : segInactive
-                }`}
+                onClick={() => setBudget("econom")}
+                className={`${budget === "econom" ? chipActive : chipInactive} min-h-[76px] px-3`}
               >
-                0
+                Экономно
               </button>
               <button
                 type="button"
-                onClick={() => setBudget("small")}
-                className={`rounded-2xl px-3 py-2.5 text-sm font-semibold ${
-                  budget === "small" ? segActive : segInactive
-                }`}
+                onClick={() => setBudget("medium")}
+                className={`${budget === "medium" ? chipActive : chipInactive} min-h-[76px] px-3`}
               >
-                Небольшой
+                Средне
+              </button>
+              <button
+                type="button"
+                onClick={() => setBudget("premium")}
+                className={`${budget === "premium" ? chipActive : chipInactive} min-h-[76px] px-3`}
+              >
+                Можно красиво
               </button>
             </div>
           </div>
-        </div>
-      </section>
 
-      <button
-        type="button"
-        disabled={!canGenerate}
-        onClick={generate}
-        className="w-full rounded-2xl bg-[linear-gradient(135deg,color-mix(in_oklab,var(--blob-b)_30%,white),color-mix(in_oklab,var(--blob-a)_26%,white))] px-4 py-3.5 text-sm font-semibold text-[color:var(--color-primary-ink)] shadow-[var(--shadow-soft)] ring-1 ring-[color:var(--color-ring)] transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 motion-safe:hover:-translate-y-0.5"
-      >
-        {loading ? "Генерирую…" : "Сгенерировать идеи"}
-      </button>
+          <div className="mt-[18px] grid gap-2">
+            <div className="ideas-section-label mb-[10px] text-[15px] font-medium leading-5 tracking-[-0.01em] text-[color:var(--ideas-text-muted)]">
+              Настроение
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setMood("fun")}
+                className={mood === "fun" ? chipActive : chipInactive}
+              >
+                Весело
+              </button>
+              <button
+                type="button"
+                onClick={() => setMood("calm")}
+                className={mood === "calm" ? chipActive : chipInactive}
+              >
+                Спокойно
+              </button>
+              <button
+                type="button"
+                onClick={() => setMood("beautiful")}
+                className={mood === "beautiful" ? chipActive : chipInactive}
+              >
+                Красиво
+              </button>
+              <button
+                type="button"
+                onClick={() => setMood("legendary")}
+                className={mood === "legendary" ? chipActive : chipInactive}
+              >
+                Легендарно
+              </button>
+              <button
+                type="button"
+                onClick={() => setMood("surprise")}
+                className={`${mood === "surprise" ? chipActive : chipInactive} col-span-2`}
+              >
+                Удиви меня
+              </button>
+            </div>
+          </div>
+          </section>
 
-      <div className="relative overflow-hidden rounded-[1.75rem] border border-[color:var(--color-border)] bg-[color:var(--color-panel)] p-5 shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-xl sm:p-6">
-        <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--color-stroke)] to-transparent" />
-        <div className="relative">
-            {error ? (
-              <pre className="whitespace-pre-wrap text-sm leading-relaxed text-[color:var(--color-muted)]">
-                {error}
-              </pre>
-            ) : text ? (
-              ideaCards ? (
-                <div className="grid gap-3">
-                  {ideaCards.map((idea, idx) => {
-                    const accents = [
-                      "from-[color-mix(in_oklab,var(--blob-a)_22%,transparent)] to-[color-mix(in_oklab,var(--blob-c)_14%,transparent)]",
-                      "from-[color-mix(in_oklab,var(--blob-b)_24%,transparent)] to-[color-mix(in_oklab,var(--blob-d)_16%,transparent)]",
-                      "from-[color-mix(in_oklab,var(--blob-c)_20%,transparent)] to-[color-mix(in_oklab,var(--blob-a)_12%,transparent)]"
-                    ];
-                    const accent = accents[idx % accents.length];
-                    return (
+          <button
+            type="button"
+            disabled={!canGenerate}
+            onClick={generate}
+            className="ideas-cta mt-6 inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-cta)] border border-[color:var(--ideas-cta-border)] bg-[image:var(--ideas-cta-bg)] px-5 text-[18px] font-bold leading-6 tracking-[-0.01em] text-[color:var(--ideas-cta-fg)] shadow-[var(--shadow-cta)] transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
+            style={{ height: "var(--ideas-cta-h)" }}
+          >
+            <span aria-hidden="true" className="text-[16px] opacity-80">
+              ✦
+            </span>
+            {loading ? "Подбираю…" : "Подобрать 3 идеи"}
+          </button>
+
+          {!text && !error ? (
+            <div className="ideas-helper mt-5 flex w-full items-start gap-[14px] rounded-[var(--radius-cta)] border border-[color:var(--ideas-border-main)] bg-[color:var(--ideas-helper-bg)] p-[18px] shadow-[var(--ideas-shadow-helper)] backdrop-blur-[var(--blur-surface)]">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[color:var(--ideas-helper-icon-bg)]">
+                <span aria-hidden="true" className="opacity-80">
+                  ✦
+                </span>
+              </div>
+              <div className="text-[16px] leading-[1.5] tracking-[-0.01em] text-[color:var(--ideas-text-secondary)]">
+                Появятся 3 идеи с атмосферой, примерным бюджетом и понятным планом.
+              </div>
+            </div>
+          ) : (
+            <div className="ideas-results mt-5 w-full rounded-[28px] border border-[color:var(--ideas-results-border)] bg-[color:var(--ideas-results-bg)] p-[14px] shadow-[var(--ideas-shadow-results)] backdrop-blur-[var(--blur-surface)]">
+              {error ? (
+                <pre className="whitespace-pre-wrap text-[16px] leading-[1.5] tracking-[-0.01em] text-[color:var(--ideas-text-secondary)]">
+                  {error}
+                </pre>
+              ) : text ? (
+                ideaCards ? (
+                  <div className="flex flex-col gap-[14px]">
+                    {ideaCards.map((idea, idx) => (
                       <div
                         key={`${idx}-${idea.slice(0, 12)}`}
-                        className="relative overflow-hidden rounded-[1.25rem] border border-[color:var(--color-border)] bg-[color:var(--color-panel-2)] p-4 shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)]"
+                        className="grid grid-cols-[34px_1fr] items-start gap-x-[14px] rounded-[var(--radius-result-card)] border border-[color:var(--ideas-result-border)] bg-[color:var(--ideas-result-bg)] p-[18px] shadow-[var(--ideas-shadow-result)]"
                       >
-                        <div
-                          className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${accent} opacity-90`}
-                        />
-                        <div className="relative flex gap-3">
-                          <div className="font-display text-2xl font-semibold tabular-nums text-[color:var(--color-fg)] opacity-90">
-                            {idx + 1}
-                          </div>
-                          <div className="text-sm leading-relaxed text-[color:var(--color-fg)]">
-                            {idea}
-                          </div>
+                        <div className="pt-[2px] font-[700] leading-none text-[28px] text-[color:var(--ideas-text-primary)]">
+                          {idx + 1}
+                        </div>
+                        <div className="text-[16px] leading-[1.62] tracking-[-0.01em] text-[color:var(--ideas-result-fg)]">
+                          {idea}
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <pre className="whitespace-pre-wrap text-sm leading-relaxed text-[color:var(--color-fg)]">
-                  {text}
-                </pre>
-              )
-            ) : (
-              <div className="text-sm leading-relaxed text-[color:var(--color-muted)]">
-                Нажми кнопку — появятся 3 короткие идеи на вечер.
-              </div>
-            )}
-        </div>
-      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <pre className="whitespace-pre-wrap text-[16px] leading-[1.62] tracking-[-0.01em] text-[color:var(--ideas-result-fg)]">
+                    {text}
+                  </pre>
+                )
+              ) : null}
+            </div>
+          )}
 
-      <Link
-        href="/"
-        className="inline-flex w-full items-center justify-center rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-panel-2)] px-4 py-3.5 text-sm font-semibold text-[color:var(--color-fg)] shadow-[var(--shadow-card)] ring-1 ring-[color:var(--color-ring)] backdrop-blur-md transition active:scale-[0.99] motion-safe:hover:bg-[color:var(--color-panel)]"
-      >
-        Домой
-      </Link>
+          <Link
+            href="/"
+            className="ideas-bottom mt-6 inline-flex w-full items-center justify-center rounded-[var(--radius-bottom-button)] border border-[color:var(--ideas-border-main)] bg-[color:var(--ideas-bottom-bg)] text-[18px] font-bold leading-6 tracking-[-0.01em] text-[color:var(--ideas-text-primary)] shadow-[var(--ideas-shadow-bottom)] backdrop-blur-[var(--blur-surface)] transition active:scale-[0.99]"
+            style={{ height: "64px" }}
+          >
+            Домой
+          </Link>
+        </div>
       </div>
     </main>
   );

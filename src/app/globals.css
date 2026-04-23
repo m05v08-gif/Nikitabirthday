@@ -110,6 +110,155 @@ html[data-theme="light"] ::selection {
   background: hsl(214 95% 55% / 0.22);
 }
 
+/* Ideas page — UI redesign (background untouched) */
+.ideas-page {
+  --radius-page-card: 32px;
+  --radius-chip: 22px;
+  --radius-cta: 24px;
+  --radius-badge: 20px;
+  --radius-result-card: 26px;
+  --radius-bottom-button: 24px;
+  --border-hairline: 1px;
+  --border-strong: 1.5px;
+  --blur-surface: 16px;
+
+  --shadow-card: 0 14px 40px rgba(0, 0, 0, 0.34);
+  --shadow-chip: 0 3px 10px rgba(0, 0, 0, 0.22);
+  --shadow-cta: 0 12px 26px rgba(0, 0, 0, 0.32);
+
+  --ideas-text-primary: #F5F1EA;
+  --ideas-text-secondary: #E4DDD3;
+  --ideas-text-muted: #AAB2C3;
+
+  --ideas-surface-main: rgba(14, 23, 39, 0.76);
+  --ideas-surface-secondary: rgba(17, 29, 49, 0.58);
+  --ideas-surface-chip: rgba(18, 30, 51, 0.54);
+  --ideas-surface-selected: rgba(30, 41, 68, 0.72);
+
+  --ideas-border-main: rgba(110, 125, 154, 0.22);
+  --ideas-border-chip: rgba(77, 93, 126, 0.36);
+  --ideas-border-selected: rgba(224, 208, 194, 0.52);
+
+  --ideas-badge-bg: rgba(15, 24, 40, 0.58);
+  --ideas-badge-accent: linear-gradient(90deg, rgba(214, 154, 87, 0.60), rgba(83, 105, 148, 0.50));
+
+  --ideas-accent-sparkle: rgba(255, 226, 189, 0.46);
+
+  --ideas-chip-fg: #F1ECE3;
+  --ideas-chip-selected-shadow:
+    0 0 0 2px rgba(255, 231, 211, 0.08),
+    0 6px 14px rgba(0, 0, 0, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+  --ideas-cta-bg: linear-gradient(180deg, rgba(248, 244, 238, 0.98) 0%, rgba(235, 227, 214, 0.98) 100%);
+  --ideas-cta-border: rgba(255, 255, 255, 0.10);
+  --ideas-cta-fg: #121A2A;
+
+  --ideas-helper-bg: rgba(16, 25, 42, 0.66);
+  --ideas-helper-icon-bg: rgba(214, 154, 87, 0.14);
+  --ideas-shadow-helper: 0 10px 24px rgba(0, 0, 0, 0.24);
+
+  --ideas-results-bg: rgba(14, 23, 39, 0.64);
+  --ideas-results-border: rgba(110, 125, 154, 0.20);
+  --ideas-shadow-results: 0 10px 28px rgba(0, 0, 0, 0.28);
+
+  --ideas-result-bg: rgba(18, 29, 48, 0.70);
+  --ideas-result-border: rgba(87, 103, 136, 0.30);
+  --ideas-shadow-result: 0 10px 28px rgba(0, 0, 0, 0.28);
+  --ideas-result-fg: #E6DED4;
+
+  --ideas-bottom-bg: rgba(14, 23, 39, 0.66);
+  --ideas-shadow-bottom: 0 10px 22px rgba(0, 0, 0, 0.24);
+
+  --ideas-pad-x: 16px;
+  --ideas-hero-size: 56px;
+  --ideas-chip-h: 60px;
+  --ideas-cta-h: 68px;
+}
+
+html[data-theme="light"] .ideas-page {
+  --shadow-card: 0 10px 32px rgba(82, 63, 39, 0.08);
+  --shadow-chip: 0 2px 8px rgba(82, 63, 39, 0.05);
+  --shadow-cta: 0 10px 24px rgba(177, 120, 73, 0.16);
+
+  --ideas-text-primary: #1F2433;
+  --ideas-text-secondary: #3A4251;
+  --ideas-text-muted: #7A8190;
+
+  --ideas-surface-main: rgba(248, 244, 238, 0.84);
+  --ideas-surface-secondary: rgba(255, 255, 255, 0.52);
+  --ideas-surface-chip: rgba(255, 255, 255, 0.44);
+  --ideas-surface-selected: rgba(248, 240, 234, 0.92);
+
+  --ideas-border-main: rgba(194, 183, 164, 0.40);
+  --ideas-border-chip: rgba(173, 180, 192, 0.38);
+  --ideas-border-selected: rgba(228, 197, 172, 0.88);
+
+  --ideas-badge-bg: rgba(248, 244, 238, 0.58);
+  --ideas-badge-accent: linear-gradient(90deg, rgba(235, 201, 175, 0.90), rgba(196, 212, 223, 0.90));
+
+  --ideas-accent-sparkle: rgba(214, 155, 106, 0.62);
+
+  --ideas-chip-fg: #273042;
+  --ideas-chip-selected-shadow:
+    0 0 0 2px rgba(245, 232, 222, 0.92),
+    0 4px 12px rgba(188, 144, 109, 0.10);
+
+  --ideas-cta-bg: linear-gradient(180deg, rgba(248, 239, 229, 0.98) 0%, rgba(241, 224, 204, 0.98) 100%);
+  --ideas-cta-border: rgba(228, 197, 172, 0.56);
+  --ideas-cta-fg: #1F2433;
+
+  --ideas-helper-bg: rgba(248, 244, 238, 0.72);
+  --ideas-helper-icon-bg: rgba(235, 201, 175, 0.24);
+  --ideas-shadow-helper: 0 8px 22px rgba(82, 63, 39, 0.06);
+
+  --ideas-results-bg: rgba(248, 244, 238, 0.64);
+  --ideas-results-border: rgba(194, 183, 164, 0.32);
+  --ideas-shadow-results: 0 8px 24px rgba(82, 63, 39, 0.06);
+
+  --ideas-result-bg: rgba(252, 250, 246, 0.88);
+  --ideas-result-border: rgba(201, 190, 172, 0.36);
+  --ideas-shadow-result: 0 8px 24px rgba(82, 63, 39, 0.07);
+  --ideas-result-fg: #2E3444;
+
+  --ideas-bottom-bg: rgba(248, 244, 238, 0.74);
+  --ideas-shadow-bottom: 0 8px 22px rgba(82, 63, 39, 0.06);
+}
+
+@media (max-width: 389px) and (min-width: 360px) {
+  .ideas-page {
+    --ideas-pad-x: 14px;
+    --ideas-hero-size: 52px;
+    --ideas-chip-h: 56px;
+    --radius-page-card: 28px;
+    --ideas-cta-h: 64px;
+  }
+}
+
+@media (max-width: 359px) {
+  .ideas-page {
+    --ideas-pad-x: 12px;
+    --ideas-hero-size: 48px;
+    --ideas-chip-h: 54px;
+    --radius-page-card: 26px;
+    --ideas-cta-h: 60px;
+  }
+}
+
+.ideas-page .ideas-title {
+  font-family: "Cormorant Garamond", "Playfair Display", var(--font-art), serif;
+  font-size: var(--ideas-hero-size);
+}
+
+.ideas-page .ideas-toggle {
+  --tt-surface-w: 112px;
+  --tt-surface-h: 58px;
+  --tt-pad: 7px;
+  --tt-thumb: 44px;
+  --tt-icon: 18px;
+  --tt-shift: calc(112px - 14px - 44px);
+  border-radius: 29px;
+}
 /* Stories page — premium editorial story frame */
 .stories-page {
   --story-frame-bg: color-mix(in oklab, var(--color-panel) 48%, transparent);
