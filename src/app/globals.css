@@ -136,17 +136,16 @@ html[data-theme="light"] ::selection {
   --story-chip-shadow: 0 12px 34px hsl(230 45% 4% / 0.18);
   --story-chip-fg: var(--color-fg);
   /* Active state: higher contrast, still premium */
-  --story-chip-bg-active: color-mix(in oklab, var(--color-panel) 78%, transparent);
-  --story-chip-border-active: color-mix(in oklab, var(--blob-b) 52%, var(--color-border));
-  --story-chip-ring-active: color-mix(in oklab, var(--blob-b) 48%, white);
-  --story-chip-shadow-active: 0 18px 52px hsl(230 45% 4% / 0.34);
+  --story-chip-bg-active: color-mix(in oklab, var(--color-panel) 92%, transparent);
+  --story-chip-border-active: color-mix(in oklab, var(--blob-b) 72%, white);
+  --story-chip-ring-active: color-mix(in oklab, var(--blob-b) 62%, white);
+  --story-chip-shadow-active: 0 22px 70px hsl(230 45% 4% / 0.42);
   --story-chip-fg-active: var(--color-fg);
 
-  --story-primary-bg: linear-gradient(
-    135deg,
-    color-mix(in oklab, var(--blob-b) 26%, color-mix(in oklab, var(--color-panel) 70%, black)),
-    color-mix(in oklab, var(--blob-a) 18%, color-mix(in oklab, var(--color-panel) 72%, black))
-  );
+  /* Primary CTA: solid, warm, readable (dark mode) */
+  --story-primary-bg: color-mix(in oklab, hsl(28 78% 56% / 0.72) 58%, hsl(225 28% 14% / 0.92));
+  --story-primary-bg-hover: color-mix(in oklab, hsl(28 78% 56% / 0.78) 62%, hsl(225 28% 14% / 0.92));
+  --story-primary-border: color-mix(in oklab, hsl(28 78% 56% / 0.48) 44%, var(--color-border));
   --story-primary-fg: var(--color-fg);
   --story-primary-shadow: 0 22px 70px hsl(230 45% 4% / 0.44);
   --story-primary-ring: color-mix(in oklab, var(--color-ring) 70%, transparent);
@@ -182,14 +181,17 @@ html[data-theme="light"] .stories-page {
   --story-chip-ring: hsl(228 30% 20% / 0.06);
   --story-chip-shadow: 0 12px 34px hsl(28 40% 24% / 0.10);
   --story-chip-fg: hsl(228 18% 26%);
-  --story-chip-bg-active: hsl(36 60% 96% / 0.94);
-  --story-chip-border-active: hsl(28 80% 52% / 0.55);
-  --story-chip-ring-active: hsl(28 80% 52% / 0.28);
-  --story-chip-shadow-active: 0 16px 46px hsl(28 40% 24% / 0.18);
+  --story-chip-bg-active: hsl(36 70% 97% / 0.98);
+  --story-chip-border-active: hsl(28 85% 52% / 0.82);
+  --story-chip-ring-active: hsl(28 85% 52% / 0.38);
+  --story-chip-shadow-active: 0 18px 52px hsl(28 40% 24% / 0.22);
   --story-chip-fg-active: hsl(228 28% 18%);
 
-  --story-primary-bg: linear-gradient(135deg, hsl(28 92% 60% / 0.92), hsl(214 92% 58% / 0.78));
-  --story-primary-fg: hsl(228 28% 16%);
+  /* Light: CTA must not disappear on bright background */
+  --story-primary-bg: hsl(26 78% 72% / 0.72);
+  --story-primary-bg-hover: hsl(26 78% 70% / 0.80);
+  --story-primary-border: hsl(26 55% 52% / 0.38);
+  --story-primary-fg: hsl(228 28% 14%);
   --story-primary-shadow: 0 22px 70px hsl(28 40% 24% / 0.18);
   --story-primary-ring: hsl(228 30% 20% / 0.08);
 
