@@ -61,7 +61,19 @@ export default function IdeasPage() {
     "border-2 border-[color-mix(in_oklab,var(--blob-b)_70%,var(--blob-a)_30%)] bg-[linear-gradient(135deg,color-mix(in_oklab,var(--blob-b)_38%,var(--color-panel)),color-mix(in_oklab,var(--blob-a)_28%,var(--color-panel)))] text-[color:var(--color-fg)] shadow-[var(--shadow-soft)] ring-2 ring-[color-mix(in_oklab,var(--blob-b)_55%,white)] outline outline-2 outline-[color-mix(in_oklab,var(--blob-b)_55%,var(--blob-a)_45%)] outline-offset-2 backdrop-blur-md";
 
   return (
-    <main className="animate-fade-in-up space-y-8">
+    <main className="relative min-h-[100dvh] w-full space-y-8 overflow-hidden">
+      {/* Full-screen background (ideas) */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-[5] h-[100vh] min-h-[100dvh] w-screen"
+      >
+        <div className="h-full w-full bg-[image:var(--ideas-artwork)] bg-cover bg-center bg-no-repeat opacity-100" />
+        <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_22%_12%,hsl(0_0%_0%_/0.22)_0%,transparent_66%)] opacity-60" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,hsl(0_0%_0%_/0.26)_100%)] opacity-50" />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-20 animate-fade-in-up space-y-8">
       <header className="relative space-y-4">
         <div className="pointer-events-none absolute -right-6 top-8 h-24 w-24 rotate-12 rounded-3xl border border-[color:var(--color-stroke)] opacity-35" />
 
@@ -237,6 +249,7 @@ export default function IdeasPage() {
       >
         Домой
       </Link>
+      </div>
     </main>
   );
 }
