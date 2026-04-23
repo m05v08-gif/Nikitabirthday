@@ -96,7 +96,7 @@ export default function StoriesPage() {
   );
 
   return (
-    <main className="stories-page relative min-h-[100dvh] w-full space-y-6 overflow-hidden">
+    <main className="stories-page relative min-h-[100dvh] w-full space-y-8 overflow-hidden">
       {/* Full-screen background (stories) */}
       <div
         aria-hidden="true"
@@ -109,12 +109,12 @@ export default function StoriesPage() {
 
       {/* Content */}
       <div className="relative z-20 animate-fade-in-up">
-      <header className="space-y-3">
+      <header className="space-y-3 pt-2 sm:pt-3">
         <div className="flex items-center justify-between">
           <button
             type="button"
             onClick={() => router.back()}
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-border)_55%,transparent)] bg-[color:color-mix(in_oklab,var(--color-panel-2)_42%,transparent)] text-[color:var(--color-fg)] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_55%,transparent)] backdrop-blur-sm transition active:scale-[0.98] motion-safe:hover:bg-[color:color-mix(in_oklab,var(--color-panel)_45%,transparent)]"
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-border)_45%,transparent)] bg-[color:color-mix(in_oklab,var(--color-panel-2)_30%,transparent)] text-[color:color-mix(in_oklab,var(--color-fg)_92%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_45%,transparent)] backdrop-blur-sm transition active:scale-[0.98] motion-safe:hover:bg-[color:color-mix(in_oklab,var(--color-panel)_36%,transparent)]"
             aria-label="Назад"
           >
             <span aria-hidden="true" className="text-xl leading-none">
@@ -123,10 +123,6 @@ export default function StoriesPage() {
           </button>
 
           <div className="flex min-w-0 flex-1 items-center justify-end gap-2">
-            <div className="inline-flex items-center gap-2 px-1.5 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.34em] text-[color:var(--color-muted-2)] opacity-80">
-              <span aria-hidden="true" className="h-1 w-1 rounded-full bg-[color:var(--color-muted-2)] opacity-60" />
-              Истории
-            </div>
             <ThemeToggle className="border-[color:color-mix(in_oklab,var(--color-border)_45%,transparent)] bg-[color:color-mix(in_oklab,var(--color-toggle-bg)_30%,transparent)] shadow-none ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_55%,transparent)] backdrop-blur-sm motion-safe:hover:shadow-none motion-safe:hover:-translate-y-0" />
           </div>
         </div>
@@ -134,7 +130,7 @@ export default function StoriesPage() {
         {/* Intentionally no headline here (reading mode) */}
       </header>
 
-      <section className="space-y-4">
+      <section className="space-y-5 pt-2 sm:pt-3">
         <StoryView data={data} loading={loading} storyKey={storyKey} />
 
         <div className="stories-reactions flex flex-wrap justify-center gap-2 pt-1">
@@ -160,12 +156,12 @@ export default function StoriesPage() {
           })}
         </div>
 
-        <div className="flex gap-3 pt-1">
+        <div className="flex gap-3 pt-2">
           <button
             type="button"
             onClick={() => void load()}
             disabled={loading}
-            className="inline-flex flex-1 items-center justify-center rounded-[1.15rem] bg-[color:var(--story-primary-bg)] px-4 py-3.5 text-sm font-semibold text-[color:var(--story-primary-fg)] shadow-[var(--story-primary-shadow)] ring-1 ring-[color:var(--story-primary-ring)] transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 motion-safe:hover:-translate-y-0.5"
+            className="inline-flex flex-1 items-center justify-center rounded-[1.15rem] border border-[color:var(--story-primary-border)] bg-[color:var(--story-primary-bg)] px-4 py-3.5 text-sm font-semibold text-[color:var(--story-primary-fg)] shadow-[var(--story-primary-shadow)] ring-1 ring-[color:var(--story-primary-ring)] transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 motion-safe:hover:-translate-y-0.5 motion-safe:hover:bg-[color:var(--story-primary-bg-hover)]"
           >
             {loading ? "Еще…" : "Еще история"}
           </button>
