@@ -12,7 +12,7 @@ export function CodeUnlockScreen({ code, onUnlocked }: CodeUnlockScreenProps) {
   const [value, setValue] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const masked = useMemo(() => "•".repeat(value.length), [value.length]);
+  const masked = useMemo(() => "*".repeat(value.length), [value.length]);
 
   useEffect(() => {
     const t = window.setTimeout(() => inputRef.current?.focus(), 160);
@@ -60,7 +60,8 @@ export function CodeUnlockScreen({ code, onUnlocked }: CodeUnlockScreenProps) {
               setValue(next);
               setError(null);
             }}
-            className="h-full w-full rounded-[10px] border border-transparent bg-transparent text-center text-[0.01px] text-transparent caret-black/40 outline-none"
+            onFocus={() => setError(null)}
+            className="h-full w-full rounded-[10px] border border-transparent bg-transparent text-center text-[16px] text-transparent caret-black/40 outline-none"
             aria-invalid={Boolean(error)}
           />
 
