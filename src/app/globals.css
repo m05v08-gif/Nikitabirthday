@@ -428,6 +428,15 @@ html[data-theme="light"] .stories-page {
   --tt-shift: calc(var(--tt-surface-w) - 2 * var(--tt-pad) - var(--tt-thumb));
 }
 
+.yakut-quest-page .yakut-toggle {
+  --tt-surface-w: 76px;
+  --tt-surface-h: 40px;
+  --tt-pad: 5px;
+  --tt-thumb: 30px;
+  --tt-icon: 14px;
+  --tt-shift: calc(var(--tt-surface-w) - 2 * var(--tt-pad) - var(--tt-thumb));
+}
+
 @keyframes fade-in-up {
   from {
     opacity: 0;

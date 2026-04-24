@@ -32,7 +32,7 @@ export default function YakutQuestPage() {
                 </span>
               </Link>
 
-              <ThemeToggle className="home-hero-toggle border-[color:color-mix(in_oklab,var(--color-border)_30%,transparent)] bg-[color:color-mix(in_oklab,var(--color-toggle-bg)_28%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_34%,transparent)] backdrop-blur-[18px] motion-safe:hover:translate-y-0 motion-safe:hover:shadow-[var(--shadow-card)]" />
+              <ThemeToggle className="yakut-toggle border-[color:color-mix(in_oklab,var(--color-border)_30%,transparent)] bg-[color:color-mix(in_oklab,var(--color-toggle-bg)_28%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_34%,transparent)] backdrop-blur-[18px] motion-safe:hover:translate-y-0 motion-safe:hover:shadow-[var(--shadow-card)]" />
             </div>
           </header>
 
@@ -42,7 +42,7 @@ export default function YakutQuestPage() {
               Угадай якутское слово
             </h1>
             <p className="home-hero-sub mt-3 text-pretty text-[0.98rem] leading-relaxed text-[color:var(--home-hero-sub)]">
-              Маленький квест из мира, где всё началось
+              Когда-нибудь ты поймёшь, о чём мы с мамой говорим
             </p>
           </div>
 
