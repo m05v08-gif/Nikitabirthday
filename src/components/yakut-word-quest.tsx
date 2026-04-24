@@ -166,7 +166,7 @@ export function YakutWordQuest() {
     "border-[color:color-mix(in_oklab,var(--color-border)_55%,transparent)]";
 
   return (
-    <section className="mt-4">
+    <section>
       <div
         className={`relative overflow-hidden rounded-[1.25rem] border ${cardBg} p-[1.1rem] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_34%,transparent)] backdrop-blur-[16px]`}
       >
@@ -176,12 +176,6 @@ export function YakutWordQuest() {
         />
 
         <div className="relative">
-          <div className="font-display text-[1.18rem] font-semibold leading-[1.1] tracking-[-0.02em] text-[color:color-mix(in_oklab,var(--color-fg)_92%,transparent)]">
-            Угадай якутское слово
-          </div>
-          <div className="mt-2 text-[0.92rem] leading-[1.45] tracking-[-0.01em] text-[color:color-mix(in_oklab,var(--color-muted)_92%,transparent)]">
-            Маленький квест из мира, где всё началось
-          </div>
 
           <div key={`${current.word}-${version}`} className="mt-5 animate-[yakut_fade_420ms_ease-out_both]">
             <div className="text-center font-display text-[2.25rem] font-semibold leading-none tracking-[-0.03em] text-[color:color-mix(in_oklab,var(--color-fg)_96%,transparent)]">
@@ -211,10 +205,10 @@ export function YakutWordQuest() {
                 "ring-2 ring-[color:color-mix(in_oklab,var(--blob-b)_22%,transparent)]";
 
               const wrong =
-                "border-[color:color-mix(in_oklab,hsl(18_70%_52%_/_0.32)_58%,transparent)] " +
-                "bg-[color:color-mix(in_oklab,hsl(18_70%_52%_/_0.12)_44%,transparent)] " +
+                "border-[color:color-mix(in_oklab,hsl(16_66%_50%_/_0.26)_58%,transparent)] " +
+                "bg-[color:color-mix(in_oklab,hsl(16_66%_50%_/_0.10)_44%,transparent)] " +
                 "text-[color:color-mix(in_oklab,var(--color-fg)_88%,transparent)] " +
-                "ring-1 ring-[color:color-mix(in_oklab,hsl(18_70%_52%_/_0.12)_45%,transparent)]";
+                "ring-1 ring-[color:color-mix(in_oklab,hsl(16_66%_50%_/_0.10)_45%,transparent)]";
 
               const chosen =
                 "border-[color:color-mix(in_oklab,var(--color-fg)_20%,transparent)] " +

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { YakutWordQuest } from "@/components/yakut-word-quest";
 
 function Tile({
   title,
@@ -11,9 +10,10 @@ function Tile({
   title: string;
   subtitle: string;
   href: string;
-  variant: "stories" | "ideas";
+  variant: "stories" | "ideas" | "yakut";
 }) {
-  const variantClass = variant === "stories" ? "home-tile--stories" : "home-tile--ideas";
+  const variantClass =
+    variant === "stories" ? "home-tile--stories" : variant === "ideas" ? "home-tile--ideas" : "home-tile--yakut";
   const panel =
     variant === "stories"
       ? "bg-[color:color-mix(in_oklab,var(--color-panel)_22%,transparent)]"
@@ -21,7 +21,9 @@ function Tile({
   const glow =
     variant === "stories"
       ? "bg-[radial-gradient(circle_at_18%_18%,color-mix(in_oklab,var(--blob-b)_14%,transparent),transparent_62%),radial-gradient(circle_at_82%_78%,color-mix(in_oklab,var(--blob-a)_12%,transparent),transparent_66%)]"
-      : "bg-[radial-gradient(circle_at_20%_28%,color-mix(in_oklab,var(--blob-a)_12%,transparent),transparent_64%),radial-gradient(circle_at_78%_22%,color-mix(in_oklab,var(--blob-c)_10%,transparent),transparent_66%)]";
+      : variant === "ideas"
+        ? "bg-[radial-gradient(circle_at_20%_28%,color-mix(in_oklab,var(--blob-a)_12%,transparent),transparent_64%),radial-gradient(circle_at_78%_22%,color-mix(in_oklab,var(--blob-c)_10%,transparent),transparent_66%)]"
+        : "bg-[radial-gradient(circle_at_20%_28%,color-mix(in_oklab,var(--blob-c)_12%,transparent),transparent_64%),radial-gradient(circle_at_78%_22%,color-mix(in_oklab,var(--blob-b)_10%,transparent),transparent_66%)]";
 
   return (
     <Link
@@ -85,9 +87,8 @@ export function MainHomeScreen() {
             href="/stories"
           />
           <Tile variant="ideas" title="Вдохновения" subtitle="Разные идеи на вечер" href="/ideas" />
+          <Tile variant="yakut" title="Угадай якутское слово" subtitle="Маленький квест" href="/yakut-quest" />
         </section>
-
-        <YakutWordQuest />
 
         <p className="home-helper home-helper-wrap mt-9 text-center text-[0.72rem] leading-relaxed opacity-95">
           <span className="block">Совет: добавь страницу на экран телефона</span>
