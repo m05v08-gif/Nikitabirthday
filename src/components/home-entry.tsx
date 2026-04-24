@@ -20,9 +20,7 @@ export function HomeEntry() {
 
   useEffect(() => {
     const shouldReset =
-      process.env.NODE_ENV !== "production" &&
-      typeof window !== "undefined" &&
-      new URLSearchParams(window.location.search).get("resetGift") === "1";
+      typeof window !== "undefined" && new URLSearchParams(window.location.search).get("resetGift") === "1";
 
     if (shouldReset) {
       try {
