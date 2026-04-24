@@ -265,16 +265,16 @@ export function YakutWordQuest() {
                 "ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_30%,transparent)]";
 
               const correct =
-                "border-[color:color-mix(in_oklab,var(--blob-b)_58%,white)] " +
-                "bg-[color:color-mix(in_oklab,var(--blob-b)_18%,transparent)] " +
+                "border-[color:color-mix(in_oklab,hsl(145_55%_42%_/_0.70)_72%,white)] " +
+                "bg-[color:color-mix(in_oklab,hsl(145_55%_42%_/_0.14)_52%,transparent)] " +
                 "text-[color:color-mix(in_oklab,var(--color-fg)_96%,transparent)] " +
-                "ring-2 ring-[color:color-mix(in_oklab,var(--blob-b)_22%,transparent)]";
+                "ring-2 ring-[color:color-mix(in_oklab,hsl(145_55%_42%_/_0.22)_55%,transparent)]";
 
               const wrong =
-                "border-[color:color-mix(in_oklab,hsl(16_66%_50%_/_0.26)_58%,transparent)] " +
-                "bg-[color:color-mix(in_oklab,hsl(16_66%_50%_/_0.10)_44%,transparent)] " +
+                "border-[color:color-mix(in_oklab,hsl(6_72%_52%_/_0.65)_72%,transparent)] " +
+                "bg-[color:color-mix(in_oklab,hsl(6_72%_52%_/_0.12)_48%,transparent)] " +
                 "text-[color:color-mix(in_oklab,var(--color-fg)_88%,transparent)] " +
-                "ring-1 ring-[color:color-mix(in_oklab,hsl(16_66%_50%_/_0.10)_45%,transparent)]";
+                "ring-1 ring-[color:color-mix(in_oklab,hsl(6_72%_52%_/_0.14)_45%,transparent)]";
 
               const chosen =
                 "border-[color:color-mix(in_oklab,var(--color-fg)_20%,transparent)] " +
@@ -319,7 +319,7 @@ export function YakutWordQuest() {
                     setFeedback(null);
                     setVersion((v) => v + 1);
                   }}
-                  className="inline-flex w-full items-center justify-center rounded-[1.1rem] border border-[color:color-mix(in_oklab,var(--color-border)_42%,transparent)] bg-[color:color-mix(in_oklab,var(--blob-b)_24%,color-mix(in_oklab,var(--color-panel)_34%,transparent))] px-4 py-3 text-[0.98rem] font-semibold tracking-[-0.01em] text-[color:color-mix(in_oklab,var(--color-fg)_92%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--blob-b)_18%,color-mix(in_oklab,var(--color-ring)_26%,transparent))] backdrop-blur-[16px] transition active:scale-[0.99] motion-safe:hover:bg-[color:color-mix(in_oklab,var(--blob-b)_30%,color-mix(in_oklab,var(--color-panel)_40%,transparent))]"
+                  className="inline-flex w-full items-center justify-center rounded-[1.1rem] border border-[color:color-mix(in_oklab,var(--blob-b)_44%,color-mix(in_oklab,var(--color-border)_40%,transparent))] bg-[color:color-mix(in_oklab,var(--blob-b)_40%,color-mix(in_oklab,var(--color-panel)_30%,transparent))] px-4 py-3 text-[0.98rem] font-semibold tracking-[-0.01em] text-[color:color-mix(in_oklab,var(--color-fg)_94%,transparent)] shadow-[0_16px_44px_color-mix(in_oklab,var(--blob-b)_18%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--blob-b)_26%,color-mix(in_oklab,var(--color-ring)_22%,transparent))] backdrop-blur-[16px] transition active:scale-[0.99] motion-safe:hover:bg-[color:color-mix(in_oklab,var(--blob-b)_48%,color-mix(in_oklab,var(--color-panel)_36%,transparent))]"
                 >
                   Ещё слово
                 </button>
