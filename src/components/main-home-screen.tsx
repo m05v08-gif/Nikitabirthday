@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { YakutWordQuest } from "@/components/yakut-word-quest";
 
 function Tile({
   title,
@@ -85,6 +86,8 @@ export function MainHomeScreen() {
           />
           <Tile variant="ideas" title="Вдохновения" subtitle="Разные идеи на вечер" href="/ideas" />
         </section>
+
+        <YakutWordQuest />
 
         <p className="home-helper home-helper-wrap mt-9 text-center text-[0.72rem] leading-relaxed opacity-95">
           <span className="block">Совет: добавь страницу на экран телефона</span>

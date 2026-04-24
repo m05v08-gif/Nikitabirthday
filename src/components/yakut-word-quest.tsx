@@ -1,0 +1,274 @@
+"use client";
+
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+type YakutWordItem = {
+  word: string;
+  correct: string;
+  options: [string, string, string, string];
+  note: string;
+};
+
+// NOTE: This is a playful mini-quest, not an academic dictionary.
+// If any translation feels off, please verify with a reliable source / native speaker.
+const yakutWords: YakutWordItem[] = [
+  {
+    word: "дьол",
+    correct: "счастье",
+    options: ["счастье", "снег", "молоко", "дорога"],
+    note: "Дьол — это счастье, удача и хорошая судьба."
+  },
+  {
+    word: "күн",
+    correct: "солнце",
+    options: ["луна", "солнце", "огонь", "звезда"],
+    note: "Күн — солнце. Очень подходящее слово для тёплого человека."
+  },
+  {
+    word: "уот",
+    correct: "огонь",
+    options: ["ветер", "огонь", "вода", "камень"],
+    note: "Уот — огонь. Про тепло, свет и внутреннюю силу."
+  },
+  {
+    word: "сүрэх",
+    correct: "сердце",
+    options: ["сердце", "дом", "голос", "песня"],
+    note: "Сүрэх — сердце. Тут всё понятно без перевода."
+  },
+  {
+    word: "дьиэ",
+    correct: "дом",
+    options: ["дом", "лес", "река", "дорога"],
+    note: "Дьиэ — дом. Место, где тепло и свои."
+  },
+  {
+    word: "суол",
+    correct: "дорога",
+    options: ["дорога", "небо", "снег", "подарок"],
+    note: "Суол — дорога. Иногда самая красивая часть — это путь вместе."
+  },
+  {
+    word: "хаар",
+    correct: "снег",
+    options: ["снег", "дождь", "ветер", "облако"],
+    note: "Хаар — снег. Сразу немного Якутии в кадре."
+  },
+  {
+    word: "сахалыы",
+    correct: "по-якутски",
+    options: ["по-якутски", "быстро", "красиво", "далеко"],
+    note: "Сахалыы — по-якутски. Очень нужное слово для этого квеста."
+  },
+  {
+    word: "аймах",
+    correct: "родня",
+    options: ["родня", "праздник", "чай", "вечер"],
+    note: "Аймах — родня, близкие люди, свои."
+  },
+  {
+    word: "махтал",
+    correct: "спасибо",
+    options: ["спасибо", "привет", "люблю", "пока"],
+    note: "Махтал — спасибо. Красивое слово благодарности."
+  },
+  {
+    word: "күүһэ",
+    correct: "сила",
+    options: ["сила", "тень", "ветка", "тишина"],
+    note: "Күүһэ — сила. Иногда тихая, но очень надёжная."
+  },
+  {
+    word: "кэрэ",
+    correct: "красивый",
+    options: ["красивый", "быстрый", "холодный", "высокий"],
+    note: "Кэрэ — красивый. Слово, которое хочется произносить медленно."
+  },
+  {
+    word: "сүбэ",
+    correct: "любовь",
+    options: ["любовь", "песня", "встреча", "свет"],
+    note: "Сүбэ — любовь. Не громкая, а настоящая — «в действиях»."
+  },
+  {
+    word: "түһүлгэ",
+    correct: "встреча",
+    options: ["встреча", "подарок", "дорога", "рассвет"],
+    note: "Түһүлгэ — встреча. Про момент «мы снова рядом»."
+  },
+  {
+    word: "уһун",
+    correct: "длинный",
+    options: ["длинный", "тёплый", "сладкий", "быстрый"],
+    note: "Уһун — длинный. Например, длинный день — и длинное счастье."
+  }
+];
+
+const correctFeedback = ["Точно!", "Ого, почти носитель", "Вот это уровень", "Красиво угадал"];
+const wrongFeedback = ["Почти!", "Не совсем, но теперь ты знаешь", "Красиво ошибся, бывает", "Якутский — дело тонкое"];
+
+function shuffle<T>(items: T[]) {
+  const arr = items.slice();
+  for (let i = arr.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function pickDifferentIndex(length: number, prev: number | null) {
+  if (length <= 1) return 0;
+  let next = Math.floor(Math.random() * length);
+  if (prev === null) return next;
+  if (next === prev) next = (next + 1 + Math.floor(Math.random() * (length - 1))) % length;
+  return next;
+}
+
+export function YakutWordQuest() {
+  const [idx, setIdx] = useState<number>(0);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [answered, setAnswered] = useState(false);
+  const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
+  const [feedback, setFeedback] = useState<string | null>(null);
+  const [version, setVersion] = useState(0);
+
+  const current = yakutWords[idx]!;
+
+  const correctOption = useMemo(() => current.correct, [current.correct]);
+
+  useEffect(() => {
+    setShuffledOptions(shuffle([...current.options]));
+  }, [current.options, version]);
+
+  useEffect(() => {
+    // On first mount, randomize initial word a bit (still stable per session)
+    const startIdx = pickDifferentIndex(yakutWords.length, null);
+    setIdx(startIdx);
+    setVersion((v) => v + 1);
+  }, []);
+
+  const choose = useCallback(
+    (opt: string) => {
+      if (answered) return;
+      setSelected(opt);
+      setAnswered(true);
+      if (opt === correctOption) {
+        setFeedback(correctFeedback[Math.floor(Math.random() * correctFeedback.length)] ?? "Точно!");
+      } else {
+        setFeedback(wrongFeedback[Math.floor(Math.random() * wrongFeedback.length)] ?? "Почти!");
+      }
+    },
+    [answered, correctOption]
+  );
+
+  const cardBg =
+    "bg-[color:color-mix(in_oklab,var(--color-panel)_62%,transparent)] " +
+    "border-[color:color-mix(in_oklab,var(--color-border)_55%,transparent)]";
+
+  return (
+    <section className="mt-4">
+      <div
+        className={`relative overflow-hidden rounded-[1.25rem] border ${cardBg} p-[1.1rem] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_34%,transparent)] backdrop-blur-[16px]`}
+      >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-40 [background:radial-gradient(circle_at_18%_18%,color-mix(in_oklab,var(--blob-b)_16%,transparent),transparent_62%),radial-gradient(circle_at_82%_78%,color-mix(in_oklab,var(--blob-c)_12%,transparent),transparent_66%)]"
+        />
+
+        <div className="relative">
+          <div className="font-display text-[1.18rem] font-semibold leading-[1.1] tracking-[-0.02em] text-[color:color-mix(in_oklab,var(--color-fg)_92%,transparent)]">
+            Угадай якутское слово
+          </div>
+          <div className="mt-2 text-[0.92rem] leading-[1.45] tracking-[-0.01em] text-[color:color-mix(in_oklab,var(--color-muted)_92%,transparent)]">
+            Маленький квест из мира, где всё началось
+          </div>
+
+          <div key={`${current.word}-${version}`} className="mt-5 animate-[yakut_fade_420ms_ease-out_both]">
+            <div className="text-center font-display text-[2.25rem] font-semibold leading-none tracking-[-0.03em] text-[color:color-mix(in_oklab,var(--color-fg)_96%,transparent)]">
+              {current.word}
+            </div>
+          </div>
+
+          <div className="mt-5 grid gap-2.5">
+            {shuffledOptions.map((opt) => {
+              const isCorrect = answered && opt === correctOption;
+              const isChosen = selected === opt;
+              const isWrongChosen = answered && isChosen && opt !== correctOption;
+
+              const base =
+                "relative inline-flex w-full items-center justify-center overflow-hidden rounded-[1.05rem] border px-4 py-3 text-center text-[0.98rem] font-semibold tracking-[-0.01em] backdrop-blur-sm transition active:scale-[0.99]";
+
+              const idle =
+                "border-[color:color-mix(in_oklab,var(--color-border)_42%,transparent)] " +
+                "bg-[color:color-mix(in_oklab,var(--color-panel-2)_46%,transparent)] " +
+                "text-[color:color-mix(in_oklab,var(--color-fg)_92%,transparent)] " +
+                "ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_30%,transparent)]";
+
+              const correct =
+                "border-[color:color-mix(in_oklab,var(--blob-b)_58%,white)] " +
+                "bg-[color:color-mix(in_oklab,var(--blob-b)_18%,transparent)] " +
+                "text-[color:color-mix(in_oklab,var(--color-fg)_96%,transparent)] " +
+                "ring-2 ring-[color:color-mix(in_oklab,var(--blob-b)_22%,transparent)]";
+
+              const wrong =
+                "border-[color:color-mix(in_oklab,hsl(18_70%_52%_/_0.32)_58%,transparent)] " +
+                "bg-[color:color-mix(in_oklab,hsl(18_70%_52%_/_0.12)_44%,transparent)] " +
+                "text-[color:color-mix(in_oklab,var(--color-fg)_88%,transparent)] " +
+                "ring-1 ring-[color:color-mix(in_oklab,hsl(18_70%_52%_/_0.12)_45%,transparent)]";
+
+              const chosen =
+                "border-[color:color-mix(in_oklab,var(--color-fg)_20%,transparent)] " +
+                "bg-[color:color-mix(in_oklab,var(--color-panel)_70%,transparent)]";
+
+              const stateClass = isCorrect ? correct : isWrongChosen ? wrong : isChosen ? chosen : idle;
+
+              return (
+                <button
+                  key={opt}
+                  type="button"
+                  disabled={answered}
+                  onClick={() => choose(opt)}
+                  className={`${base} ${stateClass} disabled:cursor-not-allowed disabled:opacity-95`}
+                  aria-pressed={isChosen}
+                >
+                  <span className="relative">{opt}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {answered ? (
+            <div className="mt-4 animate-[yakut_fade_420ms_ease-out_both]">
+              <div className="text-[0.98rem] font-semibold tracking-[-0.01em] text-[color:color-mix(in_oklab,var(--color-fg)_92%,transparent)]">
+                {selected === correctOption
+                  ? feedback ?? "Точно!"
+                  : `${feedback ?? "Почти!"} Правильный ответ — ${correctOption}.`}
+              </div>
+              <div className="mt-2 text-[0.92rem] leading-[1.55] tracking-[-0.01em] text-[color:color-mix(in_oklab,var(--color-muted)_92%,transparent)]">
+                {current.note}
+              </div>
+
+              <div className="mt-4">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const nextIdx = pickDifferentIndex(yakutWords.length, idx);
+                    setIdx(nextIdx);
+                    setSelected(null);
+                    setAnswered(false);
+                    setFeedback(null);
+                    setVersion((v) => v + 1);
+                  }}
+                  className="inline-flex w-full items-center justify-center rounded-[1.1rem] border border-[color:color-mix(in_oklab,var(--color-border)_42%,transparent)] bg-[color:color-mix(in_oklab,var(--color-panel)_42%,transparent)] px-4 py-3 text-[0.98rem] font-semibold tracking-[-0.01em] text-[color:color-mix(in_oklab,var(--color-fg)_92%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_30%,transparent)] backdrop-blur-[16px] transition active:scale-[0.99]"
+                >
+                  Ещё слово
+                </button>
+              </div>
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </section>
+  );
+}
+

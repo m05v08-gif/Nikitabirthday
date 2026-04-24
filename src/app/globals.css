@@ -448,6 +448,15 @@ html[data-theme="light"] .stories-page {
   }
 }
 
+@keyframes yakut_fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @keyframes pulse-soft {
   0%,
   100% {
