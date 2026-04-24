@@ -86,7 +86,6 @@ export function StoryView({
           </div>
 
           <div className="mt-4 px-1 pb-1">
-            <div className="pointer-events-none mb-3 h-px bg-[image:var(--story-caption-divider)] opacity-70" />
             <div className="whitespace-pre-wrap text-[0.98rem] leading-relaxed text-[color:var(--story-caption-fg)]">
               {data.story.text}
             </div>

@@ -161,13 +161,13 @@ export default function StoriesPage() {
             type="button"
             onClick={() => void load()}
             disabled={loading}
-            className="inline-flex flex-1 items-center justify-center rounded-[1.15rem] border border-[color:var(--story-primary-border)] bg-[color:var(--story-primary-bg)] px-4 py-3.5 text-sm font-semibold text-[color:var(--story-primary-fg)] shadow-[var(--story-primary-shadow)] ring-1 ring-[color:var(--story-primary-ring)] transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 motion-safe:hover:-translate-y-0.5 motion-safe:hover:bg-[color:var(--story-primary-bg-hover)]"
+            className="inline-flex flex-1 items-center justify-center rounded-[1.15rem] border border-[color:color-mix(in_oklab,var(--color-border)_42%,transparent)] bg-[color:color-mix(in_oklab,var(--color-panel)_22%,transparent)] px-4 py-3.5 text-sm font-semibold text-[color:color-mix(in_oklab,var(--color-fg)_92%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_34%,transparent)] backdrop-blur-[16px] transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 motion-safe:hover:bg-[color:color-mix(in_oklab,var(--color-panel)_30%,transparent)]"
           >
             {loading ? "Еще…" : "Еще история"}
           </button>
           <Link
             href="/"
-            className="inline-flex items-center justify-center rounded-[1.15rem] border border-[color:var(--story-secondary-border)] bg-[color:var(--story-secondary-bg)] px-4 py-3.5 text-sm font-semibold text-[color:var(--story-secondary-fg)] ring-1 ring-[color:var(--story-secondary-ring)] backdrop-blur-sm transition active:scale-[0.99] motion-safe:hover:bg-[color:var(--story-secondary-bg-hover)]"
+            className="inline-flex items-center justify-center rounded-[1.15rem] border border-[color:color-mix(in_oklab,var(--color-border)_42%,transparent)] bg-[color:color-mix(in_oklab,var(--color-panel)_20%,transparent)] px-4 py-3.5 text-sm font-semibold text-[color:color-mix(in_oklab,var(--color-fg)_88%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_30%,transparent)] backdrop-blur-[16px] transition active:scale-[0.99] motion-safe:hover:bg-[color:color-mix(in_oklab,var(--color-panel)_28%,transparent)]"
           >
             На главную
           </Link>
