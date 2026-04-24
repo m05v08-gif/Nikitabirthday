@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { GiftIntroScreen } from "@/components/gift-intro-screen";
 import { CodeUnlockScreen } from "@/components/code-unlock-screen";
 import { MainHomeScreen } from "@/components/main-home-screen";
@@ -17,15 +16,14 @@ function forceLightTheme() {
 }
 
 export function HomeEntry() {
-  const searchParams = useSearchParams();
   const [step, setStep] = useState<Step>("gift");
 
-  const shouldReset = useMemo(() => {
-    if (process.env.NODE_ENV === "production") return false;
-    return searchParams?.get("resetGift") === "1";
-  }, [searchParams]);
-
   useEffect(() => {
+    const shouldReset =
+      process.env.NODE_ENV !== "production" &&
+      typeof window !== "undefined" &&
+      new URLSearchParams(window.location.search).get("resetGift") === "1";
+
     if (shouldReset) {
       try {
         localStorage.removeItem(UNLOCK_KEY);
@@ -40,7 +38,7 @@ export function HomeEntry() {
     } catch {
       setStep("gift");
     }
-  }, [shouldReset]);
+  }, []);
 
   useEffect(() => {
     if (step === "home") return;
