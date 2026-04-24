@@ -161,7 +161,7 @@ export default function StoriesPage() {
             type="button"
             onClick={() => void load()}
             disabled={loading}
-            className="inline-flex flex-1 items-center justify-center rounded-[1.15rem] border border-[color:color-mix(in_oklab,var(--color-border)_42%,transparent)] bg-[color:color-mix(in_oklab,var(--color-panel)_22%,transparent)] px-4 py-3.5 text-sm font-semibold text-[color:color-mix(in_oklab,var(--color-fg)_92%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_34%,transparent)] backdrop-blur-[16px] transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 motion-safe:hover:bg-[color:color-mix(in_oklab,var(--color-panel)_30%,transparent)]"
+            className="inline-flex flex-1 items-center justify-center rounded-[1.15rem] border border-[color:color-mix(in_oklab,var(--color-border)_42%,transparent)] bg-[color:color-mix(in_oklab,var(--blob-b)_16%,color-mix(in_oklab,var(--color-panel)_20%,transparent))] px-4 py-3.5 text-sm font-semibold text-[color:color-mix(in_oklab,var(--color-fg)_92%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--blob-b)_14%,color-mix(in_oklab,var(--color-ring)_28%,transparent))] backdrop-blur-[16px] transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 motion-safe:hover:bg-[color:color-mix(in_oklab,var(--blob-b)_20%,color-mix(in_oklab,var(--color-panel)_26%,transparent))]"
           >
             {loading ? "Еще…" : "Еще история"}
           </button>
