@@ -651,6 +651,14 @@ html[data-theme="light"] .home-page {
   --home-hero-underlay: none;
 }
 
+.yakut-quest-page .yakut-title {
+  font-family: var(--font-editorial), ui-serif, Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--home-hero-headline);
+  text-shadow: 0 1px 0 hsl(0 0% 0% / 0.04);
+}
+
 .home-page .home-hero-title {
   font-family: var(--font-editorial), ui-serif, Georgia, "Times New Roman", serif;
   font-weight: 700;

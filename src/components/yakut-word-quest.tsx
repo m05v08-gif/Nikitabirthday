@@ -319,7 +319,7 @@ export function YakutWordQuest() {
                     setFeedback(null);
                     setVersion((v) => v + 1);
                   }}
-                  className="inline-flex w-full items-center justify-center rounded-[1.1rem] border border-[color:color-mix(in_oklab,var(--color-border)_42%,transparent)] bg-[color:color-mix(in_oklab,var(--color-panel)_42%,transparent)] px-4 py-3 text-[0.98rem] font-semibold tracking-[-0.01em] text-[color:color-mix(in_oklab,var(--color-fg)_92%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--color-ring)_30%,transparent)] backdrop-blur-[16px] transition active:scale-[0.99]"
+                  className="inline-flex w-full items-center justify-center rounded-[1.1rem] border border-[color:color-mix(in_oklab,var(--color-border)_42%,transparent)] bg-[color:color-mix(in_oklab,var(--blob-b)_24%,color-mix(in_oklab,var(--color-panel)_34%,transparent))] px-4 py-3 text-[0.98rem] font-semibold tracking-[-0.01em] text-[color:color-mix(in_oklab,var(--color-fg)_92%,transparent)] ring-1 ring-[color:color-mix(in_oklab,var(--blob-b)_18%,color-mix(in_oklab,var(--color-ring)_26%,transparent))] backdrop-blur-[16px] transition active:scale-[0.99] motion-safe:hover:bg-[color:color-mix(in_oklab,var(--blob-b)_30%,color-mix(in_oklab,var(--color-panel)_40%,transparent))]"
                 >
                   Ещё слово
                 </button>

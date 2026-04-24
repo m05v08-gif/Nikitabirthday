@@ -38,8 +38,10 @@ export default function YakutQuestPage() {
 
           {/* Hero */}
           <div className="mt-6">
-            <h1 className="home-hero-title text-balance-safe text-[2.05rem] leading-[1.06] sm:text-[2.25rem]">
-              Угадай якутское слово
+            <h1 className="yakut-title text-balance-safe text-[2.05rem] leading-[1.06] sm:text-[2.25rem]">
+              <span className="block">Угадай</span>
+              <span className="block italic">якутское</span>
+              <span className="block">слово</span>
             </h1>
             <p className="home-hero-sub mt-3 text-pretty text-[0.98rem] leading-relaxed text-[color:var(--home-hero-sub)]">
               Пока просто угадывай. Понимание придёт позже
