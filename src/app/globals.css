@@ -442,13 +442,9 @@ html[data-theme="light"] .stories-page {
 @keyframes intro-reveal {
   0% {
     opacity: 0;
-    transform: scale(0.992);
-    filter: blur(6px);
   }
   100% {
     opacity: 1;
-    transform: scale(1);
-    filter: blur(0px);
   }
 }
 
