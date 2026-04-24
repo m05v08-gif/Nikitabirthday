@@ -468,14 +468,19 @@ html[data-theme="light"] .stories-page {
 
 /* Gift intro: code unlock layout (iPhone 16 baseline) */
 .gift-screen {
+  position: fixed;
+  inset: 0;
   width: 100vw;
-  height: 100svh;
-  position: relative;
+  height: 100dvh;
+  min-height: 100svh;
   overflow: hidden;
   background: var(--color-app-bg);
 }
 
 .gift-image {
+  display: block;
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
