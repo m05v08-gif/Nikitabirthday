@@ -42,7 +42,7 @@ export default function YakutQuestPage() {
               Угадай якутское слово
             </h1>
             <p className="home-hero-sub mt-3 text-pretty text-[0.98rem] leading-relaxed text-[color:var(--home-hero-sub)]">
-              Когда-нибудь ты поймёшь, о чём мы с мамой говорим
+              Пока просто угадывай. Понимание придёт позже
             </p>
           </div>
 
