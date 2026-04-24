@@ -30,13 +30,16 @@ export function CodeUnlockScreen({ code, onUnlocked }: CodeUnlockScreenProps) {
 
   return (
     <main className="intro-root relative h-[100svh] w-full overflow-hidden bg-[color:var(--color-app-bg)]">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="h-full w-full bg-[image:url('/intro-code.png')] bg-cover bg-center bg-no-repeat" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-[5] h-[100vh] min-h-[100svh] w-screen"
+      >
+        <div className="h-full w-full bg-[image:url('/intro-code.png')] bg-cover bg-center bg-no-repeat opacity-100" />
         <div className="absolute inset-0 bg-[radial-gradient(110%_88%_at_52%_48%,hsl(0_0%_0%_/0.10)_0%,transparent_62%)] opacity-70" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,hsl(0_0%_0%_/0.22)_100%)] opacity-60" />
       </div>
 
-      <div className="relative z-10 mx-auto flex h-full w-full max-w-[430px] flex-col justify-end px-6 pb-[calc(32px_+_env(safe-area-inset-bottom))] pt-10">
+      <div className="relative z-20 mx-auto flex h-full w-full max-w-[430px] flex-col justify-end px-6 pb-[calc(32px_+_env(safe-area-inset-bottom))] pt-10">
         <div className="intro-card rounded-[22px] border border-black/10 bg-white/42 p-5 backdrop-blur-xl">
           <div className="font-display text-[1.22rem] font-semibold leading-[1.1] tracking-[-0.02em] text-black/82">
             С днём рождения, Chouchou!

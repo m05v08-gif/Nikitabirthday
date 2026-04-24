@@ -7,8 +7,11 @@ type GiftIntroScreenProps = {
 export function GiftIntroScreen({ onOpenEnvelope }: GiftIntroScreenProps) {
   return (
     <main className="intro-root relative h-[100svh] w-full overflow-hidden bg-[color:var(--color-app-bg)]">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="h-full w-full bg-[image:url('/intro-gift.png')] bg-cover bg-center bg-no-repeat" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-[5] h-[100vh] min-h-[100svh] w-screen"
+      >
+        <div className="h-full w-full bg-[image:url('/intro-gift.png')] bg-cover bg-center bg-no-repeat opacity-100" />
         <div className="absolute inset-0 bg-[radial-gradient(110%_80%_at_52%_56%,hsl(0_0%_0%_/0.10)_0%,transparent_60%)] opacity-70" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,hsl(0_0%_0%_/0.18)_100%)] opacity-60" />
       </div>
@@ -17,7 +20,7 @@ export function GiftIntroScreen({ onOpenEnvelope }: GiftIntroScreenProps) {
       <button
         type="button"
         onClick={onOpenEnvelope}
-        className="intro-envelope-hit absolute left-1/2 top-[56%] h-[26%] w-[74%] -translate-x-1/2 -translate-y-1/2 rounded-[28px] bg-transparent"
+        className="intro-envelope-hit absolute left-1/2 top-[56%] z-20 h-[26%] w-[74%] -translate-x-1/2 -translate-y-1/2 rounded-[28px] bg-transparent"
         aria-label="Открыть конверт"
       />
 

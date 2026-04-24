@@ -41,7 +41,10 @@ export function MainHomeScreen() {
   return (
     <main className="home-page relative min-h-[100svh] w-full">
       {/* Full-screen background: viewport-fixed so it is not clipped by layout max-w-md / padding */}
-      <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[5] h-[100svh] w-full">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-[5] h-[100vh] min-h-[100svh] w-screen"
+      >
         {/* Keep the original artwork brightness (no filters / global overlays) */}
         <div className="h-full w-full bg-[image:var(--home-artwork)] bg-cover bg-center bg-no-repeat opacity-100 [filter:brightness(var(--home-bg-brightness))]" />
 
