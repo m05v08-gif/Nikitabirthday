@@ -8,7 +8,7 @@ type City = "astana" | "tashkent";
 type CompanyType = "with_children" | "with_masha" | "with_friends" | "alone";
 type Duration = "1_2_hours" | "2_3_hours";
 type Budget = "econom" | "medium" | "premium";
-type Mood = "fun" | "calm" | "beautiful" | "legendary" | "surprise";
+type Mood = "fun" | "calm" | "beautiful" | "legendary";
 
 export default function IdeasPage() {
   const [city, setCity] = useState<City>("astana");
@@ -235,43 +235,11 @@ export default function IdeasPage() {
               >
                 Легендарно
               </button>
-              <button
-                type="button"
-                onClick={() => setMood("surprise")}
-                className={`${mood === "surprise" ? chipActive : chipInactive} col-span-2`}
-              >
-                Удиви меня
-              </button>
             </div>
           </div>
           </section>
 
-          {!text && !error ? (
-            <div className="ideas-helper mt-5 flex w-full items-start gap-[14px] rounded-[var(--radius-cta)] border border-[color:var(--ideas-border-main)] bg-[color:var(--ideas-helper-bg)] p-[18px] shadow-[var(--ideas-shadow-helper)] backdrop-blur-[var(--blur-surface)]">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[color:var(--ideas-helper-icon-bg)]">
-                <span aria-hidden="true" className="opacity-80">
-                  ✦
-                </span>
-              </div>
-              <div className="text-[16px] leading-[1.5] tracking-[-0.01em] text-[color:var(--ideas-text-secondary)]">
-                Появится идея с атмосферой, примерным бюджетом и понятным планом.
-              </div>
-            </div>
-          ) : (
-            <div className="ideas-results mt-5 w-full rounded-[28px] border border-[color:var(--ideas-results-border)] bg-[color:var(--ideas-results-bg)] p-[14px] shadow-[var(--ideas-shadow-results)] backdrop-blur-[var(--blur-surface)]">
-              {error ? (
-                <pre className="whitespace-pre-wrap text-[16px] leading-[1.5] tracking-[-0.01em] text-[color:var(--ideas-text-secondary)]">
-                  {error}
-                </pre>
-              ) : text ? (
-                <pre className="whitespace-pre-wrap text-[16px] leading-[1.62] tracking-[-0.01em] text-[color:var(--ideas-result-fg)]">
-                  {text}
-                </pre>
-              ) : null}
-            </div>
-          )}
-
-          <div className="mt-6 grid gap-3">
+          <div className="mt-6 grid gap-4">
             <button
               type="button"
               disabled={!canGenerate}
@@ -284,6 +252,31 @@ export default function IdeasPage() {
               </span>
               {loading ? "Подбираю…" : "Подобрать идею"}
             </button>
+
+            {!text && !error ? (
+              <div className="ideas-helper flex w-full items-start gap-[14px] rounded-[var(--radius-cta)] border border-[color:var(--ideas-border-main)] bg-[color:var(--ideas-helper-bg)] p-[18px] shadow-[var(--ideas-shadow-helper)] backdrop-blur-[var(--blur-surface)]">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[color:var(--ideas-helper-icon-bg)]">
+                  <span aria-hidden="true" className="opacity-80">
+                    ✦
+                  </span>
+                </div>
+                <div className="text-[16px] leading-[1.5] tracking-[-0.01em] text-[color:var(--ideas-text-secondary)]">
+                  Появится идея с атмосферой, примерным бюджетом и понятным планом.
+                </div>
+              </div>
+            ) : (
+              <div className="ideas-results w-full rounded-[28px] border border-[color:var(--ideas-results-border)] bg-[color:var(--ideas-results-bg)] p-[14px] shadow-[var(--ideas-shadow-results)] backdrop-blur-[var(--blur-surface)]">
+                {error ? (
+                  <pre className="whitespace-pre-wrap text-[16px] leading-[1.5] tracking-[-0.01em] text-[color:var(--ideas-text-secondary)]">
+                    {error}
+                  </pre>
+                ) : text ? (
+                  <pre className="whitespace-pre-wrap text-[16px] leading-[1.62] tracking-[-0.01em] text-[color:var(--ideas-result-fg)]">
+                    {text}
+                  </pre>
+                ) : null}
+              </div>
+            )}
 
             <Link
               href="/"
