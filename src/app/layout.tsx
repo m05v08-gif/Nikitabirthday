@@ -31,13 +31,15 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Для нас",
+  title: "Подарок",
   description: "Истории и идеи на вечер — для нас двоих",
-  applicationName: "Для нас",
+  applicationName: "Подарок",
   themeColor: "#0b1220",
   icons: {
-    icon: "/icon.svg",
-    apple: "/icon.svg"
+    icon: [
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png"
   }
 };
 
