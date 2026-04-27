@@ -3,6 +3,19 @@ import { supabaseServer } from "@/lib/supabase-server";
 
 type StoryRow = { id: string; text: string; image_path: string };
 
+function parseExcludeIds(req: Request): string[] {
+  const url = new URL(req.url);
+  const raw = url.searchParams.get("exclude") ?? "";
+  if (!raw) return [];
+  const parts = raw
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  // story ids in this project are UUID-like strings
+  const safe = parts.filter((id) => /^[0-9a-fA-F-]{16,}$/.test(id));
+  return Array.from(new Set(safe)).slice(0, 200);
+}
+
 function coerceStoryRow(row: unknown): StoryRow | null {
   if (!row || typeof row !== "object") return null;
   const r = row as { id?: unknown; text?: unknown; image_path?: unknown };
@@ -12,59 +25,43 @@ function coerceStoryRow(row: unknown): StoryRow | null {
   return { id: r.id, text: r.text, image_path: r.image_path };
 }
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
     const supabase = supabaseServer();
 
-    const rpc = await supabase.rpc("get_random_story");
+    const excludeIds = parseExcludeIds(req);
+    const inList =
+      excludeIds.length > 0 ? `(${excludeIds.map((id) => `"${id}"`).join(",")})` : null;
 
-    let story: StoryRow | null = null;
+    const countRes = await supabase
+      .from("stories")
+      .select("id", { count: "exact", head: true })
+      .not("id", "in", inList ?? '("")');
 
-    if (!rpc.error && rpc.data) {
-      const row = Array.isArray(rpc.data) ? rpc.data[0] : rpc.data;
-      story = coerceStoryRow(row);
-    } else {
-      const countRes = await supabase
-        .from("stories")
-        .select("id", { count: "exact", head: true });
-
-      if (countRes.error) {
-        return NextResponse.json(
-          { ok: false, error: countRes.error.message },
-          { status: 500 }
-        );
-      }
-
-      const count = countRes.count ?? 0;
-      if (count === 0) {
-        return NextResponse.json(
-          {
-            ok: false,
-            error:
-              "Историй пока нет. Добавь первую через Telegram-бота. Если истории есть, но random не работает — создай SQL-функцию get_random_story() из README."
-          },
-          { status: 404 }
-        );
-      }
-
-      const idx = Math.floor(Math.random() * count);
-
-      const storyRes = await supabase
-        .from("stories")
-        .select("id,text,image_path,created_at")
-        .order("created_at", { ascending: false })
-        .range(idx, idx)
-        .limit(1);
-
-      if (storyRes.error) {
-        return NextResponse.json(
-          { ok: false, error: storyRes.error.message },
-          { status: 500 }
-        );
-      }
-
-      story = coerceStoryRow(storyRes.data?.[0]);
+    if (countRes.error) {
+      return NextResponse.json({ ok: false, error: countRes.error.message }, { status: 500 });
     }
+
+    const remaining = countRes.count ?? 0;
+    if (remaining === 0) {
+      return NextResponse.json({ ok: true, done: true });
+    }
+
+    const idx = Math.floor(Math.random() * remaining);
+
+    const storyRes = await supabase
+      .from("stories")
+      .select("id,text,image_path,created_at")
+      .not("id", "in", inList ?? '("")')
+      .order("created_at", { ascending: false })
+      .range(idx, idx)
+      .limit(1);
+
+    if (storyRes.error) {
+      return NextResponse.json({ ok: false, error: storyRes.error.message }, { status: 500 });
+    }
+
+    const story = coerceStoryRow(storyRes.data?.[0]);
 
     if (!story) {
       return NextResponse.json({ ok: false, error: "Не нашла историю." }, { status: 404 });

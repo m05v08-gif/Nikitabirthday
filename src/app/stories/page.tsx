@@ -8,6 +8,7 @@ import { StoryView } from "@/components/story-view";
 
 type RandomStoryResult =
   | { ok: true; story: { id: string; text: string; imageUrl: string } }
+  | { ok: true; done: true }
   | { ok: false; error: string };
 
 export default function StoriesPage() {
@@ -16,6 +17,7 @@ export default function StoriesPage() {
   const [data, setData] = useState<RandomStoryResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [reactionByStoryId, setReactionByStoryId] = useState<Record<string, string[]>>({});
+  const [seenIds, setSeenIds] = useState<string[]>([]);
 
   const storyKey = useMemo(() => {
     if (!data) return "loading";
@@ -47,6 +49,28 @@ export default function StoriesPage() {
     }
   }, []);
 
+  // seen stories persistence (no repeats until exhausted)
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("stories:seen:v1");
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as unknown;
+      if (!Array.isArray(parsed)) return;
+      const safe = parsed.filter((x) => typeof x === "string") as string[];
+      setSeenIds(Array.from(new Set(safe)).slice(0, 200));
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const persistSeen = useCallback((next: string[]) => {
+    try {
+      localStorage.setItem("stories:seen:v1", JSON.stringify(next));
+    } catch {
+      // ignore
+    }
+  }, []);
+
   const persistReactions = useCallback((next: Record<string, string[]>) => {
     try {
       localStorage.setItem("reactions:v2", JSON.stringify(next));
@@ -55,18 +79,37 @@ export default function StoriesPage() {
     }
   }, []);
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (opts?: { allowReset?: boolean }) => {
     setLoading(true);
     try {
-      const res = await fetch("/api/story/random", { cache: "no-store" });
+      const exclude = seenIds.length > 0 ? `?exclude=${encodeURIComponent(seenIds.join(","))}` : "";
+      const res = await fetch(`/api/story/random${exclude}`, { cache: "no-store" });
       const json = (await res.json()) as RandomStoryResult;
+      if (json.ok && "done" in json && json.done) {
+        if (opts?.allowReset === false) {
+          setData({ ok: false, error: "Не получилось выбрать историю." });
+          return;
+        }
+        setSeenIds([]);
+        persistSeen([]);
+        // Try again with a fresh cycle
+        void load({ allowReset: false });
+        return;
+      }
       setData(json);
+      if (json.ok && "story" in json) {
+        setSeenIds((prev) => {
+          const next = Array.from(new Set([...prev, json.story.id])).slice(0, 200);
+          persistSeen(next);
+          return next;
+        });
+      }
     } catch (e) {
       setData({ ok: false, error: e instanceof Error ? e.message : String(e) });
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [persistSeen, seenIds]);
 
   useEffect(() => {
     // First load
