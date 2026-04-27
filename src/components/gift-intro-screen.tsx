@@ -26,8 +26,14 @@ export function GiftIntroScreen({ onOpenEnvelope }: GiftIntroScreenProps) {
 
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 pb-[max(16px,env(safe-area-inset-bottom))]">
         <div className="mx-auto w-full max-w-[430px] px-6">
-          <div className="intro-hint mx-auto w-fit rounded-full border border-black/10 bg-white/30 px-4 py-2 text-[0.9rem] font-medium tracking-[-0.01em] text-black/75 backdrop-blur-md">
-            Нажми на конверт
+          <div className="mx-auto grid w-fit justify-items-center gap-2">
+            <div className="intro-hint w-fit rounded-full border border-black/10 bg-white/30 px-4 py-2 text-[0.9rem] font-medium tracking-[-0.01em] text-black/75 backdrop-blur-md">
+              Нажми на конверт
+            </div>
+            <div className="text-center text-[0.72rem] leading-relaxed tracking-[0.01em] text-black/55">
+              <span className="block">Совет: добавь страницу на экран телефона</span>
+              <span className="block">Поделиться → На экран «Домой»</span>
+            </div>
           </div>
         </div>
       </div>

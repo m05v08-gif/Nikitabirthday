@@ -89,11 +89,6 @@ export function MainHomeScreen() {
           <Tile variant="ideas" title="Вдохновения" subtitle="Разные идеи на вечер" href="/ideas" />
           <Tile variant="yakut" title="Угадай якутское слово" subtitle="Маленький квест" href="/yakut-quest" />
         </section>
-
-        <p className="home-helper home-helper-wrap mt-9 text-center text-[0.72rem] leading-relaxed opacity-95">
-          <span className="block">Совет: добавь страницу на экран телефона</span>
-          <span className="block">Поделиться → На экран «Домой»</span>
-        </p>
       </div>
     </main>
   );
