@@ -4,16 +4,12 @@ import Link from "next/link";
 import { useCallback, useMemo, useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
-type City = "astana" | "tashkent";
 type CompanyType = "with_children" | "with_masha" | "with_friends" | "alone";
-type Duration = "1_2_hours" | "2_3_hours";
 type Budget = "econom" | "medium" | "premium";
 type Mood = "fun" | "calm" | "beautiful" | "legendary";
 
 export default function IdeasPage() {
-  const [city, setCity] = useState<City>("astana");
   const [companyType, setCompanyType] = useState<CompanyType>("with_friends");
-  const [duration, setDuration] = useState<Duration>("1_2_hours");
   const [budget, setBudget] = useState<Budget>("medium");
   const [mood, setMood] = useState<Mood>("beautiful");
 
@@ -30,7 +26,7 @@ export default function IdeasPage() {
       const res = await fetch("/api/ideas", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ city, companyType, duration, budget, mood })
+        body: JSON.stringify({ companyType, budget, mood })
       });
       const json = (await res.json()) as { ok: boolean; text?: string; error?: string };
       if (!json.ok) {
@@ -45,7 +41,7 @@ export default function IdeasPage() {
     } finally {
       setLoading(false);
     }
-  }, [budget, city, companyType, duration, mood]);
+  }, [budget, companyType, mood]);
 
   const chipBase =
     "ideas-chip relative inline-flex w-full items-center justify-center overflow-hidden min-h-[var(--ideas-chip-h)] rounded-[var(--radius-chip)] border px-4 text-center text-[1rem] font-semibold leading-[1.15] tracking-[-0.01em] transition-[background-color,border-color,box-shadow,transform,color] duration-[220ms] ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.985]";
@@ -88,33 +84,11 @@ export default function IdeasPage() {
               <span className="block">рождения</span>
             </h1>
             <p className="ideas-subtitle mt-3 max-w-[320px] text-[0.98rem] leading-[1.45] tracking-[-0.01em] text-[color:var(--ideas-text-secondary)]">
-              Подберу идею по городу, бюджету, времени и настроению.
+              Подберу атмосферную идею под ваш формат.
             </p>
           </header>
 
           <section className="mt-7">
-          <div className="grid gap-2">
-            <div className="ideas-section-label mb-[10px] text-[15px] font-medium leading-5 tracking-[-0.01em] text-[color:var(--ideas-text-muted)]">
-              Город
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                type="button"
-                onClick={() => setCity("astana")}
-                className={city === "astana" ? chipActive : chipInactive}
-              >
-                Астана
-              </button>
-              <button
-                type="button"
-                onClick={() => setCity("tashkent")}
-                className={city === "tashkent" ? chipActive : chipInactive}
-              >
-                Ташкент
-              </button>
-            </div>
-          </div>
-
           <div className="mt-[18px] grid gap-2">
             <div className="ideas-section-label mb-[10px] text-[15px] font-medium leading-5 tracking-[-0.01em] text-[color:var(--ideas-text-muted)]">
               С кем
@@ -147,28 +121,6 @@ export default function IdeasPage() {
                 className={companyType === "alone" ? chipActive : chipInactive}
               >
                 Один
-              </button>
-            </div>
-          </div>
-
-          <div className="mt-[18px] grid gap-2">
-            <div className="ideas-section-label mb-[10px] text-[15px] font-medium leading-5 tracking-[-0.01em] text-[color:var(--ideas-text-muted)]">
-              Сколько времени
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                type="button"
-                onClick={() => setDuration("1_2_hours")}
-                className={duration === "1_2_hours" ? chipActive : chipInactive}
-              >
-                1–2 часа
-              </button>
-              <button
-                type="button"
-                onClick={() => setDuration("2_3_hours")}
-                className={duration === "2_3_hours" ? chipActive : chipInactive}
-              >
-                2–3 часа
               </button>
             </div>
           </div>
@@ -261,7 +213,7 @@ export default function IdeasPage() {
                   </span>
                 </div>
                 <div className="text-[16px] leading-[1.5] tracking-[-0.01em] text-[color:var(--ideas-text-secondary)]">
-                  Появится идея с атмосферой, примерным бюджетом и понятным планом.
+                  Появится одна атмосферная идея — с вайбом маленького странного приключения.
                 </div>
               </div>
             ) : (

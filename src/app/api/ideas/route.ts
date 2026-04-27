@@ -1,101 +1,170 @@
 import { NextResponse } from "next/server";
 import { openai } from "@/lib/openai";
 
-type City = "astana" | "tashkent";
 type CompanyType = "with_children" | "with_masha" | "with_friends" | "alone";
-type Duration = "1_2_hours" | "2_3_hours";
 type Budget = "econom" | "medium" | "premium";
-type Mood = "fun" | "calm" | "beautiful" | "legendary" | "surprise";
+type Mood = "fun" | "calm" | "beautiful" | "legendary";
 
-type PromptFamily = "romantic" | "friends" | "solo" | "family";
+type StoryMode =
+  | "lunar_absurd"
+  | "rational_scifi"
+  | "epic_ritual"
+  | "cosmic_irony"
+  | "child_micro_adventure"
+  | "cozy_toddler_chaos";
 
-function getPromptFamily(companyType: CompanyType): PromptFamily {
-  if (companyType === "with_masha") return "romantic";
-  if (companyType === "with_friends") return "friends";
-  if (companyType === "alone") return "solo";
-  return "family";
-}
 
 function getSpecialCaseResponse(input: {
-  city: City;
   companyType: CompanyType;
-  duration: Duration;
   budget: Budget;
   mood: Mood;
 }): string | null {
-  const { city, companyType, duration, budget, mood } = input;
-  const cityLabel = city === "astana" ? "Астана" : "Ташкент";
-  const currency = city === "astana" ? "₸" : "сум";
-
-  // A) with_children + calm → don't call LLM, gently nudge
+  const { companyType, mood } = input;
   if (companyType === "with_children" && mood === "calm") {
     return [
-      "Ну «спокойно с детьми» — запрос, конечно, смелый.",
-      "",
-      "Давай честно: либо делаем «спокойно настолько, насколько это вообще возможно», либо переключаемся на «весело» или «красиво».",
-      "",
-      "Выбери другой вайб — и я соберу идею."
-    ].join("\n");
-  }
-
-  // B) astana + (children | masha) → don't call LLM, ask for travel context
-  if (city === "astana" && (companyType === "with_children" || companyType === "with_masha")) {
-    const who = companyType === "with_children" ? "детей" : "Машу";
-    return [
-      `Ну Астана — это уже не просто «куда сходить», это сначала вопрос: как ${who} туда красиво и без нервов доставить.`,
-      "",
-      "Покажи билеты или хотя бы даты поездки — и потом я уже подберу, что там делать."
-    ].join("\n");
-  }
-
-  // playful, but practical, non-toxic
-  if (mood === "surprise" && duration === "1_2_hours" && budget === "econom") {
-    return [
-      "Хочешь «удиви меня» на пару часов и экономно — тогда давай сделаем секретный мини‑праздник без подготовки «на сутки».",
-      `По деньгам держим ${currency} в рамках «эконом»: доставка/десерт + мелочь на свечи и бумажку для маленького квеста.`,
-      "Фишка: пока едет еда, ты пишешь 5–6 коротких вопросов (по одной строке) и прячешь их по дому. Потом — свеча, фото, чай/кофе и финал, который почему-то всегда работает: 2–3 коротких голосовых от близких по очереди.",
-      `Если нужно собрать быстро: открой карты в ${cityLabel} и ищи «кондитерская доставка»/«доставка еды», а в сообщении просто попроси свечу и приборы. Если доставка долго — ближайший магазин + готовый десерт, всё равно будет уютно.`
+      "«Спокойно с детьми» — звучит как жанр фэнтези, но мы попробуем.",
+      "Давай сделаем “спокойно насколько это вообще возможно”: мягкий домашний ритуал, без идеальности, с маленькой магией и смешными деталями.",
+      "Если хочется, чтобы было бодрее — просто переключи настроение на «весело», и я подкину версию с приключением."
     ].join("\n\n");
   }
-
-  if (companyType === "with_children" && duration === "1_2_hours" && mood === "fun") {
-    return [
-      "С детьми и «весело» на 1–2 часа лучше всего заходит формат «все заняты и смеются» — домашняя мини‑олимпиада.",
-      `По бюджету это легко держится в рамках ${currency}: снэки + наклейки/маленькие призы (или вообще «медали» из бумаги — детям всё равно будет вау).`,
-      "Собери 4 испытания за 10 минут (самолётики, попадание в корзину, танец 30 секунд, мини‑квиз), раздай роли “ведущий/судья/фотограф” — и ты уже в сюжете. В финале — свеча на десерте и награды, как на настоящем чемпионате.",
-      "Если не хочется готовить: спасает доставка + один смешной «финальный раунд» — и всё, праздник случился."
-    ].join("\n\n");
-  }
-
-  if (budget === "premium" && mood === "beautiful" && duration === "2_3_hours") {
-    return [
-      "Если хочется «красиво» и у тебя 2–3 часа, я бы делала вечер без суеты: чуть прогулки, чуть света — и вкусный финал.",
-      `По деньгам «можно красиво» (${currency}) обычно укладывается в такси/трансфер + ужин/десерт + маленький сюрприз «в карман».`,
-      `Самый простой способ собрать это в ${cityLabel}: открыть карты, выбрать район, найти 2–3 места по запросу «тихо / уютно / десерт» и просто написать/позвонить: “есть ли столик, хочется спокойно и красиво”. Если мест нет — делай десерт‑маршрут или красивую доставку домой, вайб останется.`,
-      "Если не сложится — оставь прогулку и сделай финал дома: музыка, свеча и что-то очень вкусное без спешки."
-    ].join("\n\n");
-  }
-
   return null;
+}
+
+function weightedPick<T extends string>(items: Array<{ id: T; w: number }>): T {
+  const total = items.reduce((s, x) => s + x.w, 0);
+  let r = Math.random() * total;
+  for (const it of items) {
+    r -= it.w;
+    if (r <= 0) return it.id;
+  }
+  return items[items.length - 1]!.id;
+}
+
+function pickStoryMode(input: { companyType: CompanyType; mood: Mood }): StoryMode {
+  const { companyType, mood } = input;
+
+  const kids = companyType === "with_children";
+  const wife = companyType === "with_masha";
+  const friends = companyType === "with_friends";
+  const solo = companyType === "alone";
+
+  if (kids && mood === "fun") {
+    return weightedPick([
+      { id: "cozy_toddler_chaos", w: 4 },
+      { id: "child_micro_adventure", w: 3 },
+      { id: "lunar_absurd", w: 2 }
+    ]);
+  }
+  if (kids && mood === "beautiful") {
+    return weightedPick([
+      { id: "child_micro_adventure", w: 3 },
+      { id: "cozy_toddler_chaos", w: 3 },
+      { id: "epic_ritual", w: 1 }
+    ]);
+  }
+  if (kids && mood === "calm") {
+    return weightedPick([
+      { id: "cozy_toddler_chaos", w: 4 },
+      { id: "child_micro_adventure", w: 3 }
+    ]);
+  }
+  if (friends && mood === "fun") {
+    return weightedPick([
+      { id: "cosmic_irony", w: 4 },
+      { id: "lunar_absurd", w: 3 }
+    ]);
+  }
+  if (friends && mood === "legendary") {
+    return weightedPick([
+      { id: "cosmic_irony", w: 3 },
+      { id: "epic_ritual", w: 2 },
+      { id: "lunar_absurd", w: 2 }
+    ]);
+  }
+  if (friends && mood === "beautiful") {
+    return weightedPick([
+      { id: "epic_ritual", w: 3 },
+      { id: "cosmic_irony", w: 2 }
+    ]);
+  }
+  if (wife && mood === "beautiful") {
+    return weightedPick([
+      { id: "epic_ritual", w: 4 },
+      { id: "rational_scifi", w: 2 },
+      { id: "cosmic_irony", w: 1 }
+    ]);
+  }
+  if (wife && mood === "calm") {
+    return weightedPick([
+      { id: "rational_scifi", w: 3 },
+      { id: "epic_ritual", w: 2 }
+    ]);
+  }
+  if (wife && mood === "legendary") {
+    return weightedPick([
+      { id: "epic_ritual", w: 3 },
+      { id: "cosmic_irony", w: 2 }
+    ]);
+  }
+  if (solo && mood === "legendary") {
+    return weightedPick([
+      { id: "rational_scifi", w: 2 },
+      { id: "epic_ritual", w: 3 },
+      { id: "cosmic_irony", w: 2 }
+    ]);
+  }
+  if (solo && mood === "calm") {
+    return "rational_scifi";
+  }
+  if (solo && mood === "beautiful") {
+    return weightedPick([
+      { id: "rational_scifi", w: 3 },
+      { id: "epic_ritual", w: 2 }
+    ]);
+  }
+  if (solo && mood === "fun") {
+    return weightedPick([
+      { id: "cosmic_irony", w: 3 },
+      { id: "lunar_absurd", w: 2 }
+    ]);
+  }
+
+  return weightedPick([
+    { id: "cosmic_irony", w: 2 },
+    { id: "epic_ritual", w: 2 },
+    { id: "rational_scifi", w: 1 }
+  ]);
+}
+
+function modeVibe(mode: StoryMode): string {
+  switch (mode) {
+    case "lunar_absurd":
+      return "Наивный, смешной, чуть сатирический абсурд: бытовая странность и маленький хаос, но мило.";
+    case "rational_scifi":
+      return "Умный, собранный, чуть холодный и точный тон — и неожиданное человеческое тепло внутри.";
+    case "epic_ritual":
+      return "Торжественно и красиво, как маленький обряд: свечи, ткань, медленный масштаб, ощущение важности момента.";
+    case "cosmic_irony":
+      return "Космическая ирония: день внезапно уходит на странную траекторию, но всё равно по-доброму.";
+    case "child_micro_adventure":
+      return "Детское инженерное приключение: сборка, изобретение, радость процесса, гордость «мы сделали»";
+    case "cozy_toddler_chaos":
+      return "Домашняя детская магия: мягкий хаос, смешные детали, быт как маленький эпос.";
+  }
 }
 
 export async function POST(req: Request) {
   try {
     const body = (await req.json().catch(() => ({}))) as {
-      city?: City;
       companyType?: CompanyType;
-      duration?: Duration;
       budget?: Budget;
       mood?: Mood;
     };
 
-    const city = body.city ?? "astana";
     const companyType = body.companyType ?? "with_friends";
-    const duration = body.duration ?? "1_2_hours";
     const budget = body.budget ?? "medium";
     const mood = body.mood ?? "beautiful";
 
-    const cityLabel = city === "astana" ? "Астана" : "Ташкент";
     const companyLabel =
       companyType === "with_children"
         ? "с детьми"
@@ -104,7 +173,6 @@ export async function POST(req: Request) {
           : companyType === "with_friends"
             ? "с друзьями"
             : "один";
-    const durationLabel = duration === "1_2_hours" ? "1–2 часа" : "2–3 часа";
     const budgetLabel =
       budget === "econom" ? "экономно" : budget === "medium" ? "средне" : "можно красиво";
     const moodLabel =
@@ -114,109 +182,60 @@ export async function POST(req: Request) {
           ? "спокойно"
           : mood === "beautiful"
             ? "красиво"
-            : mood === "legendary"
-              ? "легендарно"
-              : "удиви меня";
+            : "легендарно";
 
-    const currency = city === "astana" ? "₸" : "сум";
-    const budgetRange =
-      city === "astana"
-        ? budget === "econom"
-          ? "15 000–35 000 ₸ на двоих (без алкоголя) или 8 000–18 000 ₸ на человека"
-          : budget === "medium"
-            ? "35 000–80 000 ₸ на двоих или 18 000–40 000 ₸ на человека"
-            : "80 000–180 000 ₸ на двоих или 40 000–90 000 ₸ на человека"
-        : budget === "econom"
-          ? "250 000–600 000 сум на двоих или 120 000–300 000 сум на человека"
-          : budget === "medium"
-            ? "600 000–1 500 000 сум на двоих или 300 000–750 000 сум на человека"
-            : "1 500 000–3 500 000 сум на двоих или 750 000–1 800 000 сум на человека";
-
-    const specialCase = getSpecialCaseResponse({ city, companyType, duration, budget, mood });
+    const specialCase = getSpecialCaseResponse({ companyType, budget, mood });
     if (specialCase) return NextResponse.json({ ok: true, text: specialCase });
 
-    const family = getPromptFamily(companyType);
-    const familyTone =
-      family === "romantic"
-        ? [
-            "Тон для «вдвоём с Машей»: нежнее, камернее, больше заботы и красивых деталей.",
-            "Можно лёгкую романтику, но без приторности."
-          ].join("\n")
-        : family === "friends"
-          ? [
-              "Тон для «с друзьями»: живее, веселее, больше ощущения «собрали себе историю».",
-              "Можно одну шутку, но не превращай в стендап."
-            ].join("\n")
-          : family === "solo"
-            ? [
-                "Тон для «один»: как будто друг говорит «ну раз один — давай сделаем это красиво».",
-                "Без жалости и без пафоса — как маленький подарок себе."
-              ].join("\n")
-            : [
-                "Тон для «с детьми»: тепло, по-человечески, без идеальной картинки.",
-                "Можно лёгкую самоиронию, но без цинизма."
-              ].join("\n");
-
-    const moodModifier =
-      mood === "fun"
-        ? "Модификатор «весело»: больше движения, игры и лёгкого хаоса как части веселья."
-        : mood === "beautiful"
-          ? "Модификатор «красиво»: больше эстетики, света и деталей, которые хочется запомнить."
-          : mood === "legendary"
-            ? "Модификатор «легендарно»: смелее, чуть более extravagant, ощущение «ну да, это уже праздник»."
-            : "Модификатор «спокойно»: тише, камернее, без перегруза.";
-
-    const soloLegendaryOverride =
-      companyType === "alone" && mood === "legendary"
-        ? "Отдельное правило: «один + легендарно» — пусть звучит ярко и смело, как вечер без компромиссов. Не стесняйся советовать побаловать себя."
-        : "";
+    const mode = pickStoryMode({ companyType, mood });
+    const budgetScale =
+      budget === "econom"
+        ? "Экономно: бытово, из подручного, без дорогих мест. Магия — в деталях."
+        : budget === "medium"
+          ? "Средне: можно один «special элемент» (маленький сюрприз, доставка, билет, красивый реквизит)."
+          : "Можно красиво: больше ритуальности и атмосферы, эффектнее детали, но без пафоса.";
 
     const prompt = [
-      "Сгенерируй ОДНУ идею празднования дня рождения. Язык: русский.",
-      "Пиши как совет друга с хорошим вкусом: живо, тепло, по‑человечески. Без лейблов «Заголовок/Атмосфера/Бюджет».",
-      "Это одна идея‑сценарий (не инструкция и не план). Оставь место для фантазии, но держи опоры: как это выглядит и что реально сделать.",
-      "Можно 1 лёгкую шутку/самоиронию и пару бытовых деталей (свеча, плейлист, маленький ритуал).",
-      "Нельзя писать как менеджер, гид, SEO или ТЗ. Не используй формулировки: «выберите», «организуйте», «завершите».",
-      familyTone,
-      moodModifier,
-      soloLegendaryOverride,
+      "Придумай одну идею, как отпраздновать день рождения.",
       "",
-      "Реализм и ограничения (строго):",
-      "- Ты не можешь проверять афишу/расписание. НЕ выдумывай конкретные события, даты, названия заведений/мест или «точные цены».",
-      "- Если нужен ресторан/место/услуга — объясни, что искать и как быстро проверить/забронировать (карты, звонок, WhatsApp, доставка).",
-      "- Избегай шаблонов типа «ужин на крыше / ресторан с видом / особенное пространство» — только если у тебя есть простой, применимый план без фантазий.",
+      `Параметры:`,
+      `- С кем: ${companyLabel}`,
+      `- Бюджет: ${budgetLabel}`,
+      `- Настроение: ${moodLabel}`,
       "",
-      `Город: ${cityLabel}.`,
-      `С кем: ${companyLabel}.`,
-      `Длительность: ${durationLabel}.`,
-      `Бюджет: ${budgetLabel}.`,
-      `Настроение: ${moodLabel}.`,
-      `Валюта: ${currency}.`,
-      `Ориентир по бюджету (sanity-check): ${budgetRange}.`,
+      "Это не utilitarian-гайд «куда пойти сегодня». Это генератор шуточных, литературных, атмосферных идей — маленькое странное приключение.",
+      "Пользователю НЕ говори, что внутри есть скрытые режимы и вдохновения.",
       "",
-      "Формат ответа:",
-      "- 1–2 абзаца свободным текстом, 5–9 предложений.",
-      "- Упомяни вайб/атмосферу, и бюджет мягко (без таблиц и без занудства).",
-      "- Дай 1–2 конкретные подсказки «что искать/как проверить» (карты/звонок/WhatsApp/доставка).",
-      "- Закончить одной короткой строкой: «Если не сложится — ...».",
-      "Без эмодзи."
+      `Внутренний скрытый literary mode (не упоминай в ответе): ${mode}.`,
+      `Его вайб: ${modeVibe(mode)}`,
+      budgetScale,
+      "",
+      "Правила:",
+      "- Не используй прямые названия книг/авторов/персонажей/миров и не цитируй.",
+      "- Не пиши сухо, не пиши как ТЗ, не пиши как инструкция.",
+      "- Можно лёгкий абсурд, иронию, нежность, странные бытовые детали, ощущение ритуала.",
+      "- Длина: 1–3 коротких абзаца или мини-сценка. Без одинакового каркаса каждый раз.",
+      "- Идея должна быть хотя бы частично реализуемой: добавь 1–2 конкретные опоры (что взять/что сделать/как быстро проверить), но не превращай в план.",
+      "- Никаких «выберите/организуйте/завершите» и «весёлое времяпрепровождение».",
+      "",
+      "Напиши красиво, живо, по‑человечески, с вайбом приложения."
     ].join("\n");
 
     const completion = await openai().chat.completions.create({
       model: "gpt-4o-mini",
-      temperature: 0.8,
+      temperature: 0.9,
       messages: [
         {
           role: "system",
           content:
             [
-              "Ты не помощник по планированию и не менеджер.",
-              "Ты — друг с хорошим вкусом, который помогает придумать, как отпраздновать день рождения так, чтобы было и реально, и с вайбом.",
-              "Пиши по-русски. Тон: живой, человечный, тёплый.",
-              "Можно: лёгкий юмор/самоиронию, романтику (если подходит), маленькие бытовые детали.",
-              "Нельзя: сухой канцелярит, «инструкции», штампы, SEO-формулировки.",
-              "Нельзя выдумывать конкретные события, даты и названия мест (если не уверен).",
-              "Нужно советовать так, чтобы хотелось это сделать."
+              "Ты придумываешь не обычные практичные советы, а маленькие литературные сценарии для празднования дня рождения.",
+              "Пиши по-русски. Тон: живой, тёплый, странноватый, красивый, местами смешной.",
+              "Ты не менеджер и не помощник по планированию. Ты человек со вкусом, который превращает день рождения в маленькое приключение.",
+              "Можно: лёгкий абсурд, иронию, нежность, ощущение маленького ритуала, живые бытовые детали.",
+              "Нельзя: канцелярит, сухие инструкции, одинаковый шаблон, SEO-язык, формальный тон.",
+              "Нельзя: прямые отсылки к книгам/авторам/персонажам/цитатам; нельзя узнаваемые формулировки.",
+              "Важно: идея должна быть короткой, понятной и хотя бы частично реализуемой в реальной жизни."
             ].join("\n")
         },
         { role: "user", content: prompt }
