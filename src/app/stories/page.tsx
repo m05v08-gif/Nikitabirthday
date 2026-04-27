@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { StoryView } from "@/components/story-view";
@@ -18,7 +18,19 @@ export default function StoriesPage() {
   const [data, setData] = useState<RandomStoryResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [reactionByStoryId, setReactionByStoryId] = useState<Record<string, string[]>>({});
-  const [seenIds, setSeenIds] = useState<string[]>([]);
+  const [seenIds, setSeenIds] = useState<string[]>(() => {
+    try {
+      const raw = localStorage.getItem("stories:seen:v1");
+      if (!raw) return [];
+      const parsed = JSON.parse(raw) as unknown;
+      if (!Array.isArray(parsed)) return [];
+      const safe = parsed.filter((x) => typeof x === "string") as string[];
+      return Array.from(new Set(safe)).slice(0, 200);
+    } catch {
+      return [];
+    }
+  });
+  const seenIdsRef = useRef<string[]>(seenIds);
 
   const storyKey = useMemo(() => {
     if (!data) return "loading";
@@ -51,19 +63,9 @@ export default function StoriesPage() {
     }
   }, []);
 
-  // seen stories persistence (no repeats until exhausted)
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem("stories:seen:v1");
-      if (!raw) return;
-      const parsed = JSON.parse(raw) as unknown;
-      if (!Array.isArray(parsed)) return;
-      const safe = parsed.filter((x) => typeof x === "string") as string[];
-      setSeenIds(Array.from(new Set(safe)).slice(0, 200));
-    } catch {
-      // ignore
-    }
-  }, []);
+    seenIdsRef.current = seenIds;
+  }, [seenIds]);
 
   const persistSeen = useCallback((next: string[]) => {
     try {
@@ -84,7 +86,9 @@ export default function StoriesPage() {
   const load = useCallback(async (opts?: { allowReset?: boolean }) => {
     setLoading(true);
     try {
-      const exclude = seenIds.length > 0 ? `?exclude=${encodeURIComponent(seenIds.join(","))}` : "";
+      const currentSeen = seenIdsRef.current;
+      const exclude =
+        currentSeen.length > 0 ? `?exclude=${encodeURIComponent(currentSeen.join(","))}` : "";
       const res = await fetch(`/api/story/random${exclude}`, { cache: "no-store" });
       const json = (await res.json()) as RandomStoryApiResponse;
       if (json.ok && "done" in json) {
@@ -111,12 +115,13 @@ export default function StoriesPage() {
     } finally {
       setLoading(false);
     }
-  }, [persistSeen, seenIds]);
+  }, [persistSeen]);
 
   useEffect(() => {
     // First load
     void load();
-  }, [load]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const currentReactions = useMemo(() => {
     if (!data?.ok) return null;
