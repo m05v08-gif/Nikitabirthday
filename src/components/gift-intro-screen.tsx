@@ -24,13 +24,13 @@ export function GiftIntroScreen({ onOpenEnvelope }: GiftIntroScreenProps) {
         aria-label="Открыть конверт"
       />
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 pb-[max(16px,env(safe-area-inset-bottom))]">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 pb-[max(32px,calc(env(safe-area-inset-bottom)_+_16px))]">
         <div className="mx-auto w-full max-w-[430px] px-6">
           <div className="mx-auto grid w-fit justify-items-center gap-2">
             <div className="intro-hint w-fit rounded-full border border-black/10 bg-white/30 px-4 py-2 text-[0.9rem] font-medium tracking-[-0.01em] text-black/75 backdrop-blur-md">
               Нажми на конверт
             </div>
-            <div className="text-center text-[0.72rem] leading-relaxed tracking-[0.01em] text-black/55">
+            <div className="text-center text-[0.74rem] font-semibold leading-relaxed tracking-[0.01em] text-black/70">
               <span className="block">Совет: добавь страницу на экран телефона</span>
               <span className="block">Поделиться → На экран «Домой»</span>
             </div>
