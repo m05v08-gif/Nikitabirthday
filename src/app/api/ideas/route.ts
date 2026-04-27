@@ -153,6 +153,50 @@ function modeVibe(mode: StoryMode): string {
   }
 }
 
+function modeInspiration(mode: StoryMode): string {
+  switch (mode) {
+    case "lunar_absurd":
+      return weightedPick([
+        { id: "Н. Носов — «Незнайка на Луне»", w: 5 },
+        { id: "Дуглас Адамс — «Автостопом по галактике»", w: 2 },
+        { id: "Виктор Пелевин — книги", w: 2 }
+      ]);
+    case "rational_scifi":
+      return weightedPick([
+        { id: "Айзек Азимов — «Я, робот»", w: 4 },
+        { id: "Айзек Азимов — «Двухсотлетний человек»", w: 3 },
+        { id: "Айзек Азимов — цикл «Основание»", w: 2 },
+        { id: "Айзек Азимов — «Конец Вечности»", w: 2 },
+        { id: "«Звёздные войны»", w: 1 }
+      ]);
+    case "epic_ritual":
+      return weightedPick([
+        { id: "Фрэнк Герберт — «Дюна»", w: 5 },
+        { id: "«Звёздные войны»", w: 2 },
+        { id: "Сергей Есенин — стихи", w: 2 },
+        { id: "«Пираты Карибского моря»", w: 1 }
+      ]);
+    case "cosmic_irony":
+      return weightedPick([
+        { id: "Дуглас Адамс — «Автостопом по галактике»", w: 5 },
+        { id: "«Звёздные войны»", w: 2 },
+        { id: "«Пираты Карибского моря»", w: 2 },
+        { id: "Виктор Пелевин — книги", w: 1 }
+      ]);
+    case "child_micro_adventure":
+      return weightedPick([
+        { id: "«Чик и Брики»", w: 5 },
+        { id: "Н. Носов — «Незнайка на Луне»", w: 1 },
+        { id: "«Пираты Карибского моря»", w: 1 }
+      ]);
+    case "cozy_toddler_chaos":
+      return weightedPick([
+        { id: "«Чик и Брики»", w: 6 },
+        { id: "Сергей Есенин — стихи", w: 1 }
+      ]);
+  }
+}
+
 export async function POST(req: Request) {
   try {
     const body = (await req.json().catch(() => ({}))) as {
@@ -211,7 +255,7 @@ export async function POST(req: Request) {
       budgetScale,
       "",
       "Правила:",
-      "- Не используй прямые названия книг/авторов/персонажей/миров и не цитируй.",
+      "- В тексте сценария не используй прямые названия книг/авторов/персонажей/миров и не цитируй.",
       "- Не пиши сухо, не пиши как ТЗ, не пиши как инструкция.",
       "- Можно лёгкий абсурд, иронию, нежность, странные бытовые детали, ощущение ритуала.",
       "- Длина: 1–3 коротких абзаца или мини-сценка. Без одинакового каркаса каждый раз.",
@@ -242,14 +286,15 @@ export async function POST(req: Request) {
       ]
     });
 
-    const text = completion.choices[0]?.message?.content?.trim() ?? "";
-    if (!text) {
+    const textRaw = completion.choices[0]?.message?.content?.trim() ?? "";
+    if (!textRaw) {
       return NextResponse.json(
         { ok: false, error: "Пустой ответ от модели." },
         { status: 502 }
       );
     }
 
+    const text = `${textRaw}\n\nВдохновился: ${modeInspiration(mode)}`;
     return NextResponse.json({ ok: true, text });
   } catch (e) {
     return NextResponse.json(
