@@ -8,8 +8,9 @@ import { StoryView } from "@/components/story-view";
 
 type RandomStoryResult =
   | { ok: true; story: { id: string; text: string; imageUrl: string } }
-  | { ok: true; done: true }
   | { ok: false; error: string };
+
+type RandomStoryApiResponse = RandomStoryResult | { ok: true; done: true };
 
 export default function StoriesPage() {
   const router = useRouter();
@@ -21,7 +22,8 @@ export default function StoriesPage() {
 
   const storyKey = useMemo(() => {
     if (!data) return "loading";
-    return data.ok ? data.story.id : "error";
+    if (!data.ok) return "error";
+    return data.story.id;
   }, [data]);
 
   // reactions persistence
@@ -84,8 +86,8 @@ export default function StoriesPage() {
     try {
       const exclude = seenIds.length > 0 ? `?exclude=${encodeURIComponent(seenIds.join(","))}` : "";
       const res = await fetch(`/api/story/random${exclude}`, { cache: "no-store" });
-      const json = (await res.json()) as RandomStoryResult;
-      if (json.ok && "done" in json && json.done) {
+      const json = (await res.json()) as RandomStoryApiResponse;
+      if (json.ok && "done" in json) {
         if (opts?.allowReset === false) {
           setData({ ok: false, error: "Не получилось выбрать историю." });
           return;
