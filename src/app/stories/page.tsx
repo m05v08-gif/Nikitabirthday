@@ -130,10 +130,10 @@ export default function StoriesPage() {
         {/* Intentionally no headline here (reading mode) */}
       </header>
 
-      <section className="space-y-5 pt-2 sm:pt-3">
+      <section className="space-y-4 pt-2 sm:pt-3">
         <StoryView data={data} loading={loading} storyKey={storyKey} />
 
-        <div className="stories-reactions flex flex-wrap justify-center gap-2 pt-1">
+        <div className="stories-reactions flex flex-wrap justify-center gap-2 pt-0.5">
           {["❤️", "🥹", "😂", "✨"].map((emoji) => {
             const active = Boolean(currentReactions?.includes(emoji));
             return (
@@ -156,7 +156,7 @@ export default function StoriesPage() {
           })}
         </div>
 
-        <div className="flex gap-3 pt-2">
+        <div className="flex gap-3 pt-1.5">
           <button
             type="button"
             onClick={() => void load()}
