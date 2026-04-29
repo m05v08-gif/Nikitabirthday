@@ -10,10 +10,16 @@ function Tile({
   title: string;
   subtitle: string;
   href: string;
-  variant: "stories" | "ideas" | "yakut";
+  variant: "stories" | "ideas" | "yakut" | "stylist";
 }) {
   const variantClass =
-    variant === "stories" ? "home-tile--stories" : variant === "ideas" ? "home-tile--ideas" : "home-tile--yakut";
+    variant === "stories"
+      ? "home-tile--stories"
+      : variant === "ideas"
+        ? "home-tile--ideas"
+        : variant === "yakut"
+          ? "home-tile--yakut"
+          : "home-tile--stylist";
   const panel =
     variant === "stories"
       ? "bg-[color:color-mix(in_oklab,var(--color-panel)_22%,transparent)]"
@@ -23,7 +29,9 @@ function Tile({
       ? "bg-[radial-gradient(circle_at_18%_18%,color-mix(in_oklab,var(--blob-b)_14%,transparent),transparent_62%),radial-gradient(circle_at_82%_78%,color-mix(in_oklab,var(--blob-a)_12%,transparent),transparent_66%)]"
       : variant === "ideas"
         ? "bg-[radial-gradient(circle_at_20%_28%,color-mix(in_oklab,var(--blob-a)_12%,transparent),transparent_64%),radial-gradient(circle_at_78%_22%,color-mix(in_oklab,var(--blob-c)_10%,transparent),transparent_66%)]"
-        : "bg-[radial-gradient(circle_at_20%_28%,color-mix(in_oklab,var(--blob-c)_12%,transparent),transparent_64%),radial-gradient(circle_at_78%_22%,color-mix(in_oklab,var(--blob-b)_10%,transparent),transparent_66%)]";
+        : variant === "yakut"
+          ? "bg-[radial-gradient(circle_at_20%_28%,color-mix(in_oklab,var(--blob-c)_12%,transparent),transparent_64%),radial-gradient(circle_at_78%_22%,color-mix(in_oklab,var(--blob-b)_10%,transparent),transparent_66%)]"
+          : "bg-[radial-gradient(circle_at_20%_28%,color-mix(in_oklab,var(--blob-b)_12%,transparent),transparent_64%),radial-gradient(circle_at_78%_22%,color-mix(in_oklab,var(--blob-a)_10%,transparent),transparent_66%)]";
 
   return (
     <Link
@@ -87,6 +95,12 @@ export function MainHomeScreen() {
             href="/stories"
           />
           <Tile variant="ideas" title="Вдохновения" subtitle="Разные идеи на вечер" href="/ideas" />
+          <Tile
+            variant="stylist"
+            title="Стилист"
+            subtitle="Свайпай — и соберём, что тебе нравится"
+            href="/stylist"
+          />
           <Tile variant="yakut" title="Угадай якутское слово" subtitle="Маленький квест" href="/yakut-quest" />
         </section>
       </div>
