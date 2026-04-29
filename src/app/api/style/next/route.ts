@@ -53,15 +53,10 @@ export async function GET(req: Request) {
 
     const votedIn = toInList(votedIds);
 
-    // For MVP "exploit": pick a tag seed from one of liked cards and fetch similar (overlap by styleFamilies)
-    let baseQuery = supabase
-      .from("style_images")
-      .select(
-        "id,title,image_url,content_type,style_families,occasion_tags,clothing_tags,accessory_tags,color_tags,season_tags,fit_tags,vibe_tags,formality_level,notes,source_page_url,attribution"
-      )
-      .eq("active", true)
-      .eq("review_status", "approved")
-      .not("id", "in", votedIn ?? '("")');
+    let exploitStyleFamilies: string[] = [];
+    let exploitColors: string[] = [];
+    let exploitSeasons: string[] = [];
+    let exploitContentType: string | null = null;
 
     if (mode === "exploit" && likedIds.length > 0) {
       const pickLike = likedIds[Math.floor(Math.random() * likedIds.length)]!;
@@ -72,20 +67,33 @@ export async function GET(req: Request) {
         .maybeSingle();
 
       if (!likedRes.error && likedRes.data) {
-        const styleFamilies = (likedRes.data.style_families ?? []) as string[];
-        const colors = (likedRes.data.color_tags ?? []) as string[];
-        const seasons = (likedRes.data.season_tags ?? []) as string[];
-        const contentType = likedRes.data.content_type as string | null;
-
-        if (styleFamilies.length > 0) baseQuery = baseQuery.overlaps("style_families", styleFamilies.slice(0, 3));
-        if (colors.length > 0) baseQuery = baseQuery.overlaps("color_tags", colors.slice(0, 2));
-        if (seasons.length > 0) baseQuery = baseQuery.overlaps("season_tags", seasons.slice(0, 1));
-        // keep diversity: avoid hard-locking contentType
-        if (contentType && Math.random() < 0.35) baseQuery = baseQuery.eq("content_type", contentType);
+        exploitStyleFamilies = ((likedRes.data.style_families ?? []) as string[]).slice(0, 3);
+        exploitColors = ((likedRes.data.color_tags ?? []) as string[]).slice(0, 2);
+        exploitSeasons = ((likedRes.data.season_tags ?? []) as string[]).slice(0, 1);
+        exploitContentType = (likedRes.data.content_type as string | null) ?? null;
       }
     }
 
-    const countRes = await baseQuery.select("id", { count: "exact", head: true });
+    type Filterable = {
+      eq: (column: string, value: unknown) => Filterable;
+      not: (column: string, operator: string, value: unknown) => Filterable;
+      overlaps: (column: string, value: unknown) => Filterable;
+    };
+
+    const applyFilters = (q: Filterable): Filterable => {
+      let next = q.eq("active", true).eq("review_status", "approved").not("id", "in", votedIn ?? '("")');
+      if (mode === "exploit") {
+        if (exploitStyleFamilies.length > 0) next = next.overlaps("style_families", exploitStyleFamilies);
+        if (exploitColors.length > 0) next = next.overlaps("color_tags", exploitColors);
+        if (exploitSeasons.length > 0) next = next.overlaps("season_tags", exploitSeasons);
+        if (exploitContentType && Math.random() < 0.35) next = next.eq("content_type", exploitContentType);
+      }
+      return next;
+    };
+
+    const countRes = await applyFilters(
+      supabase.from("style_images").select("id", { count: "exact", head: true })
+    );
     if (countRes.error) {
       return NextResponse.json({ ok: false, error: countRes.error.message }, { status: 500 });
     }
@@ -96,7 +104,14 @@ export async function GET(req: Request) {
     }
 
     const idx = Math.floor(Math.random() * remaining);
-    const rowRes = await baseQuery.order("created_at", { ascending: false }).range(idx, idx).limit(1);
+    const rowRes = await applyFilters(
+      supabase.from("style_images").select(
+        "id,title,image_url,content_type,style_families,occasion_tags,clothing_tags,accessory_tags,color_tags,season_tags,fit_tags,vibe_tags,formality_level,notes,source_page_url,attribution"
+      )
+    )
+      .order("created_at", { ascending: false })
+      .range(idx, idx)
+      .limit(1);
     if (rowRes.error) {
       return NextResponse.json({ ok: false, error: rowRes.error.message }, { status: 500 });
     }
