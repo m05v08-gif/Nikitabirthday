@@ -74,26 +74,22 @@ export async function GET(req: Request) {
       }
     }
 
-    type Filterable = {
-      eq: (column: string, value: unknown) => Filterable;
-      not: (column: string, operator: string, value: unknown) => Filterable;
-      overlaps: (column: string, value: unknown) => Filterable;
-    };
+    // Count remaining (apply the same filters as the row query)
+    let countQuery = supabase
+      .from("style_images")
+      .select("id", { count: "exact", head: true })
+      .eq("active", true)
+      .eq("review_status", "approved")
+      .not("id", "in", votedIn ?? '("")');
 
-    const applyFilters = (q: Filterable): Filterable => {
-      let next = q.eq("active", true).eq("review_status", "approved").not("id", "in", votedIn ?? '("")');
-      if (mode === "exploit") {
-        if (exploitStyleFamilies.length > 0) next = next.overlaps("style_families", exploitStyleFamilies);
-        if (exploitColors.length > 0) next = next.overlaps("color_tags", exploitColors);
-        if (exploitSeasons.length > 0) next = next.overlaps("season_tags", exploitSeasons);
-        if (exploitContentType && Math.random() < 0.35) next = next.eq("content_type", exploitContentType);
-      }
-      return next;
-    };
+    if (mode === "exploit") {
+      if (exploitStyleFamilies.length > 0) countQuery = countQuery.overlaps("style_families", exploitStyleFamilies);
+      if (exploitColors.length > 0) countQuery = countQuery.overlaps("color_tags", exploitColors);
+      if (exploitSeasons.length > 0) countQuery = countQuery.overlaps("season_tags", exploitSeasons);
+      if (exploitContentType && Math.random() < 0.35) countQuery = countQuery.eq("content_type", exploitContentType);
+    }
 
-    const countRes = await applyFilters(
-      supabase.from("style_images").select("id", { count: "exact", head: true })
-    );
+    const countRes = await countQuery;
     if (countRes.error) {
       return NextResponse.json({ ok: false, error: countRes.error.message }, { status: 500 });
     }
@@ -104,11 +100,23 @@ export async function GET(req: Request) {
     }
 
     const idx = Math.floor(Math.random() * remaining);
-    const rowRes = await applyFilters(
-      supabase.from("style_images").select(
+    let rowQuery = supabase
+      .from("style_images")
+      .select(
         "id,title,image_url,content_type,style_families,occasion_tags,clothing_tags,accessory_tags,color_tags,season_tags,fit_tags,vibe_tags,formality_level,notes,source_page_url,attribution"
       )
-    )
+      .eq("active", true)
+      .eq("review_status", "approved")
+      .not("id", "in", votedIn ?? '("")');
+
+    if (mode === "exploit") {
+      if (exploitStyleFamilies.length > 0) rowQuery = rowQuery.overlaps("style_families", exploitStyleFamilies);
+      if (exploitColors.length > 0) rowQuery = rowQuery.overlaps("color_tags", exploitColors);
+      if (exploitSeasons.length > 0) rowQuery = rowQuery.overlaps("season_tags", exploitSeasons);
+      if (exploitContentType && Math.random() < 0.35) rowQuery = rowQuery.eq("content_type", exploitContentType);
+    }
+
+    const rowRes = await rowQuery
       .order("created_at", { ascending: false })
       .range(idx, idx)
       .limit(1);
