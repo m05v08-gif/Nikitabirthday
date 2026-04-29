@@ -122,7 +122,7 @@ export async function GET(req: Request) {
     let rowQuery = supabase
       .from("style_images")
       .select(
-        "id,title,image_url,content_type,style_families,occasion_tags,clothing_tags,accessory_tags,color_tags,season_tags,fit_tags,vibe_tags,formality_level,notes,source_page_url,attribution"
+        "id,title,image_url,source_type,content_type,style_families,occasion_tags,clothing_tags,accessory_tags,color_tags,season_tags,fit_tags,vibe_tags,formality_level,notes,source_page_url,attribution"
       )
       .eq("active", true)
       .eq("review_status", "approved")
