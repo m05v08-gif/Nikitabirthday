@@ -137,6 +137,30 @@ export default function StylistPage() {
     }
   };
 
+  const resetLikes = async () => {
+    if (!sessionId || sessionId === "anonymous") return;
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/style/reset", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ sessionId })
+      });
+      const json = (await res.json()) as { ok: boolean; error?: string };
+      if (!json.ok) {
+        setError(json.error ?? "Не получилось очистить.");
+        setLoading(false);
+        return;
+      }
+      setLiked([]);
+      await loadNext();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : String(e));
+      setLoading(false);
+    }
+  };
+
   return (
     <main className="relative min-h-[100dvh] w-full overflow-hidden">
       <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[5]">
@@ -217,7 +241,19 @@ export default function StylistPage() {
           </div>
 
           <div className="flex items-center justify-between">
-            <div className="text-sm text-[color:var(--color-muted)]">Понравилось: {liked.length}</div>
+            <div className="flex items-center gap-3">
+              <div className="text-sm text-[color:var(--color-muted)]">Понравилось: {liked.length}</div>
+              {liked.length > 0 ? (
+                <button
+                  type="button"
+                  onClick={() => void resetLikes()}
+                  disabled={loading}
+                  className="text-sm font-semibold text-[color:color-mix(in_oklab,var(--color-fg)_86%,transparent)] underline decoration-[color:color-mix(in_oklab,var(--color-ring)_34%,transparent)] underline-offset-4 disabled:opacity-60"
+                >
+                  Очистить
+                </button>
+              ) : null}
+            </div>
             <Link
               href="/"
               className="text-sm font-semibold text-[color:color-mix(in_oklab,var(--color-fg)_90%,transparent)] underline decoration-[color:color-mix(in_oklab,var(--color-ring)_40%,transparent)] underline-offset-4"
