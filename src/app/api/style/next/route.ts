@@ -23,6 +23,25 @@ function toInList(ids: string[]): string | null {
   return `(${ids.map((id) => `"${id}"`).join(",")})`;
 }
 
+function toFastImageUrl(input: { imageUrl: string; sourceType?: unknown }): string {
+  const url = input.imageUrl;
+  const sourceType = typeof input.sourceType === "string" ? input.sourceType : "";
+  // Unsplash images can be safely requested at smaller widths via query params.
+  if (sourceType === "unsplash" || url.includes("images.unsplash.com")) {
+    try {
+      const u = new URL(url);
+      if (!u.searchParams.has("auto")) u.searchParams.set("auto", "format");
+      if (!u.searchParams.has("fit")) u.searchParams.set("fit", "max");
+      if (!u.searchParams.has("w")) u.searchParams.set("w", "900");
+      if (!u.searchParams.has("q")) u.searchParams.set("q", "75");
+      return u.toString();
+    } catch {
+      return url;
+    }
+  }
+  return url;
+}
+
 export async function GET(req: Request) {
   try {
     const sessionId = getSessionId(req);
@@ -132,7 +151,7 @@ export async function GET(req: Request) {
       card: {
         id: row.id as string,
         title: (row.title as string | null) ?? null,
-        imageUrl: row.image_url as string,
+        imageUrl: toFastImageUrl({ imageUrl: row.image_url as string, sourceType: row.source_type }),
         contentType: row.content_type as
           | "full_look"
           | "detail"

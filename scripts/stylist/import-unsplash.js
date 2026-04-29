@@ -132,7 +132,7 @@ for (const bucket of manifest.buckets) {
         if (!sourcePageUrl || exists.has(sourcePageUrl)) return null;
         const photographerName = r.user?.name ?? null;
         const photographerUrl = r.user?.links?.html ?? null;
-        const imageUrl = r.urls?.regular ?? r.urls?.small ?? null;
+        const imageUrl = r.urls?.small ?? r.urls?.regular ?? null;
         if (!imageUrl) return null;
 
         const title = r.description ?? r.alt_description ?? null;

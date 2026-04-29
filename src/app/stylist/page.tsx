@@ -204,6 +204,8 @@ export default function StylistPage() {
                   <img
                     src={card.imageUrl}
                     alt={card.title ?? ""}
+                    decoding="async"
+                    fetchPriority="high"
                     className={`h-full w-full object-cover transition ${loading ? "opacity-70" : "opacity-100"}`}
                   />
                 ) : (
