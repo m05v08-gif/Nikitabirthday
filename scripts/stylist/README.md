@@ -42,3 +42,11 @@ If you already imported cards that are stuck as `review_status='pending'`, run:
 node scripts/stylist/approve-pending.js
 ```
 
+### 7) Reject likely feminine items (optional)
+
+If your seed pulled in women-oriented photos, you can auto-reject a conservative set by title keywords:
+
+```bash
+node scripts/stylist/reject-feminine.js
+```
+

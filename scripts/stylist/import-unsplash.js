@@ -79,6 +79,14 @@ function tagsFromBucket(bucketId) {
   return map[bucketId] ?? [];
 }
 
+function isLikelyFeminine(desc) {
+  const t = String(desc ?? "").toLowerCase();
+  if (!t) return false;
+  // conservative keyword filter: only remove clearly female-oriented content
+  if (/\b(men|man|menswear|male)\b/.test(t)) return false;
+  return /\b(woman|women|female|girl|lady|ladies|womenswear|dress|skirt|heels|lingerie|bra)\b/.test(t);
+}
+
 async function existingSourceUrls(urls) {
   if (urls.length === 0) return new Set();
   const res = await supabase.from("style_images").select("source_page_url").in("source_page_url", urls);
@@ -127,11 +135,14 @@ for (const bucket of manifest.buckets) {
         const imageUrl = r.urls?.regular ?? r.urls?.small ?? null;
         if (!imageUrl) return null;
 
+        const title = r.description ?? r.alt_description ?? null;
+        if (isLikelyFeminine(title)) return null;
+
         const bucketTags = tagsFromBucket(bucket.id);
         const contentType = normalizeContentType(bucket.id);
 
         return {
-          title: r.description ?? r.alt_description ?? null,
+          title,
           image_url: imageUrl,
           source_type: "unsplash",
           source_page_url: sourcePageUrl,
