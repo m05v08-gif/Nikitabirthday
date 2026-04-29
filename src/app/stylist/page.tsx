@@ -78,7 +78,13 @@ export default function StylistPage() {
         setCard(null);
         return;
       }
-      setCard(json.card);
+      if ("card" in json) {
+        setCard(json.card);
+        return;
+      }
+      setCard(null);
+      setError("Не получилось загрузить карточку.");
+      return;
     } catch (e) {
       setCard(null);
       setError(e instanceof Error ? e.message : String(e));
