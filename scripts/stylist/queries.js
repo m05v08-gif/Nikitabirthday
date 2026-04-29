@@ -1,121 +1,113 @@
 export const STYLE_BUCKETS = [
   {
-    id: "smart_casual",
-    title: "Smart casual",
+    id: "quiet_luxury",
+    title: "Quiet luxury / neutrals",
+    target: 70,
+    queries: [
+      "quiet luxury men outfit",
+      "men neutral tones outfit",
+      "men minimal luxury outfit",
+      "men knitwear outfit neutral",
+      "men cashmere sweater outfit",
+      "men beige outfit men",
+      "men cream outfit men",
+      "men linen blazer outfit"
+    ]
+  },
+  {
+    id: "tailoring_modern",
+    title: "Tailoring / modern business",
+    target: 70,
+    queries: [
+      "men tailored outfit full body",
+      "men blazer outfit street style",
+      "men turtleneck blazer outfit",
+      "men suit street style",
+      "men business casual outfit men",
+      "men overcoat outfit men",
+      "men wool coat outfit men",
+      "men smart casual outfit full body"
+    ]
+  },
+  {
+    id: "preppy_heritage",
+    title: "Preppy / heritage",
     target: 55,
     queries: [
-      "men smart casual outfit full body",
-      "men blazer casual outfit",
-      "men knitwear smart casual",
-      "men chinos outfit",
-      "men smart casual street",
-      "men office casual outfit"
+      "men preppy outfit full body",
+      "men ivy style outfit",
+      "men oxford shirt outfit",
+      "men polo shirt outfit men",
+      "men chinos loafer outfit",
+      "men cable knit sweater outfit",
+      "men tweed blazer outfit",
+      "men barn jacket outfit"
     ]
   },
   {
-    id: "relaxed_casual",
-    title: "Relaxed casual",
-    target: 45,
-    queries: [
-      "men relaxed casual outfit",
-      "men casual outfit neutral colors",
-      "men sweatshirt outfit",
-      "men denim jacket outfit",
-      "men casual layers outfit",
-      "men everyday outfit men"
-    ]
-  },
-  {
-    id: "minimal_clean",
-    title: "Minimal / clean",
+    id: "smart_casual_polished",
+    title: "Smart casual / polished",
     target: 35,
     queries: [
-      "minimal menswear outfit",
-      "men clean outfit",
-      "men monochrome outfit",
-      "men neutral outfit minimal",
-      "men minimal style outfit full body"
+      "men smart casual outfit neutral",
+      "men knit polo outfit",
+      "men cardigan outfit smart casual",
+      "men leather loafers outfit",
+      "men scarf outfit men",
+      "men knitwear smart casual"
     ]
   },
   {
-    id: "date_night",
-    title: "Date night / evening",
+    id: "outerwear_layering",
+    title: "Outerwear + layering",
+    target: 40,
+    queries: [
+      "men layered outfit",
+      "men autumn outfit",
+      "men trench coat outfit",
+      "men leather jacket outfit men",
+      "men bomber jacket outfit men",
+      "men cardigan coat outfit",
+      "men winter coat outfit men"
+    ]
+  },
+  {
+    id: "weekend_city_relaxed",
+    title: "Weekend city / relaxed adult",
     target: 25,
     queries: [
-      "men date night outfit",
-      "men evening outfit",
-      "men black outfit smart",
-      "men blazer evening look"
+      "men weekend outfit neutral",
+      "men city outfit men minimal",
+      "men denim jacket outfit men",
+      "men suede jacket outfit men",
+      "men crewneck sweater outfit"
     ]
   },
   {
-    id: "weekend_walk",
-    title: "Weekend / прогулка",
-    target: 25,
-    queries: [
-      "men weekend outfit",
-      "men city walk outfit",
-      "men casual weekend style",
-      "men sneakers outfit street"
-    ]
-  },
-  {
-    id: "dad_on_the_go",
-    title: "Dad-on-the-go",
-    target: 20,
-    queries: [
-      "men dad outfit casual",
-      "men comfortable city outfit",
-      "men simple casual outfit",
-      "men practical casual outfit"
-    ]
-  },
-  {
-    id: "summer_vacation",
-    title: "Summer / vacation",
+    id: "summer_resort",
+    title: "Summer / resort",
     target: 25,
     queries: [
       "men summer outfit",
       "men linen shirt outfit",
-      "men vacation outfit",
-      "men beach casual outfit"
+      "men resort outfit",
+      "men vacation outfit men"
     ]
   },
   {
-    id: "autumn_layering",
-    title: "Autumn layering",
-    target: 25,
-    queries: [
-      "men autumn outfit",
-      "men layered outfit",
-      "men cardigan outfit",
-      "men sweater coat outfit"
-    ]
-  },
-  {
-    id: "outerwear",
-    title: "Outerwear looks",
-    target: 30,
-    queries: [
-      "men coat outfit",
-      "men trench coat outfit",
-      "men bomber jacket outfit",
-      "men leather jacket outfit",
-      "men winter coat outfit"
-    ]
-  },
-  {
-    id: "accessories_details",
-    title: "Accessories / детали",
-    target: 35,
+    id: "details_accessories",
+    title: "Accessories / details",
+    target: 40,
     queries: [
       "men accessories watch",
-      "men sunglasses style",
+      "men watch on wrist style",
+      "men sunglasses outfit",
       "men leather bag",
-      "men boots outfit detail",
-      "men white sneakers fashion",
-      "men scarf outfit",
-      "men belt accessory"
+      "men leather briefcase",
+      "men loafers detail",
+      "men boots detail",
+      "men belt accessory",
+      "men wallet leather"
     ]
   }
 ];
